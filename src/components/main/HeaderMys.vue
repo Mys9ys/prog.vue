@@ -1,5 +1,7 @@
 <template>
-
+  <div class="wrapper">
+    <div @click="$router.push('/kvn/')">kvn</div>
+  </div>
 </template>
 
 <script>

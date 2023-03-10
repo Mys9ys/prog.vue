@@ -1,14 +1,16 @@
 <template>
+  <HeaderMys></HeaderMys>
   <router-view></router-view>
 </template>
 
 <script>
 
+import HeaderMys from "@/components/main/HeaderMys";
 
 export default {
   name: 'App',
   components: {
-
+    HeaderMys
   }
 }
 </script>
