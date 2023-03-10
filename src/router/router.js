@@ -15,12 +15,12 @@ const isAuthenticated = store.getters.isAuth
 console.log(isAuthenticated,'isAuthenticated')
 console.log(store.state.auth,'store.state.auth')
 
-router.beforeEach((to, from) => {
-    if (to.meta.requiresAuth && !isAuthenticated) {
-        // console.log("isAuthenticated")
-        return { name: 'hello' }
-    }
-})
+// router.beforeEach((to, from) => {
+//     if (to.meta.requiresAuth && !isAuthenticated) {
+//         // console.log("isAuthenticated")
+//         return { name: 'hello' }
+//     }
+// })
 
 // router.beforeEach((next) => {
 //
