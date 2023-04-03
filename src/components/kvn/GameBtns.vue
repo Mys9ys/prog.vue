@@ -1,13 +1,18 @@
 <template>
   <div class="btns">
     <div class="kgb_status no_write">не заполнено</div>
-    <a class="kgb_write_btn" href="/kvn/1/"> Заполнить <i class="bi bi-pencil"></i></a>
+    <a class="kgb_write_btn" @click="$router.push('/kvn/'+number+'/')"> Заполнить <i class="bi bi-pencil"></i></a>
   </div>
 </template>
 
 <script>
 export default {
-  name: "GameBtns"
+  name: "GameBtns",
+  props: {
+    number: {
+      type: String,
+    }
+  }
 }
 </script>
 

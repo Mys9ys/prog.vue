@@ -7,7 +7,7 @@
       <div class="game" v-for="(game, index) in getGames" :key="index">
         <GameTitle :title="game.title"></GameTitle>
         <GameTeams :info="game"></GameTeams>
-        <GameBtns></GameBtns>
+        <GameBtns :number="game.title.number"></GameBtns>
       </div>
     </div>
   </div>

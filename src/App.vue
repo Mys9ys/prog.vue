@@ -62,13 +62,17 @@ export default {
   box-sizing: border-box;
 }
 
+body{
+  background: #2E8B57;
+}
+
+
 #app {
   font-family: Roboto, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background: #2E8B57;
   width: 400px;
   max-width: 100%;
   margin: 0 auto;

@@ -2,6 +2,7 @@ import MainPage from "@/pages/MainPage";
 import KvnEvent from "@/pages/kvn/KvnEvent";
 import AuthPage from "@/pages/auth/AuthPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
+import KvnGame from "@/pages/kvn/KvnGame";
 
 const routes = [
     {
@@ -17,6 +18,10 @@ const routes = [
         meta: {
             requiresAuth: true,
         }
+    },
+    {
+        path: '/kvn/:id',
+        component: KvnGame
     },
     {
         path: '/auth',
