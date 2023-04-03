@@ -1,9 +1,12 @@
 /* eslint-disable */
 import axios from "axios";
+import {baseConfig} from "@/store/config";
 
 export const kvnModule = {
     state: () => ({
-        kvnEventData: {}
+        kvnEventData: {},
+
+        baseUrl: baseConfig.BASE_URL
     }),
     getters: {
         getGames(state){
@@ -22,7 +25,7 @@ export const kvnModule = {
     actions: {
         async fetchAnswer({state, commit}) {
             try {
-                const response = await axios.get('http://prog.work/mys_ajax/kvnevents/',{})
+                const response = await axios.get(state.baseUrl+'kvn/',{})
                 commit('setEventData', response.data)
                 console.log(response.data)
             }  catch (e) {

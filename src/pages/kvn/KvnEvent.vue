@@ -38,6 +38,7 @@ export default {
   },
   mounted() {
     this.fetchAnswer()
+    console.log('window.location.href', window.location.href.includes('localhost'))
   },
   computed: {
     ...mapState({
