@@ -20,40 +20,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>«Ровеньки»</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>«Без вариантов»</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>«Не кипишуй»</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>«Без баб»</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>Атомная сборная</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
+            <tr v-for="(team, key) in info.teams" :key="key">
+              <td>{{team.name}}</td>
+              <td>{{team.stage1}}</td>
+              <td>{{team.stage2}}</td>
+              <td>{{team.stage3}}</td>
+              <td>{{team.result}}</td>
             </tr>
             </tbody>
           </table>
