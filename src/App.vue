@@ -15,7 +15,18 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@blue: rgb(61,123,250);
+@red: rgb(255,92,92);
+@green: rgb(57,218,138);
+@orange: rgb(253,172,65);
+@yellow: rgb(254,221,73);
+
+@pearl: rgb(116,224,230);
+@purple: rgb(172,92,217);
+
+@dark: rgb(85,88,112);
+@ligth: rgb(242,242,244);
 
 @font-face {
   font-family: 'Roboto';
@@ -45,12 +56,21 @@ export default {
   font-style: normal;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #app {
   font-family: Roboto, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background: #2E8B57;
+  width: 400px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 </style>

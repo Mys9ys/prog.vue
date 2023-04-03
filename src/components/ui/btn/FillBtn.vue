@@ -25,6 +25,7 @@ export default {
     background: #43BAC0;
     background: rgba(35,35,50);
     background: #2B2B40;
+    background: #151521;
     border-radius: 20px;
 
     font-weight: 500;

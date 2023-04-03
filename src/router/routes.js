@@ -1,5 +1,7 @@
 import MainPage from "@/pages/MainPage";
 import KvnEvent from "@/pages/kvn/KvnEvent";
+import AuthPage from "@/pages/auth/AuthPage";
+import RegisterPage from "@/pages/auth/RegisterPage";
 
 const routes = [
     {
@@ -15,6 +17,14 @@ const routes = [
         meta: {
             requiresAuth: true,
         }
+    },
+    {
+        path: '/auth',
+        component: AuthPage,
+    },
+    {
+        path: '/register',
+        component: RegisterPage,
     },
 ]
 

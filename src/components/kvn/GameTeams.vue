@@ -123,6 +123,11 @@ export default {
       display: none;
       padding: 3px 0;
     }
+    tr{
+      th:first-child, td:first-child{
+        text-align: left;
+      }
+    }
   }
 
   .accordion-body {

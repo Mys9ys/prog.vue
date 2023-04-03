@@ -54,6 +54,10 @@ export default {
 
 <style lang="less" scoped>
 @blockBG: #253133;
+.wrapper{
+  width: 400px;
+  max-width: 100%;
+}
 .game{
   width: 100%;
   background: @blockBG;
