@@ -1,7 +1,26 @@
 <template>
-  <div class="wrapper">
-    <div class="header">
-
+  <div class="kvn_wrapper">
+    <div class="kvn_header">
+      <span>Test</span>
+      <span>Test</span>
+    </div>
+    <div class="games">
+      <div class="game" v-for="(game, index) in getGames" :key="index">
+        <GameTitle :title="game.title"></GameTitle>
+        <GameTeams :info="game"></GameTeams>
+        <GameBtns :number="game.title.number"></GameBtns>
+      </div>
+    </div>
+    <div class="kvn_header">
+      <span>Test</span>
+      <span>Test2</span>
+    </div>
+    <div class="games">
+      <div class="game" v-for="(game, index) in getGames" :key="index">
+        <GameTitle :title="game.title"></GameTitle>
+        <GameTeams :info="game"></GameTeams>
+        <GameBtns :number="game.title.number"></GameBtns>
+      </div>
     </div>
     <div class="games">
       <div class="game" v-for="(game, index) in getGames" :key="index">
@@ -54,9 +73,32 @@ export default {
 
 <style lang="less" scoped>
 @blockBG: #253133;
-.wrapper{
+.kvn_wrapper{
+  position: relative;
   width: 400px;
   max-width: 100%;
+  background: rgb(97, 154, 56);
+
+
+  //background: rgb(57,218,138);
+  .kvn_header{
+    background: rgb(97, 154, 56);
+    padding: 5px 8px;
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    position: sticky;
+    top:0;
+    z-index: 10;
+    span{
+      background: rgba(18,18,18,.25);
+      border-radius: 2px;
+      padding: 3px;
+      color: #fff;
+      font-size: 11px;
+      //box-shadow: 0 3px 7px 0 rgb(217 221 227 / 40%);
+    }
+  }
 }
 .game{
   width: 100%;

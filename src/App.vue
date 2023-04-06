@@ -28,6 +28,20 @@ export default {
 @dark: rgb(85,88,112);
 @ligth: rgb(242,242,244);
 
+@backGrey: rgba(18,18,18,.25);
+
+@hockei: rgb(121, 153, 168);
+@football: rgb(97, 154, 56);
+@cubersport: rgb(117, 80, 118);
+@basketball: rgb(200, 89, 35);
+@valleyball:rgb(178, 124, 60);
+@tennis: rgb(234, 142, 5);
+@kvn: rgb(96, 118, 158);
+
+@billiard: rgb(77, 143, 147);
+@boks: rgb(188, 97, 97);
+@kerling: rgb(96, 118, 158);
+
 @font-face {
   font-family: 'Roboto';
   src: url('@/font/Roboto-Bold.ttf') format('truetype');
