@@ -17,16 +17,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@blockBG: #253133;
-@colorText: #fff;
-@colorText2: #228B22;
-@qatar: #8a1538;
-@nowrite: rgb(13, 202, 240);
-@yeswrite: #146c43;
-@color: rgb(240, 240, 240);
-@colorBlur: #A6B2AA;
+@import "src/assets/css/variables.less";
 
-@darkbg: rgb(25, 25, 25);
 .btns {
   display: flex;
   flex-direction: row;
@@ -41,16 +33,16 @@ export default {
     font-size: 11px;
 
     &.no_write {
-      color: @nowrite;
+      color: @NoWrite;
     }
 
     &.yes_write {
-      color: @yeswrite;
+      color: @YesWrite;
     }
   }
 
   .kgb_write_btn {
-    background: @colorText2;
+    background: @YesWrite;
     color: @colorText;
     cursor: pointer;
     box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
@@ -64,16 +56,16 @@ export default {
 
     &:hover {
       background: @colorText;
-      color: @colorText2;
+      color: @YesWrite;
     }
   }
 
   .kgb_watch {
-    background: @nowrite;
+    background: @NoWrite;
 
     &:hover {
       background: @colorText;
-      color: @nowrite;
+      color: @NoWrite;
     }
   }
 }

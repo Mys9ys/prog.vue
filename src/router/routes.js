@@ -1,8 +1,7 @@
 import MainPage from "@/pages/MainPage";
-import KvnEvent from "@/pages/kvn/KvnEvent";
 import AuthPage from "@/pages/auth/AuthPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
-import KvnGame from "@/pages/kvn/KvnGame";
+import {kvnEvent, kvnGame} from "@/pages/kvn/routes";
 
 const routes = [
     {
@@ -13,17 +12,6 @@ const routes = [
         }
     },
     {
-        path: '/kvn/',
-        component: KvnEvent,
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: '/kvn/:id',
-        component: KvnGame
-    },
-    {
         path: '/auth',
         component: AuthPage,
     },
@@ -31,6 +19,10 @@ const routes = [
         path: '/register',
         component: RegisterPage,
     },
+    // квновские роуты -->
+    kvnEvent,
+    kvnGame
+    // квновские роуты /-->
 ]
 
 export default routes
