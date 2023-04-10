@@ -36,8 +36,8 @@ export default {
   },
   data() {
     return {
-      activeBorder: false,
-      activeInput: false,
+      activeBorder: this.inputInfo.value ? true : false,
+      activeInput: this.inputInfo.value ? true : false,
       inputText: this.inputInfo.value ?? '',
       openPass: false,
       error: this.inputInfo.error ?? ''
