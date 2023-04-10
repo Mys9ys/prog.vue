@@ -28,7 +28,7 @@
           <!--                <a class="header_button" href="/p/match/--><!--" title="Ваши прогнозы"><i class="bi bi-pencil-square"></i></a>-->
           <a class="header_button" href="/p/events/" title="События">2<i class="bi bi-menu-up"></i></a>
           <a class="header_button" href="/p/profile/" title="Ваш профиль">3<i class="bi bi-person-square"></i></a>
-          <a class="header_button" href="/p/logout/" title="Выйти">4<i class="bi bi-door-open"></i></a>
+          <LogoutBtn></LogoutBtn>
         </div>
 
       </div>
@@ -81,15 +81,19 @@
         <li><a class="dropdown-item" href="/p/admin/"><i class="fa fa-address-book" aria-hidden="true"></i> Админка</a></li>
         <li><a class="dropdown-item" href="/p/ratings/"><i class="fa fa-list-ol" aria-hidden="true"></i> Рейтинги</a></li>
         <li><a class="dropdown-item" href="/p/faq/"><i class="bi bi-patch-question"></i> Инструкции</a></li>
-        <li><a class="dropdown-item" href="/p/logout/"><i class="bi bi-door-open"></i> Выйти</a></li>
+        <LogoutBtn></LogoutBtn>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import LogoutBtn from "@/components/ui/btn/LogoutBtn";
+
 export default {
-  name: "HeaderBlock"
+  name: "HeaderBlock",
+  components: {LogoutBtn}
+
 }
 </script>
 
