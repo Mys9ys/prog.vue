@@ -3,32 +3,32 @@
     <div class="h_main_block">
       <div class="hm_left_block">
         <div class="hm_achieve_block">
-          <div class="hm_achieve_box hm_box">
+          <div class="hm_achieve_box hm_box">1
             <i class="bi bi-award"></i>
             <i class="bi bi-award-fill"></i>
           </div>
         </div>
         <div class="hm_btn_block">
-          <div class="header_button header_btn_menu" title="Меню"><i class="fa fa-bars" aria-hidden="true"></i></div>
-          <a class="header_button" href="/" title="Главная"><i class="fa fa-home" aria-hidden="true"></i></a>
-          <a class="header_button" href="/p/matches/" title="Расписание"><i class="bi bi-menu-up"></i></a>
-          <a class="header_button" href="/p/ratings/" title="Рейтинги"><i class="fa fa-list-ol" aria-hidden="true"></i></a>
+          <div class="header_button header_btn_menu" title="Меню">1<i class="fa fa-bars" aria-hidden="true"></i></div>
+          <a class="header_button" href="/" title="Главная">2<i class="fa fa-home" aria-hidden="true"></i></a>
+          <a class="header_button" href="/p/matches/" title="Расписание">3<i class="bi bi-menu-up"></i></a>
+          <a class="header_button" href="/p/ratings/" title="Рейтинги">4<i class="fa fa-list-ol" aria-hidden="true"></i></a>
 
         </div>
       </div>
       <div class="hm_ava_block">
-        <img class="hm_ava_img" src="/local/components/prognos9ys/header.block/templates/.default/assets/img/ava.jpg" alt="">
+        <img class="hm_ava_img" src="@/assets/img/ava_no_img.jpg" alt="">
       </div>
       <div class="hm_right_block">
         <div class="hm_nick_box hm_box">
           Mys9ysilii            </div>
 
         <div class="hm_btn_block hm_right">
-          <a class="header_button" href="/p/faq/" title="Инструкции"><i class="bi bi-patch-question"></i></a>
+          <a class="header_button" href="/p/faq/" title="Инструкции">1<i class="bi bi-patch-question"></i></a>
           <!--                <a class="header_button" href="/p/match/--><!--" title="Ваши прогнозы"><i class="bi bi-pencil-square"></i></a>-->
-          <a class="header_button" href="/p/events/" title="События"><i class="bi bi-menu-up"></i></a>
-          <a class="header_button" href="/p/profile/" title="Ваш профиль"><i class="bi bi-person-square"></i></a>
-          <a class="header_button" href="/p/logout/" title="Выйти"><i class="bi bi-door-open"></i></a>
+          <a class="header_button" href="/p/events/" title="События">2<i class="bi bi-menu-up"></i></a>
+          <a class="header_button" href="/p/profile/" title="Ваш профиль">3<i class="bi bi-person-square"></i></a>
+          <a class="header_button" href="/p/logout/" title="Выйти">4<i class="bi bi-door-open"></i></a>
         </div>
 
       </div>
@@ -98,7 +98,7 @@ export default {
 .header_wrapper {
   margin: 0 auto;
   width: 400px;
-  max-width: 98%;
+  max-width: 100%;
   background: @DarkColorBG;
   color: @colorText2;
   padding: 8px 12px;
@@ -107,6 +107,8 @@ export default {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  border-radius: 0 0 5px 5px ;
 
   .h_header_block {
     display: flex;

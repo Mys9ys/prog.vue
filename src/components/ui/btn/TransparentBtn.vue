@@ -10,7 +10,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+@import "src/assets/css/variables.less";
 .btn{
   width: 100%;
   padding: 15px 0;
@@ -21,7 +22,7 @@ export default {
   background: transparent;
   /* Корп цвет */
 
-  border: 2px solid #fff;
+  border: 2px solid @colorText;
   border-radius: 20px;
 
   font-weight: 500;
@@ -29,10 +30,13 @@ export default {
   line-height: 22px;
   /* or 138% */
 
-  letter-spacing: -0.408px;
-
   /* Черный */
 
-  color: #fff;
+  color: @colorText;
+
+  &:hover{
+    background: @colorText;
+    color: @YesWrite;
+  }
 }
 </style>

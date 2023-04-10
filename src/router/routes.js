@@ -7,9 +7,6 @@ const routes = [
     {
         path: '/',
         component: MainPage,
-        meta: {
-            requiresAuth: true,
-        }
     },
     {
         path: '/auth',
