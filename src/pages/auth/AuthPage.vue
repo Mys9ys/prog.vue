@@ -2,10 +2,6 @@
   <div class="wrapper">
     <PageHeader class="header">Авторизация</PageHeader>
 
-    <div class="logo">
-      <img class="logo_img" :src="$store.state.logo" alt="">
-    </div>
-
     <form action="" @click="formSubmit" class="form">
       <AuthInput
           v-for="(el, index) in inputs"
@@ -134,24 +130,19 @@ export default {
 @import "src/assets/css/variables.less";
 .wrapper {
   position: relative;
-  top: -65px;
   background: transparent;
   width: 100%;
   margin: 0 auto;
   height: 100vh;
   text-align: center;
   padding: 0 24px;
-  padding-top: 35px;
-
-  .logo {
-    margin-top: 149px;
-  }
+  padding-top: 95px;
 
   .form {
     display: flex;
-    margin-top: 52px;
+    margin-top: 55px;
     flex-direction: column;
-    gap: 32px;
+    gap: 24px;
   }
 
   .btn_send_block {

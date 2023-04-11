@@ -11,7 +11,7 @@
         <div class="hm_btn_block">
           <div class="header_button header_btn_menu" title="Меню">1<i class="fa fa-bars" aria-hidden="true"></i></div>
           <a class="header_button" href="/" title="Главная">2<i class="fa fa-home" aria-hidden="true"></i></a>
-          <a class="header_button" href="/p/matches/" title="Расписание">3<i class="bi bi-menu-up"></i></a>
+          <BtnMini @click="$router.push('/catalog')" :img="btns.get('catalog')"></BtnMini>
           <a class="header_button" href="/p/ratings/" title="Рейтинги">4<i class="fa fa-list-ol" aria-hidden="true"></i></a>
 
         </div>
@@ -21,14 +21,16 @@
       </div>
       <div class="hm_right_block">
         <div class="hm_nick_box hm_box">
-          Mys9ysilii            </div>
+          Mys9ysilii
+        </div>
 
         <div class="hm_btn_block hm_right">
           <a class="header_button" href="/p/faq/" title="Инструкции">1<i class="bi bi-patch-question"></i></a>
-          <!--                <a class="header_button" href="/p/match/--><!--" title="Ваши прогнозы"><i class="bi bi-pencil-square"></i></a>-->
+          <!--                <a class="header_button" href="/p/match/-->
+          <!--" title="Ваши прогнозы"><i class="bi bi-pencil-square"></i></a>-->
           <a class="header_button" href="/p/events/" title="События">2<i class="bi bi-menu-up"></i></a>
           <a class="header_button" href="/p/profile/" title="Ваш профиль">3<i class="bi bi-person-square"></i></a>
-          <LogoutBtn></LogoutBtn>
+          <BtnMini @click="logoutProfile()" :img="btns.get('logout')"></BtnMini>
         </div>
 
       </div>
@@ -37,12 +39,17 @@
       <!--        <ul class="dropdown-menu">-->
       <!--            <li><a class="dropdown-item" href="/p/faq/"><i class="bi bi-patch-question"></i> Инструкции</a></li>-->
       <!--            <li><a class="dropdown-item" href="/p/matches/"><i class="bi bi-menu-up"></i> Матчи</a></li>-->
-      <!--            --><!--                <li><a class="dropdown-item" href="/p/admin/"><i class="fa fa-address-book" aria-hidden="true"></i> Админка</a></li>-->
-      <!--            --><!--            --><!--            <li><a class="dropdown-item" href="/p/match/"><i class="bi bi-pencil-square"></i> Мои прогнозы</a></li>-->
+      <!--            -->
+      <!--                <li><a class="dropdown-item" href="/p/admin/"><i class="fa fa-address-book" aria-hidden="true"></i> Админка</a></li>-->
+      <!--            --><!--            -->
+      <!--            <li><a class="dropdown-item" href="/p/match/"><i class="bi bi-pencil-square"></i> Мои прогнозы</a></li>-->
       <!--            <li><a class="dropdown-item" href="/p/profile/"><i class="bi bi-person-square"></i> Мой профиль</a></li>-->
-      <!--            --><!--                <li><a class="dropdown-item" href="/auth/"><i class="fa fa-sign-in" aria-hidden="true"></i> Регистрация</a></li>-->
-      <!--            --><!--            <li><a class="dropdown-item" href="/p/ratings/"><i class="fa fa-list-ol" aria-hidden="true"></i> Рейтинги</a></li>-->
-      <!--            --><!--                <li><a class="dropdown-item" href="/p/logout/"><i class="bi bi-door-open"></i> Выйти</a></li>-->
+      <!--            -->
+      <!--                <li><a class="dropdown-item" href="/auth/"><i class="fa fa-sign-in" aria-hidden="true"></i> Регистрация</a></li>-->
+      <!--            -->
+      <!--            <li><a class="dropdown-item" href="/p/ratings/"><i class="fa fa-list-ol" aria-hidden="true"></i> Рейтинги</a></li>-->
+      <!--            -->
+      <!--                <li><a class="dropdown-item" href="/p/logout/"><i class="bi bi-door-open"></i> Выйти</a></li>-->
       <!--            --><!--        </ul>-->
       <ul class="dropdown-menu">
         <!--                <li><a class="dropdown-item" href="/p/match/"><i class="bi bi-pencil-square"></i> Мои прогнозы</a></li>-->
@@ -52,17 +59,23 @@
           </div>
         </li>
         <div class="menu_events_box sub_prognos">
-          <li><hr class="dropdown-divider"></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
           <ul class="">
             <li><a class="dropdown-item" href="/p/matches/">Футбол</a></li>
             <li><a class="dropdown-item" href="/p/f1race/">Формула 1</a></li>
             <li><a class="dropdown-item" href="/p/kvngame/">КВН</a></li>
           </ul>
-          <li><hr class="dropdown-divider"></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
         </div>
         <li><a class="dropdown-item" href="/p/profile/"><i class="bi bi-person-square"></i> Профиль</a></li>
         <li><a class="dropdown-item" href="/p/events/"><i class="bi bi-menu-up"></i> События</a></li>
-        <li><hr class="dropdown-divider"></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
 
         <!--            <li>-->
         <!--                <div class="dropdown-item menu_events_btn" data-submenu="sub_events">-->
@@ -78,41 +91,59 @@
         <!--                </ul>-->
         <!--            <li><hr class="dropdown-divider"></li>-->
         <!--            </div>-->
-        <li><a class="dropdown-item" href="/p/admin/"><i class="fa fa-address-book" aria-hidden="true"></i> Админка</a></li>
-        <li><a class="dropdown-item" href="/p/ratings/"><i class="fa fa-list-ol" aria-hidden="true"></i> Рейтинги</a></li>
+        <li><a class="dropdown-item" href="/p/admin/"><i class="fa fa-address-book" aria-hidden="true"></i> Админка</a>
+        </li>
+        <li><a class="dropdown-item" href="/p/ratings/"><i class="fa fa-list-ol" aria-hidden="true"></i> Рейтинги</a>
+        </li>
         <li><a class="dropdown-item" href="/p/faq/"><i class="bi bi-patch-question"></i> Инструкции</a></li>
-        <LogoutBtn></LogoutBtn>
+
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import LogoutBtn from "@/components/ui/btn/LogoutBtn";
+import BtnMini from "@/components/ui/btn/BtnMini";
 
 export default {
   name: "HeaderBlock",
-  components: {LogoutBtn}
+  components: {BtnMini},
+  data() {
+    return {
+      btns : new Map([
+        ['logout' ,  require('@/assets/icon/profile/exit.svg')],
+        ['catalog' ,  require('@/assets/icon/profile/list.svg')]
+      ]),
+    }
+  },
 
+  methods: {
+    logoutProfile() {
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
+
 .header_wrapper {
+  position: absolute;
   margin: 0 auto;
-  width: 400px;
-  max-width: 100%;
+  max-width: 400px;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   background: @DarkColorBG;
   color: @colorText2;
   padding: 8px 12px;
-  margin-bottom: 55px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
 
-  border-radius: 0 0 5px 5px ;
+  border-radius: 0 0 5px 5px;
 
   .h_header_block {
     display: flex;
@@ -163,12 +194,13 @@ export default {
 
     .hm_btn_block {
       width: 128px;
-      .header_button{
+
+      .header_button {
         display: inline-block;
         background: @colorText2;
         color: @colorText;
         cursor: pointer;
-        box-shadow: 0 2px 3px rgba(0,0,0,.4), 0 -1px 0 rgba(0,0,0,.2);
+        box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
         padding: 3px;
         border-radius: 3px;
         min-width: 22px;
@@ -199,30 +231,36 @@ export default {
     }
   }
 }
-.hm_right{
+
+.hm_right {
   text-align: right;
 }
 
-.header_menu_icon{
+.header_menu_icon {
   width: 16px;
   height: 16px;
 }
-.menu_events_btn{
+
+.menu_events_btn {
   cursor: pointer;
   position: relative;
-  .bi-caret{
+
+  .bi-caret {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     right: 16px;
   }
 }
-.menu_events_box{
+
+.menu_events_box {
   display: none;
-  ul{
+
+  ul {
     margin-left: 0;
     padding-left: 0;
-    li{
+
+    li {
       list-style-type: none;
     }
   }

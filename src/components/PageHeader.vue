@@ -4,7 +4,7 @@
       <div class="block_title">
         <slot></slot>
       </div>
-      <div class="btn_prev" @click="$router.go(-1)">Отмена</div>
+      <div class="btn_prev" @click="$router.go(-1)">Назад</div>
     </div>
   </div>
 </template>

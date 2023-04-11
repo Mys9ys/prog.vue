@@ -33,17 +33,19 @@ export default {
 .wrapper {
 
   position: relative;
-  width: 400px;
-  max-width: 100%;
+  max-width: 400px;
+  width: 100%;
   margin: 0 auto;
   height: 100vh;
   text-align: center;
   padding: 20px;
+  padding-top: 95px;
   .title_wrapper{
     background: @DarkColorBG;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 35px;
+    margin-top: 55px;
     .title_block {
       color: @colorText;
       border-radius: 7px;
