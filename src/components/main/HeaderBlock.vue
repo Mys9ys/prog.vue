@@ -16,12 +16,21 @@
 
         </div>
       </div>
-      <div class="hm_ava_block">
-        <img class="hm_ava_img" src="@/assets/img/ava_no_img.jpg" alt="">
-      </div>
+      <AvaComponent v-if="$router.currentRoute.value.path === '/register'" class="hm_ava_block"
+                    :pageType="'reg'"
+                    :img="$store.state.reg.avaLink"
+      ></AvaComponent>
+
+      <AvaComponent v-else class="hm_ava_block"
+                    :img="$store.state.auth.userInfo.ava"
+      ></AvaComponent>
+      <!--      <div class="hm_ava_block">-->
+      <!--        <img class="hm_ava_img" src="@/assets/img/ava_no_img.jpg" alt="">-->
+      <!--      </div>-->
       <div class="hm_right_block">
         <div class="hm_nick_box hm_box">
-          Mys9ysilii
+          <span v-if="$store.state.auth.userInfo.NAME">{{ $store.state.auth.userInfo.NAME }}</span>
+          <span v-else>Гость</span>
         </div>
 
         <div class="hm_btn_block hm_right">
@@ -30,7 +39,7 @@
           <!--" title="Ваши прогнозы"><i class="bi bi-pencil-square"></i></a>-->
           <a class="header_button" href="/p/events/" title="События">2<i class="bi bi-menu-up"></i></a>
           <a class="header_button" href="/p/profile/" title="Ваш профиль">3<i class="bi bi-person-square"></i></a>
-          <BtnMini @click="logoutProfile()" :img="btns.get('logout')"></BtnMini>
+          <BtnMini @click="logoutProfile" :img="btns.get('logout')"></BtnMini>
         </div>
 
       </div>
@@ -100,28 +109,69 @@
       </ul>
     </div>
   </div>
+  <div class="nick">
+    {{ $store.state.auth.userInfo.NAME }}
+  </div>
+  <div class="alter_btns">
+    <BtnMini @click="$router.push('/catalog')" :img="btns.get('catalog')"></BtnMini>
+    <BtnMini @click="$router.push('/football')" :img="btns.get('football')"></BtnMini>
+    <BtnMini @click="logoutProfile" :img="btns.get('logout')"></BtnMini>
+  </div>
 </template>
 
 <script>
 import BtnMini from "@/components/ui/btn/BtnMini";
+import {mapActions, mapState} from "vuex";
+import AvaComponent from "@/components/main/AvaComponent";
 
 export default {
   name: "HeaderBlock",
-  components: {BtnMini},
+  components: {BtnMini, AvaComponent},
   data() {
     return {
-      btns : new Map([
-        ['logout' ,  require('@/assets/icon/profile/exit.svg')],
-        ['catalog' ,  require('@/assets/icon/profile/list.svg')]
+      btns: new Map([
+        ['logout', require('@/assets/icon/profile/exit.svg')],
+        ['catalog', require('@/assets/icon/profile/list.svg')],
+        ['football', require('@/assets/icon/events/ball.svg')],
       ]),
     }
   },
 
+  computed: {
+    ...mapState({
+      token: state => state.auth.authData.token,
+    })
+  },
+  mounted() {
+    //
+    this.$nextTick(function () {
+      if (this.token) {
+        // проверка токена на актуальность
+        console.log('token yes')
+        this.checkAuth()
+      } else {
+        console.log('token no')
+        this.$router.push('/')
+      }
+    })
+  },
+
   methods: {
+    ...mapActions({
+      loginRequest: 'auth/loginRequest',
+      logoutVue: 'auth/logoutVue'
+    }),
+
     logoutProfile() {
+      this.logoutVue()
       this.$router.push('/')
+    },
+
+    async checkAuth() {
+      await this.loginRequest()
+      if (location.pathname === '/mob_app/') this.$router.push('/main')
     }
-  }
+  },
 }
 </script>
 
@@ -144,6 +194,8 @@ export default {
   justify-content: space-between;
 
   border-radius: 0 0 5px 5px;
+
+  display: none;
 
   .h_header_block {
     display: flex;
@@ -213,14 +265,6 @@ export default {
       left: 50%;
       bottom: -55px;
       transform: translateX(-50%);
-      width: 120px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 4px solid @DarkColorBG;
-
-      .hm_ava_img {
-        width: 100%;
-      }
     }
 
     .hm_box {

@@ -27,5 +27,9 @@ export default {
     border-radius: 3px;
     min-width: 22px;
     text-align: center;
+    img{
+      width: 16px;
+      height: 16px;
+    }
   }
 </style>
