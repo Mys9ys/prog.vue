@@ -34,7 +34,7 @@
 import {mapMutations, mapActions, mapState} from 'vuex'
 
 import AuthInput from "@/components/ui/input/AuthInput";
-import PageHeader from "@/components/PageHeader";
+import PageHeader from "@/components/main/PageHeader";
 import FillBtn from "@/components/ui/btn/FillBtn";
 
 export default {

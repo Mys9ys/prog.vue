@@ -71,5 +71,6 @@ body{
   height: 100vh;
   padding: 0 5px;
   background: @BackGreenColor;
+  overflow-y: scroll;
 }
 </style>

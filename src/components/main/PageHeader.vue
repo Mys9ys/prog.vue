@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "src/assets/css/variables.less";
+@import "../../assets/css/variables.less";
   .header_block{
     display: flex;
     flex-direction: row;

@@ -40,7 +40,7 @@
 
 import AuthInput from "@/components/ui/input/AuthInput";
 import {mapActions, mapState} from "vuex";
-import PageHeader from "@/components/PageHeader";
+import PageHeader from "@/components/main/PageHeader";
 import FillBtn from "@/components/ui/btn/FillBtn";
 
 

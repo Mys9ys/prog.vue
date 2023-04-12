@@ -1,14 +1,20 @@
 <template>
-<!--  <span>FB Game{{$router}}</span>-->
+  <div class="match_wrapper">
+    <PageHeader class="header">Матч № {{$route.params.number}}</PageHeader>
+    <span>FB Game event{{$route.params.event}}</span><br>
+    <span>FB Game number{{$route.params.number}}</span>
+  </div>
 
-  <span>FB Game event{{$route.params.event}}</span>
-  <span>FB Game number{{$route.params.number}}</span>
-<!--  <span>FB Game{{$router.event}}</span>-->
 </template>
 
 <script>
+import PageHeader from "@/components/main/PageHeader";
+
 export default {
-  name: "FBMatch"
+  name: "FBMatch",
+  components: {
+    PageHeader
+  }
 }
 </script>
 

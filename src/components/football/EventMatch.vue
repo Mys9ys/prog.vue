@@ -1,27 +1,40 @@
 <template>
   <div class="match_box">
     <div class="left_block">
-      <div class="number"># 17</div>
-      <div class="time">22:00</div>
+      <div class="number"># {{ match.number }}</div>
+      <div class="time">{{ match.time }}</div>
     </div>
+
     <div class="team_block">
-      <div class="team">
-        <div class="flag">ff</div>
-        <div class="name">Манчестер Сити</div>
-        <div class="score">0</div>
-      </div>
-      <div class="team">
-        <div class="flag">ff</div>
-        <div class="name">Бавария</div>
-        <div class="score">0</div>
+      <div class="team" v-for="(team, index) in match.teams"
+           :key="index">
+        <div class="flag">
+          <img :src="urlImg + team.flag" alt="">
+        </div>
+        <div class="name">{{ team.name }}</div>
+        <div class="score" :class="{'score_blur' : match.active === 'Y'}">{{ team.goals }}</div>
       </div>
     </div>
+
     <div class="right_block">
-      <!--      <div class="send_info">не заполнено</div>-->
-      <div class="send_info">заполнено 10.04 12:00</div>
+      <div class="send_info_block" v-if="match.send_info.send_time === ''">
+        <div class="send_info">не заполнено</div>
+      </div>
+      <div class="send_info_block" v-else>
+        <div class="send_info send_info_min">заполнено {{ match.send_info.send_time }}</div>
+        <div class="score_result">{{ match.send_info.score_result }}</div>
+      </div>
+
       <div class="btn_box">
-        <div class="more_btn" @click="moreInfo = !moreInfo"><span :class="{'close' : !moreInfo, 'open' : moreInfo}"> > </span></div>
-        <div class="match_btn" @click="$router.push('/football/1/1')">Заполнить</div>
+        <div class="more_btn" @click="moreInfo = !moreInfo"><span
+            :class="{'close' : !moreInfo, 'open' : moreInfo}"> > </span></div>
+        <div class="match_btn" v-if="match.send_info.send_time === '' && match.active === 'Y'" @click="$router.push(link)">
+          Заполнить
+        </div>
+        <div class="match_btn btn_change" v-if="match.send_info.send_time && match.active === 'Y'"
+             @click="$router.push(link)">Изменить
+        </div>
+        <div class="match_btn btn_last" v-if="match.active === 'N'" @click="$router.push(link)">Посмотреть</div>
       </div>
     </div>
   </div>
@@ -33,9 +46,16 @@
 <script>
 export default {
   name: "EventMatch",
-  data(){
+  props: {
+    match: {
+      type: Object
+    }
+  },
+  data() {
     return {
-      moreInfo: false
+      moreInfo: false,
+      link: '/football/' + this.match.event + '/' + this.match.number,
+      urlImg: 'https://prognos9ys.ru/'
     }
   }
 }
@@ -43,14 +63,14 @@ export default {
 
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
-.shadow_inset{
+
+.shadow_inset {
   box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
   padding: 0 4px;
   border-radius: 3px;
 }
 
-
-.match_box{
+.match_box {
   display: flex;
   flex-direction: row;
   gap: 4px;
@@ -60,21 +80,23 @@ export default {
   border-radius: 5px;
   margin-bottom: 4px;
 
-  .left_block{
+  .left_block {
     display: flex;
     flex-direction: column;
     gap: 4px;
     width: 13%;
     max-width: 51px;
-    .number{
+
+    .number {
       .shadow_inset;
     }
-    .time{
+
+    .time {
       .shadow_inset;
     }
   }
 
-  .team_block{
+  .team_block {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -82,79 +104,116 @@ export default {
     gap: 4px;
     width: 61%;
     max-width: 238px;
-    .team{
+
+    .team {
       display: flex;
       flex-direction: row;
       gap: 4px;
-      .flag{
+
+      .flag {
         width: 13%;
         max-width: 24px;
         .shadow_inset;
+        img{
+          width: 100%;
+        }
       }
-      .name{
+
+      .name {
         text-align: left;
         .shadow_inset;
         width: 80%;
         max-width: 194px;
       }
-      .score{
+
+      .score {
         .shadow_inset;
         width: 13%;
         max-width: 24px;
+        &.score_blur{
+          color: @colorBlur;
+        }
       }
     }
   }
 
-  .right_block{
+  .right_block {
     display: flex;
     flex-direction: column;
     gap: 4px;
     width: 25%;
     max-width: 99px;
 
-    .send_info{
+    .send_info_block {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 24px;
-      line-height: 10px;
-      .shadow_inset;
-      font-size: 10px;
-      color: @NoWrite;
+      flex-direction: row;
+      gap: 4px;
+
+      .send_info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 24px;
+        line-height: 10px;
+        .shadow_inset;
+        font-size: 10px;
+        color: @boks;
+      }
+
+      .send_info_min {
+        width: 76%;
+        max-width: 75px;
+        color: @NoWrite;
+      }
+
+      .score_result {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .shadow_inset;
+        width: 24px;
+        font-size: 10px;
+        color: @maxGreen;
+      }
     }
 
-    .btn_box{
+    .btn_box {
       display: flex;
       flex-direction: row;
       justify-content: center;
       height: 24px;
       gap: 4px;
 
-      .more_btn{
+      .more_btn {
         display: flex;
         flex-direction: column;
         justify-content: center;
         max-width: 24px;
         height: 24px;
         width: 24%;
-        background: @dark;
+        background: @valleyball;
         padding: 2px 2px;
         border-radius: 3px;
         cursor: pointer;
         box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
-        .close{
+
+        .close {
           transform: rotate(90deg);
         }
-        .open{
+
+        .open {
           transform: rotate(-90deg);
         }
-        &:hover{
+
+        &:hover {
           background: @colorText;
-          color: @dark;
-          border: 1px solid @dark;
+          color: @valleyball;
+          border: 1px solid @valleyball;
         }
       }
-      .match_btn{
+
+      .match_btn {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -171,16 +230,35 @@ export default {
         width: 76%;
         max-width: 75px;
 
-        &:hover{
+        &:hover {
           background: @colorText;
           color: @colorText2;
           border: 1px solid @colorText2;
         }
       }
+
+      .btn_last {
+        background: @maxdarkgrey;
+        color: @darkbg;
+
+        &:hover {
+          color: @darkbg;
+          border: 1px solid @darkbg;
+        }
+      }
+
+      .btn_change {
+        background: @NoWrite;
+        &:hover {
+          color: @NoWrite;
+          border: 1px solid @NoWrite;
+        }
+      }
     }
   }
 }
-.more_info{
+
+.more_info {
   width: 100%;
   background: @DarkColorBG;
 }
