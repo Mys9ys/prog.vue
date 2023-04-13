@@ -53,7 +53,7 @@ export default {
           title: 'E-mail',
           l_icon: '',
           vmod: 'mail',
-          value: 'kdkdil@yandex.ru',
+          value: '',
           error: null,
         },
         {
@@ -61,7 +61,7 @@ export default {
           title: 'Пароль',
           l_icon: require('@/assets/icon/form/eye.svg'),
           vmod: 'pass',
-          value: '32tameda',
+          value: '',
           error: null,
         },
       ],
