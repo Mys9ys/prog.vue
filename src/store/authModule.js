@@ -73,7 +73,7 @@ export const authModule = {
             console.log('axios data', state.loginData)
 
             try {
-                const response = await axios.post(state.baseUrl + 'auth/', state.loginData,
+                const response = await axios.post(baseConfig.BASE_URL + 'auth/', state.loginData,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'

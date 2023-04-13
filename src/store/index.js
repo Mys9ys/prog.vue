@@ -5,6 +5,9 @@ import {regModule} from "@/store/regModule";
 import {footballModule} from "@/store/footballModule";
 
 export default createStore({
+    state: {
+        loading: true,
+    },
     modules: {
         kvn: kvnModule,
         auth: authModule,

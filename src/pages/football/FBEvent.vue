@@ -1,5 +1,6 @@
 <template>
-  <div class="event_wrapper">
+  <PreLoader v-if="this.matchLoading"></PreLoader>
+  <div v-else class="event_wrapper">
     <PageHeader class="header">Соревнование</PageHeader>
     <div v-if="arMatches.past">
       <div class="past_title_wrapper">
@@ -128,12 +129,14 @@
 import EventMatch from "@/components/football/EventMatch";
 import PageHeader from "@/components/main/PageHeader";
 import {mapActions, mapState} from "vuex";
+import PreLoader from "@/components/main/PreLoader";
 
 export default {
   name: "FBEvent",
   components: {
     EventMatch,
-    PageHeader
+    PageHeader,
+    PreLoader
   },
   data() {
     return {
@@ -163,6 +166,7 @@ export default {
       queryEvent: state => state.football.queryEvent,
       token: state => state.auth.authData.token,
       arMatches: state => state.football.matches,
+      matchLoading: state => state.football.matchLoading,
     })
   },
 }

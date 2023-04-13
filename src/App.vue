@@ -1,17 +1,25 @@
 <template>
-  <HeaderBlock></HeaderBlock>
-  <router-view></router-view>
+<!--  <PreLoader v-if="$store.state.football.matchLoading"></PreLoader>-->
+<!--  <div v-else>-->
+    <HeaderBlock></HeaderBlock>
+    <router-view></router-view>
+<!--  </div>-->
 </template>
 
 <script>
 
 import HeaderBlock from "@/components/main/HeaderBlock";
+// import PreLoader from "@/components/main/PreLoader";
+
 
 export default {
   name: 'App',
   components: {
-    HeaderBlock
-  }
+    HeaderBlock,
+    // PreLoader
+  },
+
+
 }
 </script>
 

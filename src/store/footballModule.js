@@ -18,7 +18,9 @@ export const footballModule = {
             eventId:'',
             userToken: '',
             number: ''
-        }
+        },
+
+        matchLoading: true,
 
     }),
 
@@ -31,6 +33,11 @@ export const footballModule = {
         setMatchData(state, data) {
             state.match = data
         },
+
+        setMatchLoading(state){
+            console.log('setMatchLoading')
+            state.matchLoading = false
+        }
     },
     actions: {
 
@@ -48,6 +55,7 @@ export const footballModule = {
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
                     commit('setMatchesData', response.data.matches)
+                    commit('setMatchLoading')
                 }
                 if (response.data.status == 'error') {
                     commit('setError', response.data.mes)
@@ -72,6 +80,7 @@ export const footballModule = {
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
                     commit('setMatchData', response.data.match)
+                    commit('setMatchLoading')
                 }
                 if (response.data.status == 'error') {
                     commit('setError', response.data.mes)
