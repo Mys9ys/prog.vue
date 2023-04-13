@@ -153,11 +153,15 @@ export default {
     }),
 
     async fillMatchesElem() {
+      this.queryEvent.eventId = this.$route.params.event
+      this.queryEvent.userToken = this.token
       await this.getEventMatches()
     }
   },
   computed: {
     ...mapState({
+      queryEvent: state => state.football.queryEvent,
+      token: state => state.auth.authData.token,
       arMatches: state => state.football.matches,
     })
   },

@@ -114,8 +114,15 @@ export default {
         width: 13%;
         max-width: 24px;
         .shadow_inset;
+        padding: 3px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
         img{
-          width: 100%;
+          width: 98%;
+          max-width: 20px;
+          border-radius: 3px;
         }
       }
 
