@@ -9,26 +9,28 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 
 use Bitrix\Main\Loader;
 
-$token = 'cae9-191b-aa1d-f416-3998-8bc0-8278-ee90';
+file_put_contents('../../_logs/debug_new.json', json_encode($_REQUEST), FILE_APPEND);
+file_put_contents('../../_logs/request.log', json_encode($_REQUEST) . PHP_EOL, FILE_APPEND);
+
+//$token = 'cae9-191b-aa1d-f416-3998-8bc0-8278-ee90';
 //$event = 6664;
-$event = 34;
+////$event = 34;
+//
+//$arData = [
+//    'token' => $token,
+//    'event' => $event
+//];
 
-$arData = [
-    'token' => $token,
-    'event' => $event
-];
-
-$res = new FootballHandlerClass($arData);
+$res = new FootballHandlerClass($_REQUEST);
 
 echo json_encode($res->result());
 
 class FootballHandlerClass
 {
 
-    protected $matchesIb;
     protected $eventsIb;
+    protected $matchesIb;
     protected $groupIb;
-    protected $teamsIb;
     protected $prognIb;
     protected $resultIb;
 
@@ -58,21 +60,22 @@ class FootballHandlerClass
         $this->eventsIb = \CIBlock::GetList([], ['CODE' => 'events'], false)->Fetch()['ID'] ?: 1;
         $this->matchesIb = \CIBlock::GetList([], ['CODE' => 'matches'], false)->Fetch()['ID'] ?: 2; // установочные данные матча
         $this->groupIb = \CIBlock::GetList([], ['CODE' => 'group'], false)->Fetch()['ID'] ?: 5;
-        $this->teamsIb = \CIBlock::GetList([], ['CODE' => 'countries'], false)->Fetch()['ID'] ?: 3; //команды/страны
+
         $this->prognIb = \CIBlock::GetList([], ['CODE' => 'prognosis'], false)->Fetch()['ID'] ?: 6; //прогнозы
         $this->resultIb = \CIBlock::GetList([], ['CODE' => 'result'], false)->Fetch()['ID'] ?: 7; //результаты футбол
 
-        if ($data['event']) $this->eventId = $data['event'];
+        if ($data['eventId']) $this->eventId = $data['eventId'];
 
-        if ($data['token']) {
-            $userRes = new GetUserIdForToken($data['token']);
+        if ($data['userToken']) {
+            $userRes = new GetUserIdForToken($data['userToken']);
             $this->userId = $userRes->getId();
         }
 
         $this->getUserPrognos();
         $this->getUserResult();
 
-        $this->getTeamInfo();
+        $team = new GetFootballTeams();
+        $this->arTeams = $team->result();
 
         $this->getMatchOfData();
 
@@ -103,6 +106,7 @@ class FootballHandlerClass
                 "PROPERTY_group",
                 "PROPERTY_stage",
                 "PROPERTY_number",
+                "PROPERTY_events",
             ]
         );
 
@@ -117,6 +121,7 @@ class FootballHandlerClass
 
             $el["active"] = $res["ACTIVE"];
             $el["number"] = $res["PROPERTY_NUMBER_VALUE"];
+            $el["event"] = $this->eventId;
 
             $el["teams"]["home"] = $this->getTeamData($this->arTeams[$res["PROPERTY_HOME_VALUE"]], $res["PROPERTY_GOAL_HOME_VALUE"]);
             $el["teams"]["guest"] = $this->getTeamData($this->arTeams[$res["PROPERTY_GUEST_VALUE"]], $res["PROPERTY_GOAL_GUEST_VALUE"]);
@@ -141,21 +146,33 @@ class FootballHandlerClass
             $intervalDay = $interval->format('%R%a');
 
             if ($intervalDay > 0 && $intervalDay < 2) {
-                $this->arResult['matches']['recent'][$el["date"]][$el["number"]] = $el;
+                $this->arResult['res']['recent']['matches'][$el["date"]][$el["number"]] = $el;
+                $this->arResult['res']['recent']['count'] += 1;
+                $this->arResult['res']['recent']['title'] = 'Недавние';
+                $this->arResult['res']['recent']['visible'] = true;
                 continue;
             }
 
             if ($intervalDay > 1) {
-                $this->arResult['matches']['past'][$el["date"]][$el["number"]] = $el;
+                $this->arResult['res']['past']['matches'][$el["date"]][$el["number"]] = $el;
+                $this->arResult['res']['past']['count'] += 1;
+                $this->arResult['res']['past']['title'] = 'Прошедшие';
+                $this->arResult['res']['past']['visible'] = false;
                 continue;
             }
 
             if ($intervalDay < 1 && $intervalDay > -2) {
-                $this->arResult['matches']['nearest'][$el["date"]][$el["number"]] = $el;
+                $this->arResult['res']['nearest']['matches'][$el["date"]][$el["number"]] = $el;
+                $this->arResult['res']['nearest']['count'] += 1;
+                $this->arResult['res']['nearest']['title'] = 'Ближайшие';
+                $this->arResult['res']['nearest']['visible'] = true;
                 continue;
             }
             if ($intervalDay < 0) {
-                $this->arResult['matches']['future'][$el["date"]][$el["number"]] = $el;
+                $this->arResult['res']['future']['matches'][$el["date"]][$el["number"]] = $el;
+                $this->arResult['res']['future']['count'] += 1;
+                $this->arResult['res']['future']['title'] = 'Будущие';
+                $this->arResult['res']['future']['visible'] = false;
                 continue;
             }
 
@@ -163,10 +180,16 @@ class FootballHandlerClass
 
     }
 
+    protected function fillSectionArray($arr,$section, $title, $visible){
+
+    }
+
     protected function reverseArrayOldMatches()
     {
-        $this->arResult['matches']['recent'] = array_reverse($this->arResult['matches']['recent'], true);
-        $this->arResult['matches']['past'] = array_reverse($this->arResult['matches']['past'], true);
+        if(count($this->arResult['res']['recent']['matches']))
+            $this->arResult['res']['recent']['matches'] = array_reverse($this->arResult['res']['recent']['matches'], true);
+        if(count($this->arResult['res']['past']['matches']))
+            $this->arResult['res']['past']['matches'] = array_reverse($this->arResult['res']['past']['matches'], true);
     }
 
     protected function getUserPrognos()
@@ -268,25 +291,6 @@ class FootballHandlerClass
 
     }
 
-    protected function getTeamInfo(): void
-    {
-
-        $response = \Bitrix\Iblock\ElementTable::getList(
-            [
-                'select' => ['ID', 'NAME', 'PREVIEW_PICTURE'],
-                'filter' => [
-                    "IBLOCK_ID" => $this->teamsIb,
-                ]
-            ]
-        );
-
-        while ($res = $response->fetch()) {
-            $res["flag"] = CFile::GetPath($res["PREVIEW_PICTURE"]);
-            $this->arTeams[$res["ID"]] = $res;
-        }
-
-    }
-
     protected function getTeamData($data, $goals): array
     {
         return [
@@ -298,6 +302,7 @@ class FootballHandlerClass
 
     public function result()
     {
+        file_put_contents('../../_logs/matches_l.log', $this->userId . PHP_EOL , FILE_APPEND);
         return $this->arResult;
     }
 }
