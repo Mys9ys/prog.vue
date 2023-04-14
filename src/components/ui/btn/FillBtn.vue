@@ -13,6 +13,7 @@ export default {
 <style lang="less" scoped>
 
   .btn{
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;

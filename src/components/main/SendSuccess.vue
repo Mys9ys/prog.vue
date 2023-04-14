@@ -1,0 +1,56 @@
+<template>
+  <div class="wrapper">
+    <div class="logo_block">
+      <div class="logo">
+        <img class="logo_img" src="@/assets/icon/football/ballf.svg">
+      </div>
+      <div class="loader_line">
+        <p>Прогноз успешно отправлен</p>
+      </div>
+    </div>
+
+    <FillBtn class="success_btn" @click="$store.state.football.prognosisSuccess = false">Закрыть</FillBtn>
+
+  </div>
+</template>
+
+<script>
+import FillBtn from "@/components/ui/btn/FillBtn";
+
+export default {
+  name: "SendSuccess",
+  components: {FillBtn},
+}
+</script>
+
+<style lang="less" scoped>
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(97, 154, 56, 0.80);
+  width: 100vw;
+  max-width: 400px;
+  margin: 0 auto;
+  height: 100vh;
+  text-align: center;
+  z-index: 3;
+  padding: 0 20px;
+
+  .logo_block {
+    display: block;
+    margin-top: 46%;
+  }
+
+  .logo {
+    .logo_img {
+      width: 100px;
+    }
+  }
+
+  .success_btn{
+    margin-top: 95px;
+  }
+}
+</style>

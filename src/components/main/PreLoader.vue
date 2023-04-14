@@ -47,8 +47,7 @@ export default {
 
   .logo_block{
     display: block;
-    position: relative;
-    top: 46%;
+    margin-top: 46%;
   }
   .logo{
     .logo_img{
