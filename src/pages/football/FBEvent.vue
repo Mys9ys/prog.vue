@@ -2,141 +2,27 @@
   <PreLoader v-if="this.matchLoading"></PreLoader>
   <div v-else class="event_wrapper">
     <PageHeader class="header">Соревнование</PageHeader>
-    <div v-if="arMatches.past">
-      <div class="past_title_wrapper">
-        <div class="past_title">
-          Прошедшие
-        </div>
-        <div class="more_btn" @click="past = !past">
-          <span :class="{'close' : !past, 'open' : past}"> > </span>
-        </div>
-
-      </div>
-      <div class="past_box match_box" v-if="past">
-        <div class="date_match_block"
-             v-for="(matches, index) in arMatches.past"
-             :key="index"
-        >
-          <div class="date_title_wrapper">
-            <div class="date_title">{{index}}</div>
-          </div>
-
-          <EventMatch
-              v-for="(el, index) in matches"
-              :key="index"
-              :match="el"
-          ></EventMatch>
-          <div class="doted_line"></div>
-        </div>
-
-      </div>
-    </div>
-
-    <div v-if="arMatches.recent">
-      <div class="past_title_wrapper">
-        <div class="past_title">
-          Недавние
-        </div>
-        <div class="more_btn" @click="recent = !recent">
-          <span :class="{'close' : !recent, 'open' : recent}"> > </span>
-        </div>
-
-      </div>
-      <div class="past_box match_box" v-if="recent">
-        <div class="date_match_block"
-             v-for="(matches, index) in arMatches.recent"
-             :key="index"
-        >
-          <div class="date_title_wrapper">
-            <div class="date_title">{{index}}</div>
-          </div>
-
-          <EventMatch
-              v-for="(el, index) in matches"
-              :key="index"
-              :match="el"
-          ></EventMatch>
-          <div class="doted_line"></div>
-        </div>
-
-      </div>
-    </div>
-
-    <div v-if="arMatches.nearest">
-      <div class="past_title_wrapper">
-        <div class="past_title">
-          Ближайшие
-        </div>
-        <div class="more_btn" @click="nearest = !nearest">
-          <span :class="{'close' : !nearest, 'open' : nearest}"> > </span>
-        </div>
-
-      </div>
-      <div class="past_box match_box" v-if="nearest">
-        <div class="date_match_block"
-             v-for="(matches, index) in arMatches.nearest"
-             :key="index"
-        >
-          <div class="date_title_wrapper">
-            <div class="date_title">{{index}}</div>
-          </div>
-
-          <EventMatch
-              v-for="(el, index) in matches"
-              :key="index"
-              :match="el"
-          ></EventMatch>
-          <div class="doted_line"></div>
-        </div>
-
-      </div>
-    </div>
-
-    <div v-if="arMatches.future">
-      <div class="past_title_wrapper">
-        <div class="past_title">
-          Будущие
-        </div>
-        <div class="more_btn" @click="future = !future">
-          <span :class="{'close' : !future, 'open' : future}"> > </span>
-        </div>
-
-      </div>
-      <div class="past_box match_box" v-if="future">
-        <div class="date_match_block"
-             v-for="(matches, index) in arMatches.future"
-             :key="index"
-        >
-          <div class="date_title_wrapper">
-            <div class="date_title">{{index}}</div>
-          </div>
-
-          <EventMatch
-              v-for="(el, index) in matches"
-              :key="index"
-              :match="el"
-          ></EventMatch>
-          <div class="doted_line"></div>
-        </div>
-
-      </div>
-    </div>
-
+    <SectionMatches
+        v-for="(arrSection, index) in arMatches"
+        :arMatches="arrSection"
+        :key=index
+    ></SectionMatches>
   </div>
 </template>
 
 <script>
-import EventMatch from "@/components/football/EventMatch";
+
 import PageHeader from "@/components/main/PageHeader";
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
+import SectionMatches from "@/components/football/SectionMatches";
 
 export default {
   name: "FBEvent",
   components: {
-    EventMatch,
     PageHeader,
-    PreLoader
+    PreLoader,
+    SectionMatches
   },
   data() {
     return {
@@ -144,10 +30,9 @@ export default {
       recent: true, //недавние
       nearest: true, //ближайшие
       future: false, //будущие
-
     }
   },
-  mounted() {
+  created() {
     this.fillMatchesElem()
   },
   methods: {
@@ -181,7 +66,15 @@ export default {
   border-radius: 3px;
 }
 
-.past_title_wrapper{
+.flex_center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.past_title_wrapper {
+  position: relative;
   background: @DarkColorBG;
   color: @colorText;
   padding: 4px;
@@ -192,10 +85,25 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  .past_title{
+
+  .past_title {
     display: inline-block;
     .shadow_inset;
   }
+
+  .title_count {
+    position: absolute;
+    right: 32px;
+    .shadow_inset;
+    .flex_center;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    padding: 0;
+    border: 2px solid @kvn;
+    color: @kvn;
+  }
+
   .more_btn {
     display: flex;
     flex-direction: column;
@@ -209,7 +117,7 @@ export default {
     cursor: pointer;
     box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
 
-    span{
+    span {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -232,13 +140,15 @@ export default {
   }
 }
 
-.match_box{
+.match_box {
   background: @BackGreenColor;
-  .doted_line{
+
+  .doted_line {
     width: 100%;
     border-bottom: 2px dotted @darkbg;
   }
-  .date_title_wrapper{
+
+  .date_title_wrapper {
     width: 20%;
     max-width: 75px;
     background: @DarkColorBG;
@@ -246,12 +156,13 @@ export default {
     padding: 4px;
     border-radius: 5px;
     display: inline-block;
-    .date_title{
+
+    .date_title {
       .shadow_inset;
     }
   }
 
-  .date_match_block{
+  .date_match_block {
     display: flex;
     flex-direction: column;
     gap: 8px;

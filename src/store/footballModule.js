@@ -54,7 +54,7 @@ export const footballModule = {
 
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
-                    commit('setMatchesData', response.data.matches)
+                    commit('setMatchesData', response.data.res)
                     commit('setMatchLoading')
                 }
                 if (response.data.status == 'error') {

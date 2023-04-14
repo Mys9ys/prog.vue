@@ -1,5 +1,5 @@
 <template>
-  <div class="match_box">
+  <div class="match_box" v-if="match">
     <div class="left_block">
       <div class="number"># {{ match.number }}</div>
       <div class="time">{{ match.time }}</div>
