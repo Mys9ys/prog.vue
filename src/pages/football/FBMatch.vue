@@ -160,6 +160,79 @@
 
       </div>
     </div>
+    <div class="match_result_wrapper">
+      <table class="table table-dark table-hover om_table_box">
+        <thead>
+        <tr>
+          <th class="pr_table_col">0-0</th>
+          <th class="pr_table_col">&#127942;</th>
+          <th class="pr_table_col">sum</th>
+          <th class="pr_table_col">+/-</th>
+          <th class="pr_table_col">%</th>
+          <th class="pr_table_col"><i class="bi bi-file-fill" style="color:yellow"></i></th>
+          <th class="pr_table_col"><i class="bi bi-file-fill" style="color:red"></i></th>
+          <th class="pr_table_col"><i class="bi bi-flag"></i></th>
+          <th class="pr_table_col">pen</th>
+          <th class="pr_table_col">+<i class="bi bi-alarm"></i></th>
+          <th class="pr_table_col">+pen</th>
+          <th class="pr_table_col">all</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+
+          <td class="pr_table_col">{{ prognosis.goal_home }} - {{ prognosis.goal_guest }}</td>
+          <td class="pr_table_col">{{ prognosis.result}}</td>
+          <td class="pr_table_col">{{ prognosis.sum}}</td>
+          <td class="pr_table_col">{{ prognosis.diff}}</td>
+          <td class="pr_table_col">{{ prognosis.domination}} - {{100- prognosis.domination}}</td>
+          <td class="pr_table_col">{{ prognosis.yellow}}</td>
+          <td class="pr_table_col">{{ prognosis.red}}</td>
+          <td class="pr_table_col">{{ prognosis.corner}}</td>
+          <td class="pr_table_col">{{ prognosis.penalty}}</td>
+          <td class="pr_table_col">{{ prognosis.otime}}</td>
+          <td class="pr_table_col">{{ prognosis.spenalty}}</td>
+          <td class="pr_table_col"></td>
+
+        </tr>
+
+        <tr>
+
+          <td class="pr_table_col result">{{ matchR.goal_home }} - {{ matchR.goal_guest }}</td>
+          <td class="pr_table_col result">{{ matchR.result}}</td>
+          <td class="pr_table_col result">{{ matchR.sum}}</td>
+          <td class="pr_table_col result">{{ matchR.diff}}</td>
+          <td class="pr_table_col result">{{ matchR.domination}} - {{100- matchR.domination}}</td>
+          <td class="pr_table_col result">{{ matchR.yellow}}</td>
+          <td class="pr_table_col result">{{ matchR.red}}</td>
+          <td class="pr_table_col result">{{ matchR.corner}}</td>
+          <td class="pr_table_col result">{{ matchR.penalty}}</td>
+          <td class="pr_table_col result">{{ matchR.otime}}</td>
+          <td class="pr_table_col result">{{ matchR.spenalty}}</td>
+          <td class="pr_table_col result"></td>
+
+        </tr>
+
+        <tr class="prog_r">
+
+          <td class="pr_table_col" :class="{'green' : progR.score >0}">{{ progR.score }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.result >0}">{{ progR.result}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.sum >0}">{{ progR.sum}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.diff >0}">{{ progR.diff}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.domination >0}">{{ progR.domination}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.yellow >0}">{{ progR.yellow}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.red >0}">{{ progR.red}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.corner >0}">{{ progR.corner}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.penalty >0}">{{ progR.penalty}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.otime >0}">{{ progR.otime}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.spenalty >0}">{{ progR.spenalty}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.all >0}">{{ progR.all}}</td>
+
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
     <div class="btn_select_other_wrapper">
       <div class="prev_btn other_match_btn" @click="$router.push(prevLink).then(() => { this.$router.go() })">
         <img src="@/assets/icon/pagination/left.svg" alt=""><span>Предыдущий</span>
@@ -352,6 +425,9 @@ export default {
       matchLoading: state => state.football.matchLoading,
       prognosisSuccess: state => state.football.prognosisSuccess,
       token: state => state.auth.authData.token,
+      prognosis: state => state.football.match.prognosis,
+      matchR: state => state.football.match.match_result,
+      progR: state => state.football.match.prog_result,
     })
   },
 }
@@ -811,7 +887,7 @@ export default {
   border-radius: 6px;
 }
 
-.btn_select_other_wrapper{
+.btn_select_other_wrapper {
   background: @DarkColorBG;
   color: @colorText;
   display: flex;
@@ -829,7 +905,7 @@ export default {
     .prognosis_btn;
     display: flex;
     flex-direction: row;
-    gap:4px;
+    gap: 4px;
     width: 140px;
     max-width: 40%;
   }
@@ -847,5 +923,27 @@ export default {
   gap: 4px;
 
   margin-top: 4px;
+}
+
+.om_table_box {
+  border-radius: 5px;
+  th, td{
+    padding: 2px;
+    font-size: 11px;
+  }
+
+  .result{
+    color: @NoWrite;
+  }
+
+  .prog_r{
+    td{
+      color: @colorBlur;
+    }
+    .green{
+      color: @YesWrite;
+    }
+  }
+
 }
 </style>
