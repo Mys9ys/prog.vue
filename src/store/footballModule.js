@@ -34,15 +34,14 @@ export const footballModule = {
             state.match = data
         },
 
-        setMatchLoading(state){
-            console.log('setMatchLoading')
-            state.matchLoading = false
+        setMatchLoading(state, data){
+            state.matchLoading = data
         }
     },
     actions: {
 
         async getEventMatchesRequest({state, commit}) {
-
+            commit('setMatchLoading', true)
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'football/matches/', state.queryEvent,
                     {
@@ -55,7 +54,7 @@ export const footballModule = {
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
                     commit('setMatchesData', response.data.res)
-                    commit('setMatchLoading')
+                    commit('setMatchLoading', false)
                 }
                 if (response.data.status == 'error') {
                     commit('setError', response.data.mes)
@@ -68,6 +67,7 @@ export const footballModule = {
 
         async getMatchRequest({state, commit}) {
 
+            commit('setMatchLoading', true)
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'football/match/', state.queryMatch,
                     {
@@ -80,7 +80,7 @@ export const footballModule = {
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
                     commit('setMatchData', response.data.match)
-                    commit('setMatchLoading')
+                    commit('setMatchLoading', false)
                 }
                 if (response.data.status == 'error') {
                     commit('setError', response.data.mes)
