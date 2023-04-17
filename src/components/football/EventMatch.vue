@@ -21,8 +21,8 @@
         <div class="send_info">не заполнено</div>
       </div>
       <div class="send_info_block" v-else>
-        <div class="send_info send_info_min">заполнено {{ match.send_info.send_time }}</div>
-        <div class="score_result">{{ match.send_info.score_result }}</div>
+        <div class="send_info send_fill" :class="{'send_info_min' : match.send_info.score_result}">заполнено {{ match.send_info.send_time }}</div>
+        <div class="score_result" v-if="match.send_info.score_result">{{ match.send_info.score_result }}</div>
       </div>
 
       <div class="btn_box">
@@ -78,7 +78,6 @@ export default {
   color: @colorText;
   padding: 4px;
   border-radius: 5px;
-  margin-bottom: 4px;
 
   .left_block {
     display: flex;
@@ -165,12 +164,14 @@ export default {
         .shadow_inset;
         font-size: 10px;
         color: @boks;
+        &.send_fill{
+          color: @NoWrite;
+        }
       }
 
       .send_info_min {
         width: 76%;
         max-width: 75px;
-        color: @NoWrite;
       }
 
       .score_result {

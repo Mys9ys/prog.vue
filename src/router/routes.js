@@ -6,6 +6,7 @@ import CatalogPage from "@/pages/CatalogPage";
 import FBMatch from "@/pages/football/FBMatch";
 import FBCatalog from "@/pages/football/FBCatalog";
 import FBEvent from "@/pages/football/FBEvent";
+import RatingPage from "@/pages/RatingPage";
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
     {
         path: '/catalog',
         component: CatalogPage,
+    },
+
+    {
+        path: '/ratings',
+        component: RatingPage,
     },
 
     {

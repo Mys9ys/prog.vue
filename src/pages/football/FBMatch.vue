@@ -2,7 +2,7 @@
   <PreLoader v-if="this.matchLoading"></PreLoader>
   <SendSuccess v-if="prognosisSuccess"></SendSuccess>
   <div v-else class="match_wrapper">
-    <PageHeader class="header">Матч № {{ $route.params.number }}</PageHeader>
+    <PageHeader class="header" :path="'/football/' + $route.params.event">Матч № {{ $route.params.number }}</PageHeader>
     <div class="match_title">
       <div class="number title_cell"># {{ arMatch.number }}</div>
       <div class="date title_cell">&#128197; {{ arMatch.date }}</div>
@@ -150,7 +150,7 @@
 
         <div class="btns_block">
 
-          <div class="annotation_btn" @click="annotationVis = !annotationVis">Пояснения
+          <div class="annotation_btn" @click="annotationVis = !annotationVis">Расшифровка
             <span class="annotation_arrow" :class="{'up' : annotationVis === true}">v</span>
           </div>
           <div class="btn_send" @click="sendPrognosis" v-if="!prognosis.result">Отправить</div>
@@ -172,8 +172,8 @@
           <th class="pr_table_col">{{icons[19]}}</th>
           <th class="pr_table_col">{{icons[28]}}</th>
           <th class="pr_table_col">{{icons[32]}}</th>
-          <th class="pr_table_col">{{icons[21]}}</th>
-          <th class="pr_table_col">{{icons[22]}}</th>
+          <th class="pr_table_col yellow_t">{{icons[21]}}</th>
+          <th class="pr_table_col red_t">{{icons[22]}}</th>
           <th class="pr_table_col">{{icons[20]}}</th>
           <th class="pr_table_col">{{icons[23]}}</th>
           <th class="pr_table_col">{{icons[45]}}</th>
@@ -245,7 +245,7 @@
       </div>
       <div class="annotation_elem" v-for="(icon, index) in icons"
         :key="index">
-        <div class="annotation_title">{{icon}}</div>
+        <div class="annotation_title" :class="{'yellow_t' : index == 21, 'red_t' : index == 22}">{{icon}}</div>
         <div class="annotation_description">{{description[index]}}</div>
       </div>
     </div>
@@ -331,10 +331,10 @@ export default {
         28: 'Разница мячей забитые второй командой вычитаются из забитых первой командой',
         19: 'Сумма мячей забитых обеими командами',
         32: 'Процент владения мячом первой и второй командой',
-        21: 'Количество желтых карточек в матче(сумма для обеих команд)',
-        22: 'Количество красных карточек в матче(сумма для обеих команд)',
-        20: 'Количество угловых в матче(сумма для обеих команд)',
-        23: 'Количество пенальти в матче(сумма для обеих команд)',
+        21: 'Количество желтых карточек в матче (сумма для обеих команд)',
+        22: 'Количество красных карточек в матче (сумма для обеих команд)',
+        20: 'Количество угловых в матче (сумма для обеих команд)',
+        23: 'Количество пенальти в матче (сумма для обеих команд)',
         45: 'Дополнительное время (наличие/отсутствие)',
         46: 'Серия пенальти (наличие/отсутствие)',
 
@@ -443,6 +443,8 @@ export default {
     },
 
     async fillMatchElem() {
+      this.matchLoading = true
+
       this.queryMatch.number = this.$route.params.number
       this.queryMatch.eventId = this.$route.params.event
       this.queryMatch.userToken = this.token
@@ -1014,7 +1016,7 @@ export default {
       width: 9%;
       .shadow_inset;
       .flex_center;
-      justify-content: left;
+      font-size: 16px;
     }
 
     .annotation_description{
@@ -1046,5 +1048,13 @@ export default {
     }
   }
 
+}
+
+.yellow_t{
+  color: @maxYellow;
+}
+
+.red_t {
+  color: @maxred;
 }
 </style>

@@ -4,14 +4,20 @@
       <div class="block_title">
         <slot></slot>
       </div>
-      <div class="btn_prev" @click="$router.go(-1)">Назад</div>
+      <div v-if="path" class="btn_prev" @click="$router.push(path)">Назад</div>
+      <div v-else class="btn_prev" @click="$router.go(-1)">Назад</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PageHeader"
+  name: "PageHeader",
+  props: {
+    path: {
+      type: String
+    }
+  }
 }
 </script>
 

@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <FillBtn class="success_btn" @click="$store.state.football.prognosisSuccess = false">Закрыть</FillBtn>
+    <FillBtn class="success_btn" @click="closeSuccessWindow()">Закрыть</FillBtn>
 
   </div>
 </template>
@@ -20,6 +20,17 @@ import FillBtn from "@/components/ui/btn/FillBtn";
 export default {
   name: "SendSuccess",
   components: {FillBtn},
+
+  mounted() {
+    setTimeout(() => {
+      this.closeSuccessWindow()
+    }, 2500)
+  },
+  methods: {
+    closeSuccessWindow() {
+      this.$store.state.football.prognosisSuccess = false
+    }
+  },
 }
 </script>
 
