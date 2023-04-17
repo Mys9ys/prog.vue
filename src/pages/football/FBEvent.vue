@@ -60,19 +60,6 @@ export default {
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
 
-.shadow_inset {
-  box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
-  padding: 0 4px;
-  border-radius: 3px;
-}
-
-.flex_center {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
 .past_title_wrapper {
   position: relative;
   background: @DarkColorBG;

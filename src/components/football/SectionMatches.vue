@@ -135,13 +135,14 @@ export default {
     display: inline-block;
     .date_title{
       .shadow_inset;
+      font-size: 12px;
     }
   }
 
   .date_match_block{
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     margin-bottom: 16px;
   }
 }

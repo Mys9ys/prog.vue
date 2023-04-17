@@ -37,7 +37,7 @@ export default {
       letter-spacing: -0.408px;
 
       /* Черный */
-      color: #000000;
+      color: @darkbg;
     }
     .btn_prev{
       font-weight: 500;

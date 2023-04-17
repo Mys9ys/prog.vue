@@ -88,10 +88,16 @@ export default {
 
     .number {
       .shadow_inset;
+      .flex_center;
+      font-size: 12px;
+      height: 24px;
     }
 
     .time {
       .shadow_inset;
+      .flex_center;
+      font-size: 12px;
+      height: 24px;
     }
   }
 
