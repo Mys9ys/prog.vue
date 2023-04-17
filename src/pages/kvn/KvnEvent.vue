@@ -7,7 +7,7 @@
       <div class="game" v-for="(game, index) in getGames" :key="index">
         <GameTitle :title="game.title"></GameTitle>
         <GameTeams :info="game"></GameTeams>
-        <GameBtns :number="game.title.number"></GameBtns>
+        <GameBtns :number="$route.params.event+'/'+game.title.number"></GameBtns>
       </div>
     </div>
   </div>
@@ -54,26 +54,27 @@ export default {
 
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
+
 @blockBG: #253133;
-.kvn_wrapper{
+.kvn_wrapper {
   position: relative;
   width: 400px;
   max-width: 100%;
   background: @YesWrite;
 
-
   //background: rgb(57,218,138);
-  .kvn_header{
+  .kvn_header {
     //background: rgb(97, 154, 56);
     padding: 5px 8px;
     display: flex;
     flex-direction: row;
-    gap:10px;
+    gap: 10px;
     position: sticky;
-    top:0;
+    top: 0;
     z-index: 10;
-    span{
-      background: rgba(18,18,18,.25);
+
+    span {
+      background: rgba(18, 18, 18, .25);
       border-radius: 2px;
       padding: 3px;
       color: #fff;
@@ -83,12 +84,13 @@ export default {
     }
   }
 }
-.game{
+
+.game {
   width: 100%;
   background: @blockBG;
   //background:rgb(45,45,45);
   padding: 5px;
   border-radius: 5px;
-  margin-bottom:5px;
+  margin-bottom: 5px;
 }
 </style>

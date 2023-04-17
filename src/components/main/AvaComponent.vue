@@ -26,7 +26,7 @@ export default {
   name: "AvaComponent",
   data() {
     return {
-      url:  window.location.href.includes('localhost') ? 'http://prog.work' :  'https://prognos9ys.ru',
+      url:  window.location.href.includes('localhost') ? 'http://prog.work' : 'https://prognos9ys.ru',
       // error: null
       errorText: 'загружаемое изображение превышает 500кб',
       error: false

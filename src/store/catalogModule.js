@@ -16,10 +16,10 @@ export const catalogModule = {
     },
     actions: {
 
-        async authRequest({state, commit}) {
+        async getEventsInfo({state, commit}) {
 
             try {
-                const response = await axios.post(state.baseUrl + 'events/', state.loginData,
+                const response = await axios.post(baseConfig.BASE_URL + 'events/', state.loginData,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'

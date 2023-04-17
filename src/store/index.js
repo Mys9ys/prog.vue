@@ -3,6 +3,7 @@ import {kvnModule} from "@/store/kvnModule";
 import {authModule} from "@/store/authModule";
 import {regModule} from "@/store/regModule";
 import {footballModule} from "@/store/footballModule";
+import {catalogModule} from "@/store/catalogModule";
 
 export default createStore({
     state: {
@@ -12,6 +13,7 @@ export default createStore({
         kvn: kvnModule,
         auth: authModule,
         reg: regModule,
-        football: footballModule
+        football: footballModule,
+        catalog: catalogModule
     }
 })

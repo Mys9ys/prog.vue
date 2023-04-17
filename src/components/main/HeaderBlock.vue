@@ -114,7 +114,7 @@
   </div>
   <div class="alter_btns">
     <BtnMini @click="$router.push('/catalog')" :img="btns.get('catalog')"></BtnMini>
-    <BtnMini @click="$router.push('/football')" :img="btns.get('football')"></BtnMini>
+    <BtnMini @click="$router.push('/catalog')" :img="btns.get('catalog')"></BtnMini>
     <BtnMini @click="logoutProfile" :img="btns.get('logout')"></BtnMini>
   </div>
 </template>
