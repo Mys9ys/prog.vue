@@ -145,6 +145,8 @@ class FootballHandlerClass
             $interval = date_diff($dateMatch, $now);
             $intervalDay = $interval->format('%R%a');
 
+            $el["ratio"] = $this->setRatio($res['ID']);
+
             if ($intervalDay > 0 && $intervalDay < 2) {
                 $this->arResult['res']['recent']['matches'][$el["date"]][$el["number"]] = $el;
                 $this->arResult['res']['recent']['count'] += 1;
@@ -298,6 +300,51 @@ class FootballHandlerClass
             'name' => $data['NAME'],
             'goals' => $goals ?? 0
         ];
+    }
+
+    protected function setRatio($matchId){
+
+        $arFilter = [
+            'IBLOCK_ID' => $this->prognIb,
+            'PROPERTY_ID' => $matchId,
+        ];
+
+        $arRatio = [
+            'plus' => 0,
+            'equal' => 0,
+            'minus' => 0,
+            'count' => 0
+        ];
+
+        $response = CIBlockElement::GetList(
+            [],
+            $arFilter,
+            false,
+            [],
+            [
+                "PROPERTY_diff",
+            ]
+        );
+
+        while($res = $response->GetNext()){
+
+            if($res['PROPERTY_DIFF_VALUE'] > 0)  $arRatio['plus'] +=1;
+            if($res['PROPERTY_DIFF_VALUE'] === 0)  $arRatio['equal'] +=1;
+            if($res['PROPERTY_DIFF_VALUE'] < 0)  $arRatio['minus'] +=1;
+
+            $arRatio['count'] += 1;
+
+        }
+
+        $arRatioScore = [
+            0 => ['name' => 'п1', 'count' => number_format (($arRatio['count']+1) / ($arRatio['plus']+1), 2)],
+            1 => ['name' => 'н', 'count' => number_format (($arRatio['count']+1) / ($arRatio['equal']+1), 2)],
+            2 => ['name' => 'п2', 'count' => number_format (($arRatio['count']+1) / ($arRatio['minus']+1), 2)],
+            3 => ['name' => 'Σ', 'count' => $arRatio['count']]
+        ];
+
+        return $arRatioScore;
+
     }
 
     public function result()

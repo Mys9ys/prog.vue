@@ -160,9 +160,8 @@
       </div>
 
       <div class="error_message" v-if="error">{{ error }}</div>
-
-
     </div>
+
     <div class="match_result_wrapper" v-else>
       <table class="table table-dark table-hover om_table_box">
         <thead>

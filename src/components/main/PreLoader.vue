@@ -20,12 +20,12 @@
 
 export default {
   name: "PreLoader",
-  // mounted() {
-  //   setInterval(() => {
-  //     this.$store.state.football.matchLoading = false
-  //   }, 1100)
-  //   // this.loginRequest()
-  // },
+  mounted() {
+    setTimeout(() => {
+      console.log('fdfsdgf loader')
+    }, 1100)
+    // this.loginRequest()
+  },
 
 }
 </script>

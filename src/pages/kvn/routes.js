@@ -10,6 +10,6 @@ export const kvnEvent = {
 }
 
 export const kvnGame = {
-        path: '/kvn/:event/:number',
-        component: KvnGame
+    path: '/kvn/:event/:number',
+    component: KvnGame
 }

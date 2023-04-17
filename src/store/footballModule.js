@@ -9,6 +9,8 @@ export const footballModule = {
 
         match: [],
 
+        prognosis: [],
+
         queryEvent: {
             eventId:'',
             userToken: ''
@@ -41,6 +43,10 @@ export const footballModule = {
             state.match = data
         },
 
+        setPrognosisData(state, prognosis){
+            state.prognosis = prognosis
+        },
+
         setMatchLoading(state, data){
             state.matchLoading = data
         },
@@ -64,6 +70,7 @@ export const footballModule = {
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
                     commit('setMatchesData', response.data.res)
+                    commit('setPrognosisData', response.data.res.prognosis)
                     commit('setMatchLoading', false)
                 }
                 if (response.data.status == 'error') {

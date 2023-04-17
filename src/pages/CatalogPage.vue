@@ -147,7 +147,6 @@ export default {
     gap: 6px;
 
     .img_box{
-      background: @DarkColorBG;
       .shadow_inset;
       .flex_center;
       max-width: 55px;
@@ -159,6 +158,7 @@ export default {
       padding: 5px;
     }
     .name{
+      background: @colorText;
       .shadow_inset;
       .flex_center;
       width: 88%;
