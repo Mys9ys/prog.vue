@@ -24,12 +24,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "src/assets/css/variables.less";
 .wrapper {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(97, 154, 56, 0.80);
+  background: @YesWrite;
   width: 100vw;
   max-width: 400px;
   margin: 0 auto;

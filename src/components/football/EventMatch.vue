@@ -39,7 +39,13 @@
     </div>
   </div>
   <div class="more_info" v-if="moreInfo">
-    <p>vczxvzxvc</p>
+    <div class="title">Коэффициенты на матч</div>
+    <div class="box">
+      <div class="cell" v-for="(ratio, index) in match.ratio" :key="index">
+        <div class="title_cell">{{ratio.name}}</div>
+        <div class="count">{{ratio.count}}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -63,12 +69,6 @@ export default {
 
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
-
-.shadow_inset {
-  box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
-  padding: 0 4px;
-  border-radius: 3px;
-}
 
 .match_box {
   display: flex;
@@ -268,5 +268,48 @@ export default {
 .more_info {
   width: 100%;
   background: @DarkColorBG;
+  color: @colorBlur;
+  display: flex;
+  flex-direction: column;
+  gap:4px;
+  padding: 4px;
+  border-radius: 5px;
+
+  .title{
+    width: 100%;
+    .shadow_inset;
+
+    justify-content: left;
+  }
+
+  .box{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 4px;
+
+    .cell{
+      width: 24%;
+      .shadow_inset;
+      display: flex;
+      flex-direction: row;
+      color: @pearl;
+      font-weight: 700;
+
+      .title_cell{
+        text-align: right;
+        width: 35%;
+        border-right: 3px solid @colorBlur;
+        padding-right: 6px;
+      }
+
+      .count{
+        width: 65%;
+        text-align: left;
+        padding-left: 6px;
+      }
+    }
+  }
 }
 </style>

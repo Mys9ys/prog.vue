@@ -10,7 +10,6 @@
       <div class="stage title_cell">{{ arMatch.step }}</div>
     </div>
     <div class="match_record_wrapper" v-if="arMatch.active === 'Y'">
-      <p>icon {{ stateArray[18] }}</p>
 
       <div class="teams_block">
         <div class="team">
@@ -30,7 +29,7 @@
       <div class="prognosis_block">
         <div class="goals_block">
           <div class="goals_block_title pb_title">
-            <img src="@/assets/icon/football/scoreboard.svg" alt="">
+            {{icons[1]}}
           </div>
           <div class="goal_block">
             <div class="zero goal_btn" @click="setGoals('zero', 15)">0</div>
@@ -52,8 +51,8 @@
         <div class="match_math_block">
 
           <div class="match_result_block">
-            <div class="match_result_title pb_title" v-html="icon[18]">
-
+            <div class="match_result_title pb_title">
+              {{icons[18]}}
             </div>
             <div class="match_result_box">
               <div class="match_result_el" :class="{'active' : data[18] === 'п1'}" @click="setResult('п1')">п1</div>
@@ -63,8 +62,8 @@
           </div>
 
           <div class="match_sum_block">
-            <div class="match_sum_title pb_title" v-html="icon[28]">
-
+            <div class="match_sum_title pb_title">
+              {{icons[28]}}
             </div>
             <div class="match_sum_box">
               <div class="minus math_btn" @click="setMath('minus', 28, 'sum')">-</div>
@@ -75,7 +74,7 @@
 
           <div class="match_sum_block">
             <div class="match_sum_title pb_title">
-              <span>Σ</span>
+              {{icons[19]}}
             </div>
             <div class="match_sum_box">
               <div class="minus math_btn" @click="setMath('minus', 19)">-</div>
@@ -88,7 +87,7 @@
         <div class="prognosis_dash_line"></div>
 
         <div class="match_domination_block">
-          <div class="pb_title">&#129112;</div>
+          <div class="pb_title">{{icons[32]}}</div>
           <div class="match_domination_box">
             <div class="minus math_btn" @click="setRangeBtn('minus')">-</div>
             <div class="value left">{{ data[32] }}</div>
@@ -101,7 +100,7 @@
         <div class="prognosis_dash_line"></div>
         <div class="cards_block">
           <div class="block yellow">
-            <div class="title">&#9646;</div>
+            <div class="title">{{icons[21]}}</div>
             <div class="box">
               <div class="btn" @click="setValue('zero', 21)">0</div>
               <div class="btn" @click="setValue('minus', 21)">-</div>
@@ -112,7 +111,7 @@
           </div>
 
           <div class="block red">
-            <div class="title">&#9646;</div>
+            <div class="title">{{icons[22]}}</div>
             <div class="box">
               <div class="btn" @click="setValue('zero', 22)">0</div>
               <div class="btn" @click="setValue('minus', 22)">-</div>
@@ -125,7 +124,7 @@
         <div class="prognosis_dash_line"></div>
         <div class="corner_penalty_block">
           <div class="block corner">
-            <div class="title">&#129132;</div>
+            <div class="title">{{icons[20]}}</div>
             <div class="box">
               <div class="btn" @click="setValue('zero', 20)">0</div>
               <div class="btn" @click="setValue('minus', 20)">-</div>
@@ -136,7 +135,7 @@
           </div>
 
           <div class="block penalty">
-            <div class="title">&#129081;</div>
+            <div class="title">{{icons[23]}}</div>
             <div class="box">
               <div class="btn" @click="setValue('zero', 23)">0</div>
               <div class="btn" @click="setValue('minus', 23)">-</div>
@@ -146,36 +145,41 @@
             </div>
           </div>
         </div>
+
+        <div class="prognosis_dash_line"></div>
+
         <div class="btns_block">
 
-          <div class="annotation_btn" @click="annotationVis = !annotationVis">Пояснения</div>
-          <div class="btn_send" @click="sendPrognosis" v-if="arMatch.active === 'Y'">Отправить</div>
-          <div class="btn_send btn_gray" v-else>Не доступно</div>
+          <div class="annotation_btn" @click="annotationVis = !annotationVis">Пояснения
+            <span class="annotation_arrow" :class="{'up' : annotationVis === true}">v</span>
+          </div>
+          <div class="btn_send" @click="sendPrognosis" v-if="!prognosis.result">Отправить</div>
+          <div class="btn_send rewrite" @click="sendPrognosis" v-else>Изменить</div>
+
         </div>
       </div>
 
       <div class="error_message" v-if="error">{{ error }}</div>
 
-      <div class="annotation_block" v-if="annotationVis">
 
-      </div>
     </div>
-    <div class="match_result_wrapper">
+    <div class="match_result_wrapper" v-else>
       <table class="table table-dark table-hover om_table_box">
         <thead>
         <tr>
-          <th class="pr_table_col">0-0</th>
-          <th class="pr_table_col">&#127942;</th>
-          <th class="pr_table_col">sum</th>
-          <th class="pr_table_col">+/-</th>
-          <th class="pr_table_col">%</th>
-          <th class="pr_table_col"><i class="bi bi-file-fill" style="color:yellow"></i></th>
-          <th class="pr_table_col"><i class="bi bi-file-fill" style="color:red"></i></th>
-          <th class="pr_table_col"><i class="bi bi-flag"></i></th>
-          <th class="pr_table_col">pen</th>
-          <th class="pr_table_col">+<i class="bi bi-alarm"></i></th>
-          <th class="pr_table_col">+pen</th>
+          <th class="pr_table_col">{{icons[1]}}</th>
+          <th class="pr_table_col">{{icons[18]}}</th>
+          <th class="pr_table_col">{{icons[19]}}</th>
+          <th class="pr_table_col">{{icons[28]}}</th>
+          <th class="pr_table_col">{{icons[32]}}</th>
+          <th class="pr_table_col">{{icons[21]}}</th>
+          <th class="pr_table_col">{{icons[22]}}</th>
+          <th class="pr_table_col">{{icons[20]}}</th>
+          <th class="pr_table_col">{{icons[23]}}</th>
+          <th class="pr_table_col">{{icons[45]}}</th>
+          <th class="pr_table_col">{{icons[46]}}</th>
           <th class="pr_table_col">all</th>
+
         </tr>
         </thead>
         <tbody>
@@ -233,6 +237,19 @@
         </tbody>
       </table>
     </div>
+
+    <div class="annotation_block" v-if="annotationVis">
+      <div class="header">
+        <div class="title">Расшифровка обозначений</div>
+        <div class="close" @click="annotationVis = false">x</div>
+      </div>
+      <div class="annotation_elem" v-for="(icon, index) in icons"
+        :key="index">
+        <div class="annotation_title">{{icon}}</div>
+        <div class="annotation_description">{{description[index]}}</div>
+      </div>
+    </div>
+
     <div class="btn_select_other_wrapper">
       <div class="prev_btn other_match_btn" @click="$router.push(prevLink).then(() => { this.$router.go() })">
         <img src="@/assets/icon/pagination/left.svg" alt=""><span>Предыдущий</span>
@@ -243,6 +260,8 @@
       </div>
     </div>
   </div>
+
+
 
 </template>
 
@@ -291,19 +310,35 @@ export default {
 
         29: '', // m_offside
       },
-      // stateArray: new Map([
-      //   [18, ['icon', '&#127942;','desc', '']],
-      //   ['catalog', require('@/assets/icon/profile/list.svg')],
-      //   ['football', require('@/assets/icon/events/ball.svg')],
-      // ]),
-      stateArray: {
-        18: ['icon', '&#127942;', 'desc', '']
+
+      icons: {
+        1: '0-0',
+        18: '🏆',  // result
+        28: 'Δ',
+        19: 'Σ',
+        32: '🡘',
+        21: '▮',
+        22: '▮',
+        20: '🡬',
+        23: '🠹',
+        45: '+🕘',
+        46: '+🠹',
       },
 
-      icon: {
-        18: '&#127942;',
-        28: 'Δ'
-      },
+      description: {
+        1: 'Счет матча',
+        18: 'Исход матча (п1 - победа первой команды, н - ничья, п2 - победа второй',
+        28: 'Разница мячей забитые второй командой вычитаются из забитых первой командой',
+        19: 'Сумма мячей забитых обеими командами',
+        32: 'Процент владения мячом первой и второй командой',
+        21: 'Количество желтых карточек в матче(сумма для обеих команд)',
+        22: 'Количество красных карточек в матче(сумма для обеих команд)',
+        20: 'Количество угловых в матче(сумма для обеих команд)',
+        23: 'Количество пенальти в матче(сумма для обеих команд)',
+        45: 'Дополнительное время (наличие/отсутствие)',
+        46: 'Серия пенальти (наличие/отсутствие)',
+
+      }
     }
   },
 
@@ -413,6 +448,23 @@ export default {
       this.queryMatch.userToken = this.token
 
       await this.getMatchRequest()
+
+      // запись полученных значений
+
+      this.data[15] = this.prognosis.goal_home ?? 0
+      this.data[16] = this.prognosis.goal_guest ?? 0
+      this.data[18] = this.prognosis.result ?? ''
+      this.data[19] = this.prognosis.diff ?? ''
+      this.data[28] = this.prognosis.sum ?? ''
+
+      this.data[32] = this.prognosis.domination ?? 50
+      this.data[21] = this.prognosis.yellow ?? ''
+      this.data[22] = this.prognosis.red ?? ''
+      this.data[20] = this.prognosis.corner ?? ''
+      this.data[23] = this.prognosis.penalty ?? ''
+
+      this.data[45] = this.prognosis.spenalty ?? ''
+      this.data[46] = this.prognosis.otime ?? ''
     }
   },
   computed: {
@@ -576,9 +628,7 @@ export default {
     justify-content: space-between;
 
     .goals_block_title {
-      img {
-        width: 14px;
-      }
+      width: 36px;
     }
 
     .goal_block {
@@ -860,20 +910,29 @@ export default {
     }
 
     .annotation_btn {
+      position: relative;
       .prognosis_btn;
       width: 140px;
       max-width: 40%;
+      background: @kerling;
+
+      .annotation_arrow{
+        position: absolute;
+        right: 5px;
+
+        &.up{
+          transform: rotate(-180deg);
+        }
+      }
     }
 
     .btn_send {
       .prognosis_btn;
       width: 140px;
       max-width: 40%;
-    }
-
-    .btn_gray {
-      background: @maxdarkgrey;
-      cursor: not-allowed;
+      &.rewrite{
+        background: @NoWrite;
+      }
     }
   }
 }
@@ -913,7 +972,7 @@ export default {
 
 .annotation_block {
   background: @DarkColorBG;
-  color: @colorText;
+  color: @colorBlur;
   display: flex;
   flex-direction: column;
 
@@ -923,6 +982,48 @@ export default {
   gap: 4px;
 
   margin-top: 4px;
+  .header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 4px;
+    .title{
+      width: 95%;
+      .shadow_inset;
+      text-align: left;
+
+    }
+
+    .close{
+     width: 27px;
+      .prognosis_btn;
+      background: @boks;
+    }
+  }
+
+
+  .annotation_elem{
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    font-size: 13px;
+    text-align: left;
+
+    .annotation_title{
+      max-width: 35px;
+      width: 9%;
+      .shadow_inset;
+      .flex_center;
+      justify-content: left;
+    }
+
+    .annotation_description{
+      max-width: 355px;
+      width: 90%;
+      .shadow_inset;
+    }
+
+  }
 }
 
 .om_table_box {
