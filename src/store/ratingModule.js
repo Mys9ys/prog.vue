@@ -3,28 +3,25 @@ import axios from "axios";
 
 import {baseConfig} from "@/store/config";
 
-export const catalogModule = {
+export const ratingModule = {
     state: () => ({
-        eventsData: [],
+        footballRating: [],
 
-        catalogData: {
-            type: ''
-        },
-
+        ratingData: {
+            event: '',
+        }
     }),
-
     getters: {},
     mutations: {
-        setEventsData(state, eventsData) {
-            state.eventsData = eventsData
+        setFootballRatings(state, data) {
+            state.footballRating = data
         },
     },
     actions: {
-
-        async getEventsInfo({state, commit}) {
-
+        async getFootballRatings({state, commit}) {
+            commit('setMainLoading', true, { root: true })
             try {
-                const response = await axios.post(baseConfig.BASE_URL + 'events/', state.catalogData,
+                const response = await axios.post(baseConfig.BASE_URL + 'football/ratings/', state.ratingData,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -34,7 +31,8 @@ export const catalogModule = {
 
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
-                    commit('setEventsData', response.data.events)
+                    commit('setFootballRatings', response.ratings)
+                    commit('setMainLoading', false, { root: true })
                 }
                 if (response.data.status == 'error') {
                     commit('setError', response.data.mes)
@@ -44,7 +42,7 @@ export const catalogModule = {
                 console.log('error', e)
             }
         },
-
     },
     namespaced: true
+
 }

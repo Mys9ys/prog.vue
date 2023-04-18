@@ -9,10 +9,15 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 
 use Bitrix\Main\Loader;
 
-
 $res = new Prognos9ysGetEventsInfo();
 
-echo json_encode($res->getResult());
+if($_REQUEST["type"] === 'all'){
+    echo json_encode($res->getAll());
+} else {
+    echo json_encode($res->getResult());
+}
+
+
 
 class Prognos9ysGetEventsInfo{
 
@@ -20,6 +25,8 @@ class Prognos9ysGetEventsInfo{
     protected $eventsTypeIb;
 
     protected $arEvents = [];
+
+    protected $arrAll = [];
 
     public function __construct()
     {
@@ -32,8 +39,9 @@ class Prognos9ysGetEventsInfo{
         $this->eventsIb = \CIBlock::GetList([], ['CODE' => 'events'], false)->Fetch()['ID'] ?: 1;
         $this->eventsTypeIb = \CIBlock::GetList([], ['CODE' => 'eventtype'], false)->Fetch()['ID'] ?: 19;
 
-        $this->getEvents();
+
         $this->getEventsType();
+        $this->getEvents();
 
     }
 
@@ -71,6 +79,9 @@ class Prognos9ysGetEventsInfo{
 
             $res["img"] = CFile::GetPath($res["PREVIEW_PICTURE"]);
 
+            $res['code'] = $this->arEvents[$res["PROPERTY_E_TYPE_VALUE"]]["info"]["CODE"];
+            $this->arrAll[$res["ID"]] = $res;
+
             if($res["ACTIVE"] === 'Y') {
                 $this->arEvents[$res["PROPERTY_E_TYPE_VALUE"]]["active"][$res["ID"]] = $res;
             } else {
@@ -84,6 +95,13 @@ class Prognos9ysGetEventsInfo{
         return [
             "status" => 'ok',
             "events" =>$this->arEvents
+        ];
+    }
+
+    public function getAll(){
+        return [
+            "status" => 'ok',
+            "events" => $this->arrAll
         ];
     }
 }

@@ -113,7 +113,7 @@
     {{ $store.state.auth.userInfo.NAME }}
   </div>
   <div class="alter_btns">
-    <BtnMini @click="$router.push('/catalog')" :img="btns.get('catalog')"></BtnMini>
+    <BtnMini @click="$router.push('/ratings')" :img="btns.get('ratings')"></BtnMini>
     <BtnMini @click="$router.push('/catalog')" :img="btns.get('catalog')"></BtnMini>
     <BtnMini @click="logoutProfile" :img="btns.get('logout')"></BtnMini>
   </div>
@@ -132,7 +132,7 @@ export default {
       btns: new Map([
         ['logout', require('@/assets/icon/profile/exit.svg')],
         ['catalog', require('@/assets/icon/profile/list.svg')],
-        ['football', require('@/assets/icon/events/ball.svg')],
+        ['ratings', require('@/assets/icon/profile/shield.svg')],
       ]),
     }
   },

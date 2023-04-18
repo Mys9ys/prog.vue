@@ -13,7 +13,7 @@ file_put_contents('../../_logs/ratings.json', json_encode($_REQUEST), FILE_APPEN
 
 
 
-$res = new CreateFootballRatings(["event" => 34]);
+$res = new CreateFootballRatings(["event" => 6664]);
 
 
 
@@ -24,10 +24,28 @@ class CreateFootballRatings{
 
     protected $arUsers = [];
     protected $arResults = [];
+    protected $arMiddleResults = [];
+
+    protected $arrSelector = [
+        "all",
+        "score",
+        "result",
+        "sum",
+        "diff",
+        "domination",
+        "yellow",
+        "red",
+        "corner",
+        "penalty",
+        "otime",
+        "spenalty",
+    ];
 
     protected $arOneEventResult = [];
 
-    protected $best = [];
+    protected $arBest = [];
+
+    protected $arUserScore = [];
 
     protected $count = 0;
 
@@ -53,10 +71,12 @@ class CreateFootballRatings{
             $this->getUsers();
 
             $this->getResults();
+
+            $this->arrSum();
+
+            $this->arrProcessing();
+
         }
-
-
-
     }
 
     protected function getUsers()
@@ -74,22 +94,6 @@ class CreateFootballRatings{
     protected function getResults()
     {
         $arFilter["IBLOCK_ID"] = $this->resultIb;
-
-        $arrSelector = [
-            "all",
-            "score",
-            "result",
-            "sum",
-            "diff",
-            "domination",
-            "yellow",
-            "red",
-            "corner",
-            "penalty",
-            "otime",
-            "spenalty",
-        ];
-
 
         if($this->eventId == 34) {
             $arFilter["!=PROPERTY_events"] = 6664;
@@ -124,36 +128,58 @@ class CreateFootballRatings{
         );
 
         while ($res = $response->GetNext()) {
+            $this->arUserScore[$res["PROPERTY_USER_ID_VALUE"]] += 1;
 
-            foreach ($arrSelector as $selector) {
+            foreach ($this->arrSelector as $selector) {
                 $number = $this->ArMatchIdForNumber[$res["PROPERTY_MATCH_ID_VALUE"]];
-                $this->arResults[$selector][$number][$res["PROPERTY_USER_ID_VALUE"]] =
-                    $this->arResults[$selector][$number-1][$res["PROPERTY_USER_ID_VALUE"]] + $res["PROPERTY_" . strtoupper($selector) . "_VALUE"] ?? 0;
+
+                $this->arMiddleResults[$selector][$number][$res["PROPERTY_USER_ID_VALUE"]] = (float)$res["PROPERTY_" . strtoupper($selector) . "_VALUE"] ?? 0;
 
                 if ($res["PROPERTY_ALL_VALUE"] > 30) {
-
+                    $this->arResults['best'][$number][$res["PROPERTY_USER_ID_VALUE"]]=$res["PROPERTY_ALL_VALUE"];
                 }
             }
 
-
-//            $this->arResults[$res["PROPERTY_USER_ID_VALUE"]][$res["PROPERTY_MATCH_ID_VALUE"]] = $res;
-//
-//            if ($res["PROPERTY_ALL_VALUE"] > 30) {
-//                if(!$res["PROPERTY_NUMBER_VALUE"]) {
-//                    $res["PROPERTY_NUMBER_VALUE"] = +$res["PROPERTY_MATCH_ID_VALUE"];
-//                } else {
-//                    $res["PROPERTY_NUMBER_VALUE"] += 42;
-//                }
-//                $this->best[$res["PROPERTY_USER_ID_VALUE"] . '-' . $res["PROPERTY_NUMBER_VALUE"]] = $res["PROPERTY_ALL_VALUE"];
-//            }
-//
-//            $this->arOneEventResult["users"][$res["PROPERTY_USER_ID_VALUE"]] = [];
-//        }
-//
-//        $this->count = count($this->arResults[20]);
         }
-        var_dump(count($this->arResults["all"]));
-        var_dump($this->arResults);
 
+    }
+
+    protected function arrSum(){
+        foreach ($this->arMiddleResults as $selector=>$arCategory){
+            foreach ($arCategory as $number=>$arScore){
+                foreach ($this->arUserScore as $userId=>$count){
+                    if($arScore[$userId]){
+                        $this->arResults[$selector][$number][$userId] = $arScore[$userId];
+                    }
+
+                    if($this->arResults[$selector][$number-1][$userId])
+                        $this->arResults[$selector][$number][$userId] += $this->arResults[$selector][$number-1][$userId];
+
+                }
+            }
+        }
+    }
+
+    protected function arrProcessing(){
+
+        function MysSortFunc($a, $b) {
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a > $b) ? -1 : 1;
+        }
+
+        foreach ($this->arResults as $selector=>$match){
+            foreach ($match as $id=>$score){
+
+                uasort($score, 'MysSortFunc');
+                $this->arResults[$selector][$id] = $score;
+
+            }
+        }
+    }
+
+    public function getResult(){
+        return ['status'=>'ok', 'ratings'=>$this->getResult()];
     }
 }

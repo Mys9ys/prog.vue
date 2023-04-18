@@ -4,16 +4,25 @@ import {authModule} from "@/store/authModule";
 import {regModule} from "@/store/regModule";
 import {footballModule} from "@/store/footballModule";
 import {catalogModule} from "@/store/catalogModule";
+import {ratingModule} from "@/store/ratingModule";
 
 export default createStore({
     state: {
-        loading: true,
+        mainLoader: false,
+    },
+
+    mutations: {
+        setMainLoading(state, data){
+            state.mainLoader = data
+        }
     },
     modules: {
         kvn: kvnModule,
         auth: authModule,
         reg: regModule,
         football: footballModule,
-        catalog: catalogModule
-    }
+        catalog: catalogModule,
+        rating: ratingModule
+    },
+    root: true
 })
