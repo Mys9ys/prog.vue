@@ -9,11 +9,15 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 
 use Bitrix\Main\Loader;
 
-file_put_contents('../../_logs/debug_match.json', json_encode($_REQUEST), FILE_APPEND);
+$_REQUEST['date'] = date(\CDatabase::DateFormatToPHP("DD.MM.YYYY HH:MI:SS"), time());
 
-$res = new FootballMatchLoadInfo($_REQUEST);
+file_put_contents('../../_logs/match.log', json_encode($_REQUEST) . PHP_EOL, FILE_APPEND);
 
-echo json_encode($res->result());
+if($_REQUEST){
+    $res = new FootballMatchLoadInfo($_REQUEST);
+
+    echo json_encode($res->result());
+}
 
 class FootballMatchLoadInfo {
 

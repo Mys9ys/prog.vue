@@ -1,20 +1,18 @@
 <template>
-  <PreLoader v-if="this.mainLoader"></PreLoader>
+  <PreLoader v-if="mainLoader"></PreLoader>
   <div class="ratings_wrapper">
     <PageHeader class="header">Рейтинги</PageHeader>
 
-    <div class="event_block">
+    <div class="event_block" :class="{'small_category' : category}">
       <div class="el_event" v-for="(el, index) in eventsData" :key="index">
-        <div class="img_box" @click="loadRating(el.id, el.code)">
+        <div class="img_box" @click="selectRating(el.id, el.code)">
           <img :src="url+el.img" alt="">
         </div>
       </div>
     </div>
 
     <div class="rating_block">
-      <div class="rating_header">
-
-      </div>
+      <FootballRatingBlock v-if="category === 'football'"></FootballRatingBlock>
     </div>
   </div>
 </template>
@@ -23,49 +21,20 @@
 import PageHeader from "@/components/main/PageHeader";
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
+import FootballRatingBlock from "@/components/football/FootballRatingBlock";
 
 export default {
   name: "RatingPage",
   components: {
     PageHeader,
-    PreLoader
+    PreLoader,
+    FootballRatingBlock
   },
   data() {
     return {
       url:  'https://prognos9ys.ru/',
-
-      relation: {
-
-      },
-
-      icons: {
-        1: '0-0',
-        18: '🏆',  // result
-        28: 'Δ',
-        19: 'Σ',
-        32: '🡘',
-        21: '▮',
-        22: '▮',
-        20: '🡬',
-        23: '🠹',
-        45: '+🕘',
-        46: '+🠹',
-      },
-
-      description: {
-        1: 'Счет матча',
-        18: 'Исход матча (п1 - победа первой команды, н - ничья, п2 - победа второй',
-        28: 'Разница мячей забитые второй командой вычитаются из забитых первой командой',
-        19: 'Сумма мячей забитых обеими командами',
-        32: 'Процент владения мячом первой и второй командой',
-        21: 'Количество желтых карточек в матче (сумма для обеих команд)',
-        22: 'Количество красных карточек в матче (сумма для обеих команд)',
-        20: 'Количество угловых в матче (сумма для обеих команд)',
-        23: 'Количество пенальти в матче (сумма для обеих команд)',
-        45: 'Дополнительное время (наличие/отсутствие)',
-        46: 'Серия пенальти (наличие/отсутствие)',
-
-      }
+      category: '',
+      eventId: ''
     }
   },
 
@@ -76,7 +45,6 @@ export default {
   methods: {
     ...mapActions({
       getEventsInfo: 'catalog/getEventsInfo',
-      getFootballRatings: 'rating/getFootballRatings',
     }),
 
     async fillCatalogElem() {
@@ -85,12 +53,10 @@ export default {
       await this.getEventsInfo()
     },
 
-    async loadRating(id, type){
-
-      if(type === 'football'){
-        this.ratingData.event = id
-        await this.getFootballRatings()
-      }
+    selectRating(id, code){
+      console.log('selectRating')
+      this.eventId = id
+      this.category = code
     }
   },
 
@@ -126,6 +92,12 @@ export default {
         img{
           width: 100%;
         }
+      }
+    }
+
+    &.small_category{
+      .el_event{
+        width: 40px;
       }
     }
   }

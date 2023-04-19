@@ -10,11 +10,15 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 
 use Bitrix\Main\Loader;
 
-file_put_contents('../../_logs/send.log', json_encode($_REQUEST['userToken']), FILE_APPEND);
+$_REQUEST['date'] = date(\CDatabase::DateFormatToPHP("DD.MM.YYYY HH:MI:SS"), time());
 
-$res = new SendUserPrognosis($_REQUEST);
+file_put_contents('../../_logs/send.log', json_encode($_REQUEST) . PHP_EOL, FILE_APPEND);
 
-echo json_encode($res->getArResult());
+if($_REQUEST){
+    $res = new SendUserPrognosis($_REQUEST);
+
+    echo json_encode($res->getArResult());
+}
 
 
 class SendUserPrognosis {

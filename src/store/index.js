@@ -13,6 +13,7 @@ export default createStore({
 
     mutations: {
         setMainLoading(state, data){
+            console.log('loading main', data)
             state.mainLoader = data
         }
     },

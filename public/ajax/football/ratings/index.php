@@ -9,13 +9,14 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 
 use Bitrix\Main\Loader;
 
-file_put_contents('../../_logs/ratings.json', json_encode($_REQUEST), FILE_APPEND);
+$_REQUEST['date'] = date(\CDatabase::DateFormatToPHP("DD.MM.YYYY HH:MI:SS"), time());
 
+file_put_contents('../../_logs/ratings.log', json_encode($_REQUEST) . PHP_EOL, FILE_APPEND);
 
 
 $res = new CreateFootballRatings(["event" => 6664]);
 
-
+echo json_encode($res->getResult());
 
 class CreateFootballRatings{
 
@@ -40,10 +41,6 @@ class CreateFootballRatings{
         "otime",
         "spenalty",
     ];
-
-    protected $arOneEventResult = [];
-
-    protected $arBest = [];
 
     protected $arUserScore = [];
 
@@ -180,6 +177,6 @@ class CreateFootballRatings{
     }
 
     public function getResult(){
-        return ['status'=>'ok', 'ratings'=>$this->getResult()];
+        return ['status'=>'ok', 'ratings'=>$this->arResults];
     }
 }

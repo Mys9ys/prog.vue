@@ -9,13 +9,21 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 
 use Bitrix\Main\Loader;
 
-$res = new Prognos9ysGetEventsInfo();
+$_REQUEST['date'] = date(\CDatabase::DateFormatToPHP("DD.MM.YYYY HH:MI:SS"), time());
 
-if($_REQUEST["type"] === 'all'){
-    echo json_encode($res->getAll());
-} else {
-    echo json_encode($res->getResult());
+file_put_contents('../../_logs/events.log', json_encode($_REQUEST) . PHP_EOL, FILE_APPEND);
+
+if($_REQUEST){
+    $res = new Prognos9ysGetEventsInfo();
+
+    if($_REQUEST["type"] === 'all'){
+        echo json_encode($res->getAll());
+    } else {
+        echo json_encode($res->getResult());
+    }
 }
+
+
 
 
 

@@ -9,17 +9,22 @@ export const ratingModule = {
 
         ratingData: {
             event: '',
-        }
+        },
+
+        ratingLoader: false
     }),
     getters: {},
     mutations: {
         setFootballRatings(state, data) {
             state.footballRating = data
         },
+        setFootballLoader(state, data){
+            state.ratingLoader = data
+        }
     },
     actions: {
         async getFootballRatings({state, commit}) {
-            commit('setMainLoading', true, { root: true })
+            commit('setFootballLoader', true)
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'football/ratings/', state.ratingData,
                     {
@@ -31,8 +36,8 @@ export const ratingModule = {
 
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
-                    commit('setFootballRatings', response.ratings)
-                    commit('setMainLoading', false, { root: true })
+                    commit('setFootballLoader', false)
+                    commit('setFootballRatings', response.data.ratings)
                 }
                 if (response.data.status == 'error') {
                     commit('setError', response.data.mes)

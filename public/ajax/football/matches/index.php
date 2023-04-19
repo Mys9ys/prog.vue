@@ -9,21 +9,16 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 
 use Bitrix\Main\Loader;
 
-file_put_contents('../../_logs/debug_new.json', json_encode($_REQUEST), FILE_APPEND);
+$_REQUEST['date'] = date(\CDatabase::DateFormatToPHP("DD.MM.YYYY HH:MI:SS"), time());
+
 file_put_contents('../../_logs/request.log', json_encode($_REQUEST) . PHP_EOL, FILE_APPEND);
 
-//$token = 'cae9-191b-aa1d-f416-3998-8bc0-8278-ee90';
-//$event = 6664;
-////$event = 34;
-//
-//$arData = [
-//    'token' => $token,
-//    'event' => $event
-//];
+if($_REQUEST){
+    $res = new FootballHandlerClass($_REQUEST);
 
-$res = new FootballHandlerClass($_REQUEST);
+    echo json_encode($res->result());
+}
 
-echo json_encode($res->result());
 
 class FootballHandlerClass
 {

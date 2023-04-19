@@ -1,0 +1,163 @@
+<template>
+  <!--  <PreLoader v-if="this.mainLoader"></PreLoader>-->
+
+  <div class="rating_wrapper">
+    <div class="rating_header">
+      <div class="rating_title_cell"
+           :class="{'yellow': index == 21, 'red': index == 22, 'activeCell': activeCell == index}"
+           v-for="(icon, index) in icons"
+           @click="activeCell = index"
+           :key="index">{{ icon }}
+      </div>
+    </div>
+
+    <FootballRatingBody class="rating_body" :class="{'active_body':activeCell == index}" v-for="(icon, index) in icons"
+                        :key="index"
+
+    >{{ icon }}
+    </FootballRatingBody>
+
+
+  </div>
+</template>
+
+<script>
+
+import {mapActions, mapState} from "vuex";
+import FootballRatingBody from "@/components/football/FootballRatingBody";
+// import PreLoader from "@/components/main/PreLoader";
+
+export default {
+  name: "FootballRatingBlock",
+  components: {
+    // PreLoader
+    FootballRatingBody
+  },
+  props: {
+    info: {
+      type: Object
+    }
+  },
+  data() {
+    return {
+      activeCell: 1,
+      relation: {
+        1: 'score',
+        18: 'result',
+        28: 'diff',
+        19: 'summ',
+        32: 'domination',
+        21: 'yellow',
+        22: 'red',
+        20: 'corner',
+        23: 'penalty',
+        45: 'otime',
+        46: 'openalty',
+        100: 'best',
+
+      },
+
+      icons: {
+        1: '0-0',
+
+        18: '✓',  // result
+        28: 'Δ',
+        19: 'Σ',
+        32: '🡘',
+        21: '▮',
+        22: '▮',
+        20: '🡬',
+        23: '🠹',
+        45: '+⧗',
+        46: '+🠹',
+        100: '🏆',
+      },
+
+      description: {
+        1: 'Счет матча',
+        18: 'Исход матча (п1 - победа первой команды, н - ничья, п2 - победа второй',
+        28: 'Разница мячей забитые второй командой вычитаются из забитых первой командой',
+        19: 'Сумма мячей забитых обеими командами',
+        32: 'Процент владения мячом первой и второй командой',
+        21: 'Количество желтых карточек в матче (сумма для обеих команд)',
+        22: 'Количество красных карточек в матче (сумма для обеих команд)',
+        20: 'Количество угловых в матче (сумма для обеих команд)',
+        23: 'Количество пенальти в матче (сумма для обеих команд)',
+        45: 'Дополнительное время (наличие/отсутствие)',
+        46: 'Серия пенальти (наличие/отсутствие)',
+
+      }
+    }
+  },
+  created() {
+    this.loadRating()
+  },
+
+  methods: {
+    ...mapActions({
+      getFootballRatings: 'rating/getFootballRatings',
+    }),
+
+    async loadRating(id) {
+
+      this.ratingData.event = id
+      await this.getFootballRatings()
+
+      console.log('footballRating', this.footballRating)
+
+    }
+  },
+
+  computed: {
+    ...mapState({
+      matchLoading: state => state.football.matchLoading,
+      catalogData: state => state.catalog.catalogData,
+      ratingData: state => state.rating.ratingData,
+      footballRating: state => state.rating.footballRating,
+      ratingLoader: state => state.rating.ratingLoader,
+    })
+  },
+}
+</script>
+
+<style lang="less" scoped>
+@import "src/assets/css/variables.less";
+
+.rating_header {
+  background: @DarkColorBG;
+  padding: 4px;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  border-radius: 5px 5px 0 0;
+  margin-top: 25px;
+
+  .rating_title_cell {
+    min-width: 24px;
+    cursor: pointer;
+    .shadow_inset;
+    color: @colorText;
+
+    &.yellow {
+      color: @maxYellow;
+    }
+
+    &.red {
+      color: @maxred;
+    }
+
+    &.activeCell {
+      background: @colorBlur;
+    }
+  }
+}
+
+.rating_body{
+  display: none;
+  &.active_body{
+    display: block;
+  }
+}
+
+</style>
