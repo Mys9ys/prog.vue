@@ -167,6 +167,7 @@ class CreateFootballRatings{
         }
 
         foreach ($this->arResults as $selector=>$match){
+
             foreach ($match as $id=>$score){
 
                 uasort($score, 'MysSortFunc');

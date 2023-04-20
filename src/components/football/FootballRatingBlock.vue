@@ -13,10 +13,10 @@
 
     <FootballRatingBody class="rating_body" :class="{'active_body':activeCell == index}" v-for="(icon, index) in icons"
                         :key="index"
-
+                        :arRating="footballRating[relation[index]]"
+                        :icon="index"
     >{{ icon }}
     </FootballRatingBody>
-
 
   </div>
 </template>
@@ -42,24 +42,25 @@ export default {
     return {
       activeCell: 1,
       relation: {
-        1: 'score',
+        1: 'all',
+        2: 'score',
         18: 'result',
         28: 'diff',
-        19: 'summ',
+        19: 'sum',
         32: 'domination',
         21: 'yellow',
         22: 'red',
         20: 'corner',
         23: 'penalty',
         45: 'otime',
-        46: 'openalty',
+        46: 'spenalty',
         100: 'best',
 
       },
 
       icons: {
-        1: '0-0',
-
+        1: '♛',
+        2: '0-0',
         18: '✓',  // result
         28: 'Δ',
         19: 'Σ',
@@ -67,10 +68,10 @@ export default {
         21: '▮',
         22: '▮',
         20: '🡬',
-        23: '🠹',
-        45: '+⧗',
-        46: '+🠹',
-        100: '🏆',
+        23: '◒',
+        45: '+◔',
+        46: '+◒',
+        100: '♚',
       },
 
       description: {
@@ -126,15 +127,15 @@ export default {
 .rating_header {
   background: @DarkColorBG;
   padding: 4px;
-  padding-bottom: 0;
   display: flex;
   flex-direction: row;
-  gap: 4px;
-  border-radius: 5px 5px 0 0;
+  justify-content: space-between;
+  gap: 3px;
+  border-radius: 5px;
   margin-top: 25px;
 
   .rating_title_cell {
-    min-width: 24px;
+    min-width: 23px;
     cursor: pointer;
     .shadow_inset;
     color: @colorText;
