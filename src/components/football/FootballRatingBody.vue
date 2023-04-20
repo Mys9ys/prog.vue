@@ -4,16 +4,21 @@
       <div class="title_icon" :class="{'yellow': icon == 21, 'red': icon == 22}"><slot></slot></div>
       <div class="title_text">{{title[icon]}}</div>
     </div>
-    <pre>
-      {{Object.keys(arRating)}}
-    </pre>
+    <SelectBlockRating
+        :matchNumber="Object.keys(this.arRating || {})"
+        :arRating="arRating"
+    ></SelectBlockRating>
 
   </div>
 </template>
 
 <script>
+import SelectBlockRating from "@/components/football/SelectBlockRating";
+
 export default {
   name: "FootballRatingBody",
+  components: {SelectBlockRating},
+
   props: {
     arRating: {
       type: Object
@@ -24,7 +29,6 @@ export default {
   },
   data(){
     return{
-      // ratings: Array.from(this.arRating),
       title: {
         1: 'Сводный рейтинг (сумма остальных)',
         2: 'Счет матча',
