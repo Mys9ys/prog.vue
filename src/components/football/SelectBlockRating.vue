@@ -1,10 +1,10 @@
 <template>
   <div class="select_wrapper">
-    <select>
-      <option v-for="(el,id) in arRating" :value="id" :key="id">{{id}}</option>
-
+    <select v-if="arRating">
+      <option v-for="(id) in selectMatch(arRating)" :value="id" :key="id">Матч №: {{id}}</option>
     </select>
-    {{matchNumbers}}
+
+
   </div>
 </template>
 
@@ -25,16 +25,16 @@ export default {
     }
   },
 
-  mounted() {
-    this.checkIds()
-  },
+  // mounted() {
+  //   this.checkIds()
+  // },
 
   methods: {
-    checkIds(){
-      this.matchNumbers = Object.keys(this.arRating || {})
+    selectMatch(arRating){
+      this.matchNumbers = Object.keys(arRating || {})
 
-      console.log(this.matchNumbers)
-    }
+      return this.matchNumbers.reverse()
+    },
   }
 }
 </script>
