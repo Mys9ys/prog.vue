@@ -4,7 +4,7 @@
       <div class="block_title">
         <slot></slot>
       </div>
-      <div v-if="path" class="btn_prev" @click="$router.push(path)">Назад</div>
+      <div v-if="path" class="btn_prev" @click="$router.push(path).then(() => { this.$router.go() })">Назад</div>
       <div v-else class="btn_prev" @click="$router.go(-1)">Назад</div>
     </div>
   </div>

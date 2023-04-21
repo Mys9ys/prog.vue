@@ -34,8 +34,8 @@ export default {
     FootballRatingBody
   },
   props: {
-    info: {
-      type: Object
+    eventId: {
+      type: String
     }
   },
   data() {
@@ -55,7 +55,6 @@ export default {
         45: 'otime',
         46: 'spenalty',
         100: 'best',
-
       },
 
       icons: {
@@ -86,12 +85,11 @@ export default {
         23: 'Количество пенальти в матче (сумма для обеих команд)',
         45: 'Дополнительное время (наличие/отсутствие)',
         46: 'Серия пенальти (наличие/отсутствие)',
-
       }
     }
   },
   created() {
-    this.loadRating()
+    this.loadRating(this.eventId)
   },
 
   methods: {
@@ -132,7 +130,7 @@ export default {
   justify-content: space-between;
   gap: 3px;
   border-radius: 5px;
-  margin-top: 25px;
+  margin-top: 4px;
 
   .rating_title_cell {
     min-width: 23px;

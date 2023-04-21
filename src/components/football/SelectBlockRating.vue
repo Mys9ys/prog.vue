@@ -4,7 +4,7 @@
       <option v-for="(el,id) in arRating" :value="id" :key="id">{{id}}</option>
 
     </select>
-    {{this.matchNumbers}}
+    {{matchNumbers}}
   </div>
 </template>
 
@@ -16,12 +16,24 @@ export default {
       type: Object
     },
     matchNumber:{
-      type: Object
+      type: Array
     }
   },
   data(){
     return{
-      // matchNumbers: Object.keys(this.arRating || {})
+      matchNumbers: []
+    }
+  },
+
+  mounted() {
+    this.checkIds()
+  },
+
+  methods: {
+    checkIds(){
+      this.matchNumbers = Object.keys(this.arRating || {})
+
+      console.log(this.matchNumbers)
     }
   }
 }

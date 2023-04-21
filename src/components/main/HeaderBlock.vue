@@ -113,8 +113,8 @@
     {{ $store.state.auth.userInfo.NAME }}
   </div>
   <div class="alter_btns">
-    <BtnMini @click="$router.push('/ratings')" :img="btns.get('ratings')"></BtnMini>
-    <BtnMini @click="$router.push('/catalog')" :img="btns.get('catalog')"></BtnMini>
+    <BtnMini @click="$router.push('/ratings').then(() => { this.$router.go() })" :img="btns.get('ratings')"></BtnMini>
+    <BtnMini @click="$router.push('/catalog').then(() => { this.$router.go() })" :img="btns.get('catalog')"></BtnMini>
     <BtnMini @click="logoutProfile" :img="btns.get('logout')"></BtnMini>
   </div>
 </template>

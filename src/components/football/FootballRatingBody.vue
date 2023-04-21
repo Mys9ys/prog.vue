@@ -5,7 +5,6 @@
       <div class="title_text">{{title[icon]}}</div>
     </div>
     <SelectBlockRating
-        :matchNumber="Object.keys(this.arRating || {})"
         :arRating="arRating"
     ></SelectBlockRating>
 

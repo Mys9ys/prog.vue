@@ -9,11 +9,9 @@
       </div>
 
       <div class="active event_box" v-if="event.active">
-        <div class="title_wrapper">
-          <div class="title">Активные</div>
-        </div>
         <div class="el_event" v-for="(el, index) in event.active" :key="index">
          <div class="img_box">
+           <div class="active_lamp"></div>
            <img :src="url+el.img" alt="">
          </div>
           <div class="name">{{el.NAME}}</div>
@@ -23,11 +21,9 @@
         </div>
       </div>
       <div class="old event_box" v-if="event.old">
-        <div class="title_wrapper">
-          <div class="title">Прошедшие</div>
-        </div>
         <div class="el_event" v-for="(el, index) in event.old" :key="index">
           <div class="img_box">
+            <div class="old_lamp"></div>
             <img :src="url+el.img" alt="">
           </div>
           <div class="name">{{el.NAME}}</div>
@@ -117,23 +113,6 @@ export default {
     align-items: flex-start;
 
     margin-bottom: 12px;
-
-    .title_wrapper{
-      display: inline-block;
-      padding: 2px;
-      background: @DarkColorBG;
-      border-radius: 5px;
-      color: @colorText;
-      margin: 4px 0;
-      align-items: flex-start;
-      .title{
-        display: inline-block;
-        .shadow_inset;
-        font-size: 12px;
-        padding: 0 4px;
-      }
-    }
-
   }
 
   .el_event {
@@ -147,6 +126,7 @@ export default {
     gap: 6px;
 
     .img_box{
+      position: relative;
       .shadow_inset;
       .flex_center;
       max-width: 55px;
@@ -176,6 +156,21 @@ export default {
       }
     }
   }
+}
 
+.active_lamp{
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
+  background: @green;
+  border-radius: 50%;
+}
+.old_lamp{
+  .active_lamp;
+  background: @red;
 }
 </style>

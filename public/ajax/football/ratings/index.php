@@ -13,10 +13,12 @@ $_REQUEST['date'] = date(\CDatabase::DateFormatToPHP("DD.MM.YYYY HH:MI:SS"), tim
 
 file_put_contents('../../_logs/ratings.log', json_encode($_REQUEST) . PHP_EOL, FILE_APPEND);
 
+if($_REQUEST){
+    $res = new CreateFootballRatings(["event" => 6664]);
 
-$res = new CreateFootballRatings(["event" => 6664]);
+    echo json_encode($res->getResult());
+}
 
-echo json_encode($res->getResult());
 
 class CreateFootballRatings{
 
