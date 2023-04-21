@@ -1,8 +1,11 @@
 <template>
   <div class="select_wrapper">
-    <select v-if="arRating">
-      <option v-for="(id) in selectMatch(arRating)" :value="id" :key="id">Матч №: {{id}}</option>
+    <select v-if="arRating" v-model="selected">
+      <option v-for="(id) in matchNumbers" :value="id" :key="id">Матч №: {{id}}</option>
     </select>
+    <div v-for="(data, index) in arRating" :key="index">
+      <div v-if="selected==index">{{data}}</div>
+    </div>
 
 
   </div>
@@ -15,13 +18,11 @@ export default {
     arRating: {
       type: Object
     },
-    matchNumber:{
-      type: Array
-    }
   },
   data(){
     return{
-      matchNumbers: []
+      matchNumbers: [],
+      selected: ''
     }
   },
 
@@ -29,9 +30,17 @@ export default {
   //   this.checkIds()
   // },
 
+  watch:{
+    arRating(){
+      this.selectMatch(this.arRating)
+    }
+  },
+
   methods: {
     selectMatch(arRating){
       this.matchNumbers = Object.keys(arRating || {})
+
+      this.selected = this.matchNumbers.length
 
       return this.matchNumbers.reverse()
     },
