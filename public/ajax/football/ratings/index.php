@@ -170,13 +170,69 @@ class CreateFootballRatings{
 
         foreach ($this->arResults as $selector=>$match){
 
-            foreach ($match as $id=>$score){
+            foreach ($match as $id=>$scores){
 
-                uasort($score, 'MysSortFunc');
-                $this->arResults[$selector][$id] = $score;
+                uasort($scores, 'MysSortFunc');
 
+                $place = 1;
+                $prev = '';
+                $count = 1;
+                $el = [];
+                $arSorted = [];
+
+                foreach ($scores as $uid=>$score){
+                    if($score !== $prev) {
+                        $place = $count;
+                    }
+                    $el['num'] = $count;
+
+                    $el['place'] = $place;
+                    $el['user'] =  $this->arUsers[$uid];
+                    $el['score'] = $score;
+
+                    if($id>1 && $selector != 'best') {
+                        $el['diff'] = $this->arResults[$selector][$id-1][$uid]['place'] - $place;
+
+//                        var_dump($el['diff']);
+//                        var_dump($selector);
+//                        var_dump($place);
+//                        var_dump($el['user']['name']);
+//                        var_dump($this->arResults[$selector][$id-1][$uid]);
+//                        var_dump($this->arResults[$selector][$id-1][$uid]['place']);
+//                        die;
+                    } else {
+                        $el['diff'] = 0;
+                    }
+                    $arSorted[$uid] = $el;
+
+                    $prev = $score;
+                    $count++;
+                }
+                $this->arResults[$selector][$id] = $arSorted;
+            }
+//            foreach ($match as $id=>$scores){
+//                foreach ($scores as $num=>$score){
+//                    if($id == 1){
+//                        $score['diff'] = 0;
+//                    } else {
+//                        $score['diff'] = $score['place'] - $match[$id][$scores[$num]]['place'];
+//                    }
+//                    $this->arResults[$selector][$id] = $score;
+//                }
+//            }
+        }
+        foreach ($this->arResults as $selector=>$match){
+
+            foreach ($match as $id=>$scores) {
+
+                array_multisort(array_column($scores, 'тгь'), SORT_DESC, $scores);
+
+                $this->arResults[$selector][$id] = $scores;
             }
         }
+
+
+        file_put_contents('../../_logs/ratings.json', json_encode($this->arResults));
     }
 
     public function getResult(){
