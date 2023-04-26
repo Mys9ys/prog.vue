@@ -88,7 +88,6 @@ export default {
         }
       })
 
-
       if (this.errors.length === 0) {
         // запрос авторизации
         this.recoverCodeData['type'] = 'recoverMail'
