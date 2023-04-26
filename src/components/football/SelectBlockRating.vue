@@ -20,7 +20,7 @@
             <td class="pr_table_col" v-if="el.diff === 0"><div class="zero_diff">–</div></td>
             <td class="pr_table_col" v-else-if="el.diff >0"><div class="plus_diff">{{el.diff}}</div></td>
             <td class="pr_table_col" v-else-if="el.diff <0"><div class="minus_diff">{{el.diff}}</div></td>
-            <td class="pr_table_col">{{el.user.name}}</td>
+            <td class="pr_table_col user_cell"><span>{{el.user.name}}</span><span class="user_info" @click="$router.push('/profile/' + el.user.id)">i</span></td>
             <td class="pr_table_col">{{el.score}}</td>
           </tr>
           </tbody>
@@ -73,6 +73,25 @@ export default {
   th,td{
     padding: 2px;
     text-align: left;
+  }
+
+  .user_cell{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .user_info{
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 20px;
+      height: 20px;
+      color: @pearl;
+      border: 1px solid @pearl;
+      border-radius: 3px;
+    }
   }
 }
 .zero_diff{

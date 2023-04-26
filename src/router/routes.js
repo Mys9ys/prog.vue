@@ -7,6 +7,10 @@ import FBMatch from "@/pages/football/FBMatch";
 import FBCatalog from "@/pages/football/FBCatalog";
 import FBEvent from "@/pages/football/FBEvent";
 import RatingPage from "@/pages/RatingPage";
+import MyProfilePage from "@/pages/MyProfilePage";
+import ProfilePage from "@/pages/ProfilePage";
+import RecoverMail from "@/pages/auth/RecoverMail";
+import RecoverSuccess from "@/pages/auth/RecoverSuccess";
 
 const routes = [
     {
@@ -35,6 +39,25 @@ const routes = [
     {
         path: '/football',
         component: FBCatalog,
+    },
+
+    {
+        path: '/profile',
+        component: MyProfilePage,
+    },
+
+    {
+        path: '/profile/:id',
+        component: ProfilePage,
+    },
+
+    {
+        path: '/recover',
+        component: RecoverMail,
+    },
+    {
+        path: '/recover_success',
+        component: RecoverSuccess,
     },
 
     {

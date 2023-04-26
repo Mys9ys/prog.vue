@@ -156,13 +156,8 @@ export default {
   }
 
   .footer {
-    width: 100%;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     text-align: center;
-    bottom: 45px;
-    padding: 0 24px;
+    margin-top: 25px;
     display: flex;
     flex-direction: column;
     gap: 12px;

@@ -5,6 +5,7 @@ import {regModule} from "@/store/regModule";
 import {footballModule} from "@/store/footballModule";
 import {catalogModule} from "@/store/catalogModule";
 import {ratingModule} from "@/store/ratingModule";
+import {recoverModule} from "@/store/recoverModule";
 
 export default createStore({
     state: {
@@ -23,7 +24,8 @@ export default createStore({
         reg: regModule,
         football: footballModule,
         catalog: catalogModule,
-        rating: ratingModule
+        rating: ratingModule,
+        recover: recoverModule
     },
     root: true
 })

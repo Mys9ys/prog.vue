@@ -82,16 +82,14 @@ export const authModule = {
                 )
 
                 if (response.data.status == 'ok') {
-                    console.log('axios data', response.data)
+                    console.log('axios response', response.data)
                     commit('setUserInfo', response.data.info)
                     commit('setAuth', true)
                     commit('setToken', response.data.info.UF_TOKEN)
                     commit('setLoginError', '')
-                }
-                if (response.data.status == 'error') {
+                } else {
                     commit('setLoginError', response.data.mes)
                     commit('setAuth', false)
-                    // state.loginError = 'fvvvn v'
                 }
 
                 // console.log(response.data)

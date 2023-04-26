@@ -110,7 +110,7 @@
     </div>
   </div>
   <div class="nick">
-    {{ $store.state.auth.userInfo.NAME }}
+    {{$store.state.auth.userInfo.NAME}}
   </div>
   <div class="alter_btns">
     <BtnMini @click="$router.push('/ratings').then(() => { this.$router.go() })" :img="btns.get('ratings')"></BtnMini>
