@@ -24,9 +24,6 @@ if($_REQUEST){
 }
 
 
-
-
-
 class Prognos9ysGetEventsInfo{
 
     protected $eventsIb;

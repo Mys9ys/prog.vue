@@ -85,6 +85,7 @@ class CreateFootballRatings{
         ]);
 
         while ($res = $row->fetch()) {
+            $this->arUsers[$res["ID"]]["id"] = $res["ID"];
             $this->arUsers[$res["ID"]]["name"] = $res["NAME"];
             $this->arUsers[$res["ID"]]["img"] = $res["PERSONAL_PHOTO"] ? CFile::GetPath($res["PERSONAL_PHOTO"]) : null;
         }
