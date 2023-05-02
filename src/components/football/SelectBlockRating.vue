@@ -1,6 +1,6 @@
 <template>
   <div class="select_wrapper">
-    <select v-if="arRating" v-model="selected">
+    <select class="select" v-if="arRating" v-model="selected">
       <option v-for="(id) in matchNumbers" :value="id" :key="id">Матч №: {{id}}</option>
     </select>
     <div v-for="(data, index) in arRating" :key="index">
@@ -106,4 +106,32 @@ export default {
 .minus_diff{
   color: @red;
 }
+.select_wrapper{
+  text-align: right;
+  .select{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    /* identical to box height, or 157% */
+
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+
+    text-align: right;
+    font-family: 'Roboto', sans-serif;
+
+    /* Серый */
+    color: #8A8A8E;
+    border: none;
+    outline: none;
+    margin-bottom: 4px;
+    padding: 0 4px;
+    border-radius: 5px;
+    option{
+      text-align: left;
+    }
+  }
+}
+
 </style>

@@ -63,6 +63,7 @@ export default {
     flex-direction: row;
     align-items: center;
     gap: 4px;
+    margin-bottom: 4px;
     .title_icon{
       .shadow_inset;
       min-width: 30px;
