@@ -27,80 +27,96 @@
         </div>
       </div>
       <div class="prognosis_block">
-        <div class="goals_block">
-          <div class="goals_block_title pb_title">
-            {{icons[1]}}
+        <div class="part_block">
+          <div class="title_block">
+            <div class="item icon">{{ icons[1] }}</div>
+            <div class="item title">{{ title[1] }}:</div>
           </div>
-          <div class="goal_block">
-            <div class="zero goal_btn" @click="setGoals('zero', 15)">0</div>
-            <div class="minus goal_btn" @click="setGoals('minus', 15)">-</div>
-            <div class="value">{{ data[15] }}</div>
-            <div class="plus goal_btn" @click="setGoals('plus', 15)">+</div>
-            <div class="two goal_btn" @click="setGoals('two', 15)">2</div>
+          <div class="value_block">
+            <div class="goal_block">
+              <div class="zero goal_btn" @click="setGoals('zero', 15)">0</div>
+              <div class="minus goal_btn" @click="setGoals('minus', 15)">-</div>
+              <div class="value">{{ data[15] }}</div>
+              <div class="plus goal_btn" @click="setGoals('plus', 15)">+</div>
+              <div class="two goal_btn" @click="setGoals('two', 15)">2</div>
+            </div>
+            <div class="dash">–</div>
+            <div class="goal_block">
+              <div class="zero goal_btn" @click="setGoals('zero', 16)">0</div>
+              <div class="minus goal_btn" @click="setGoals('minus', 16)">-</div>
+              <div class="value">{{ data[16] }}</div>
+              <div class="plus goal_btn" @click="setGoals('plus', 16)">+</div>
+              <div class="two goal_btn" @click="setGoals('two', 16)">2</div>
+            </div>
           </div>
-          <div class="dash">–</div>
-          <div class="goal_block">
-            <div class="zero goal_btn" @click="setGoals('zero', 16)">0</div>
-            <div class="minus goal_btn" @click="setGoals('minus', 16)">-</div>
-            <div class="value">{{ data[16] }}</div>
-            <div class="plus goal_btn" @click="setGoals('plus', 16)">+</div>
-            <div class="two goal_btn" @click="setGoals('two', 16)">2</div>
-          </div>
+
         </div>
         <div class="prognosis_dash_line"></div>
-        <div class="match_math_block">
 
-          <div class="match_result_block">
-            <div class="match_result_title pb_title">
-              {{icons[18]}}
-            </div>
-            <div class="match_result_box">
+        <div class="part_block">
+          <div class="title_block">
+            <div class="item icon">{{ icons[18] }}</div>
+            <div class="item title">{{ title[18] }}:</div>
+          </div>
+          <div class="value_block">
+            <div class="value_box">
               <div class="match_result_el" :class="{'active' : data[18] === 'п1'}" @click="setResult('п1')">п1</div>
               <div class="match_result_el" :class="{'active' : data[18] === 'н'}" @click="setResult('н')">н</div>
               <div class="match_result_el" :class="{'active' : data[18] === 'п2'}" @click="setResult('п2')">п2</div>
             </div>
           </div>
+        </div>
+        <div class="prognosis_dash_line"></div>
 
-          <div class="match_sum_block">
-            <div class="match_sum_title pb_title">
-              {{icons[28]}}
-            </div>
-            <div class="match_sum_box">
-              <div class="minus math_btn" @click="setMath('minus', 28, 'sum')">-</div>
-              <div class="value">{{ data[28] }}</div>
-              <div class="plus math_btn" @click="setMath('plus', 28, 'sum')">+</div>
-            </div>
+        <div class="part_block">
+          <div class="title_block">
+            <div class="item icon">{{ icons[28] }}</div>
+            <div class="item title">{{ title[28] }}:</div>
           </div>
-
-          <div class="match_sum_block">
-            <div class="match_sum_title pb_title">
-              {{icons[19]}}
-            </div>
-            <div class="match_sum_box">
-              <div class="minus math_btn" @click="setMath('minus', 19)">-</div>
-              <div class="value">{{ data[19] }}</div>
-              <div class="plus math_btn" @click="setMath('plus', 19)">+</div>
-            </div>
+          <div class="value_block">
+            <div class="minus math_btn" @click="setMath('minus', 28, 'sum')">-</div>
+            <div class="value">{{ data[28] }}</div>
+            <div class="plus math_btn" @click="setMath('plus', 28, 'sum')">+</div>
           </div>
         </div>
 
         <div class="prognosis_dash_line"></div>
 
-        <div class="match_domination_block">
-          <div class="pb_title">{{icons[32]}}</div>
-          <div class="match_domination_box">
-            <div class="minus math_btn" @click="setRangeBtn('minus')">-</div>
-            <div class="value left">{{ data[32] }}</div>
-            <input class="domination_range" type="range" ref="iRange" :value="data[32]" @change="rangeChange()">
-            <div class="value right">{{ 100 - data[32] }}</div>
-            <div class="plus math_btn" @click="setRangeBtn('plus')">-</div>
-            <div class="plus math_btn" @click="setRangeBtn('half')">50</div>
+        <div class="part_block">
+          <div class="title_block">
+            <div class="item icon">{{ icons[19] }}</div>
+            <div class="item title">{{ title[19] }}:</div>
+          </div>
+          <div class="value_block">
+            <div class="minus math_btn" @click="setMath('minus', 19)">-</div>
+            <div class="value">{{ data[19] }}</div>
+            <div class="plus math_btn" @click="setMath('plus', 19)">+</div>
           </div>
         </div>
         <div class="prognosis_dash_line"></div>
-        <div class="cards_block">
-          <div class="block yellow">
-            <div class="title">{{icons[21]}}</div>
+        <div class="part_block">
+          <div class="title_block">
+            <div class="item icon">{{ icons[32] }}</div>
+            <div class="item title">{{ title[32] }}:</div>
+          </div>
+          <div class="value_block">
+            <div class="match_domination_box">
+              <div class="minus math_btn" @click="setRangeBtn('minus')">-</div>
+              <div class="value left">{{ data[32] }}</div>
+              <input class="domination_range" type="range" ref="iRange" :value="data[32]" @change="rangeChange()">
+              <div class="value right">{{ 100 - data[32] }}</div>
+              <div class="plus math_btn" @click="setRangeBtn('plus')">-</div>
+              <div class="plus math_btn" @click="setRangeBtn('half')">50</div>
+            </div>
+          </div>
+        </div>
+        <div class="prognosis_dash_line"></div>
+        <div class="part_block yellow">
+          <div class="title_block">
+            <div class="item icon">{{ icons[21] }}</div>
+            <div class="item title">{{ title[21] }}:</div>
+            </div>
+          <div class="value_block">
             <div class="box">
               <div class="btn" @click="setValue('zero', 21)">0</div>
               <div class="btn" @click="setValue('minus', 21)">-</div>
@@ -109,9 +125,14 @@
               <div class="btn" @click="setValue('five', 21)">5</div>
             </div>
           </div>
-
-          <div class="block red">
-            <div class="title">{{icons[22]}}</div>
+        </div>
+        <div class="prognosis_dash_line"></div>
+        <div class="part_block red">
+          <div class="title_block">
+            <div class="item icon">{{ icons[22] }}</div>
+            <div class="item title">{{ title[22] }}:</div>
+          </div>
+          <div class="value_block">
             <div class="box">
               <div class="btn" @click="setValue('zero', 22)">0</div>
               <div class="btn" @click="setValue('minus', 22)">-</div>
@@ -122,9 +143,12 @@
           </div>
         </div>
         <div class="prognosis_dash_line"></div>
-        <div class="corner_penalty_block">
-          <div class="block corner">
-            <div class="title">{{icons[20]}}</div>
+        <div class="part_block">
+          <div class="title_block">
+            <div class="item icon">{{ icons[20] }}</div>
+            <div class="item title">{{ title[20] }}:</div>
+          </div>
+          <div class="value_block">
             <div class="box">
               <div class="btn" @click="setValue('zero', 20)">0</div>
               <div class="btn" @click="setValue('minus', 20)">-</div>
@@ -133,9 +157,14 @@
               <div class="btn" @click="setValue('six', 20)">6</div>
             </div>
           </div>
-
-          <div class="block penalty">
-            <div class="title">{{icons[23]}}</div>
+        </div>
+        <div class="prognosis_dash_line"></div>
+        <div class="part_block">
+          <div class="title_block">
+            <div class="item icon">{{ icons[23] }}</div>
+            <div class="item title">{{ title[23] }}:</div>
+          </div>
+          <div class="value_block">
             <div class="box">
               <div class="btn" @click="setValue('zero', 23)">0</div>
               <div class="btn" @click="setValue('minus', 23)">-</div>
@@ -163,20 +192,20 @@
     </div>
 
     <div class="match_result_wrapper" v-else>
-      <table class="table table-dark table-hover om_table_box">
+      <table class="table table-dark table-hover om_table_box" v-if="prognosis">
         <thead>
         <tr>
-          <th class="pr_table_col">{{icons[1]}}</th>
-          <th class="pr_table_col">{{icons[18]}}</th>
-          <th class="pr_table_col">{{icons[19]}}</th>
-          <th class="pr_table_col">{{icons[28]}}</th>
-          <th class="pr_table_col">{{icons[32]}}</th>
-          <th class="pr_table_col yellow_t">{{icons[21]}}</th>
-          <th class="pr_table_col red_t">{{icons[22]}}</th>
-          <th class="pr_table_col">{{icons[20]}}</th>
-          <th class="pr_table_col">{{icons[23]}}</th>
-          <th class="pr_table_col">{{icons[45]}}</th>
-          <th class="pr_table_col">{{icons[46]}}</th>
+          <th class="pr_table_col">{{ icons[1] }}</th>
+          <th class="pr_table_col">{{ icons[18] }}</th>
+          <th class="pr_table_col">{{ icons[19] }}</th>
+          <th class="pr_table_col">{{ icons[28] }}</th>
+          <th class="pr_table_col">{{ icons[32] }}</th>
+          <th class="pr_table_col yellow_t">{{ icons[21] }}</th>
+          <th class="pr_table_col red_t">{{ icons[22] }}</th>
+          <th class="pr_table_col">{{ icons[20] }}</th>
+          <th class="pr_table_col">{{ icons[23] }}</th>
+          <th class="pr_table_col">{{ icons[45] }}</th>
+          <th class="pr_table_col">{{ icons[46] }}</th>
           <th class="pr_table_col">all</th>
 
         </tr>
@@ -185,16 +214,16 @@
         <tr>
 
           <td class="pr_table_col">{{ prognosis.goal_home }} - {{ prognosis.goal_guest }}</td>
-          <td class="pr_table_col">{{ prognosis.result}}</td>
-          <td class="pr_table_col">{{ prognosis.sum}}</td>
-          <td class="pr_table_col">{{ prognosis.diff}}</td>
-          <td class="pr_table_col">{{ prognosis.domination}} - {{100- prognosis.domination}}</td>
-          <td class="pr_table_col">{{ prognosis.yellow}}</td>
-          <td class="pr_table_col">{{ prognosis.red}}</td>
-          <td class="pr_table_col">{{ prognosis.corner}}</td>
-          <td class="pr_table_col">{{ prognosis.penalty}}</td>
-          <td class="pr_table_col">{{ prognosis.otime}}</td>
-          <td class="pr_table_col">{{ prognosis.spenalty}}</td>
+          <td class="pr_table_col">{{ prognosis.result }}</td>
+          <td class="pr_table_col">{{ prognosis.sum }}</td>
+          <td class="pr_table_col">{{ prognosis.diff }}</td>
+          <td class="pr_table_col">{{ prognosis.domination }} - {{ 100 - prognosis.domination }}</td>
+          <td class="pr_table_col">{{ prognosis.yellow }}</td>
+          <td class="pr_table_col">{{ prognosis.red }}</td>
+          <td class="pr_table_col">{{ prognosis.corner }}</td>
+          <td class="pr_table_col">{{ prognosis.penalty }}</td>
+          <td class="pr_table_col">{{ prognosis.otime }}</td>
+          <td class="pr_table_col">{{ prognosis.spenalty }}</td>
           <td class="pr_table_col"></td>
 
         </tr>
@@ -202,16 +231,16 @@
         <tr>
 
           <td class="pr_table_col result">{{ matchR.goal_home }} - {{ matchR.goal_guest }}</td>
-          <td class="pr_table_col result">{{ matchR.result}}</td>
-          <td class="pr_table_col result">{{ matchR.sum}}</td>
-          <td class="pr_table_col result">{{ matchR.diff}}</td>
-          <td class="pr_table_col result">{{ matchR.domination}} - {{100- matchR.domination}}</td>
-          <td class="pr_table_col result">{{ matchR.yellow}}</td>
-          <td class="pr_table_col result">{{ matchR.red}}</td>
-          <td class="pr_table_col result">{{ matchR.corner}}</td>
-          <td class="pr_table_col result">{{ matchR.penalty}}</td>
-          <td class="pr_table_col result">{{ matchR.otime}}</td>
-          <td class="pr_table_col result">{{ matchR.spenalty}}</td>
+          <td class="pr_table_col result">{{ matchR.result }}</td>
+          <td class="pr_table_col result">{{ matchR.sum }}</td>
+          <td class="pr_table_col result">{{ matchR.diff }}</td>
+          <td class="pr_table_col result">{{ matchR.domination }} - {{ 100 - matchR.domination }}</td>
+          <td class="pr_table_col result">{{ matchR.yellow }}</td>
+          <td class="pr_table_col result">{{ matchR.red }}</td>
+          <td class="pr_table_col result">{{ matchR.corner }}</td>
+          <td class="pr_table_col result">{{ matchR.penalty }}</td>
+          <td class="pr_table_col result">{{ matchR.otime }}</td>
+          <td class="pr_table_col result">{{ matchR.spenalty }}</td>
           <td class="pr_table_col result"></td>
 
         </tr>
@@ -219,17 +248,17 @@
         <tr class="prog_r">
 
           <td class="pr_table_col" :class="{'green' : progR.score >0}">{{ progR.score }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.result >0}">{{ progR.result}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.sum >0}">{{ progR.sum}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.diff >0}">{{ progR.diff}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.domination >0}">{{ progR.domination}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.yellow >0}">{{ progR.yellow}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.red >0}">{{ progR.red}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.corner >0}">{{ progR.corner}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.penalty >0}">{{ progR.penalty}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.otime >0}">{{ progR.otime}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.spenalty >0}">{{ progR.spenalty}}</td>
-          <td class="pr_table_col" :class="{'green' : progR.all >0}">{{ progR.all}}</td>
+          <td class="pr_table_col" :class="{'green' : progR.result >0}">{{ progR.result }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.sum >0}">{{ progR.sum }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.diff >0}">{{ progR.diff }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.domination >0}">{{ progR.domination }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.yellow >0}">{{ progR.yellow }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.red >0}">{{ progR.red }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.corner >0}">{{ progR.corner }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.penalty >0}">{{ progR.penalty }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.otime >0}">{{ progR.otime }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.spenalty >0}">{{ progR.spenalty }}</td>
+          <td class="pr_table_col" :class="{'green' : progR.all >0}">{{ progR.all }}</td>
 
         </tr>
 
@@ -243,9 +272,9 @@
         <div class="close" @click="annotationVis = false">x</div>
       </div>
       <div class="annotation_elem" v-for="(icon, index) in icons"
-        :key="index">
-        <div class="annotation_title" :class="{'yellow_t' : index == 21, 'red_t' : index == 22}">{{icon}}</div>
-        <div class="annotation_description">{{description[index]}}</div>
+           :key="index">
+        <div class="annotation_title" :class="{'yellow_t' : index == 21, 'red_t' : index == 22}">{{ icon }}</div>
+        <div class="annotation_description">{{ description[index] }}</div>
       </div>
     </div>
 
@@ -259,8 +288,6 @@
       </div>
     </div>
   </div>
-
-
 
 </template>
 
@@ -324,9 +351,23 @@ export default {
         46: '+◒',
       },
 
+      title: {
+        1: 'Счет матча',
+        18: 'Исход матча',
+        28: 'Разница мячей',
+        19: 'Сумма мячей',
+        32: 'Процент владения',
+        21: 'Количество желтых',
+        22: 'Количество красных',
+        20: 'Количество угловых',
+        23: 'Количество пенальти',
+        45: 'Дополнительное время',
+        46: 'Серия пенальти',
+      },
+
       description: {
         1: 'Счет матча',
-        18: 'Исход матча (п1 - победа первой команды, н - ничья, п2 - победа второй',
+        18: 'Исход матча (п1 - победа первой команды, н - ничья, п2 - победа второй)',
         28: 'Разница мячей забитые второй командой вычитаются из забитых первой командой',
         19: 'Сумма мячей забитых обеими командами',
         32: 'Процент владения мячом первой и второй командой',
@@ -344,6 +385,12 @@ export default {
   created() {
     this.fillMatchElem()
     this.setOtherLink()
+  },
+
+  watch: {
+    prognosis() {
+      console.log('prognosis load')
+    }
   },
   methods: {
     ...mapActions({
@@ -373,14 +420,13 @@ export default {
 
     setGoals(type, id) {
 
-      if (type === 'zero') this.data[id] = 0
-
       if (type === 'minus') {
         if (this.data[id] > 0) this.data[id]--
       }
 
       if (type === 'plus') this.data[id]++
 
+      if (type === 'zero') this.data[id] = 0
       if (type === 'two') this.data[id] = 2
       if (type === 'five') this.data[id] = 5
 
@@ -415,7 +461,6 @@ export default {
     },
 
     setValue(type, id) {
-      if (type === 'zero') this.data[id] = 0
 
       if (type === 'minus') {
         if (this.data[id] > 0) this.data[id]--
@@ -423,6 +468,7 @@ export default {
 
       if (type === 'plus') this.data[id]++
 
+      if (type === 'zero') this.data[id] = 0
       if (type === 'one') this.data[id] = 1
       if (type === 'five') this.data[id] = 5
       if (type === 'six') this.data[id] = 6
@@ -604,15 +650,71 @@ export default {
 
   gap: 4px;
 
-  .pb_title {
-    width: 24px;
-    height: 24px;
-    .shadow_inset;
-    .flex_center;
-    color: @maxdarkgrey;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 0;
+  .part_block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    .title_block {
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+      .item{
+        .shadow_inset;
+        text-align: left;
+        color: @maxdarkgrey;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .icon{
+        min-width: 24px;
+        .flex_center;
+      }
+    }
+
+    .value_block {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 4px;
+
+      .value_box {
+        display: flex;
+        flex-direction: row;
+        gap: 4px;
+      }
+    }
+
+    &.yellow {
+      .item {
+        color: @maxYellow;
+      }
+
+      .value {
+        border-color: @maxYellow;
+      }
+
+      .btn {
+        background: @maxYellow;
+      }
+    }
+
+    &.red {
+      .item {
+        color: @maxred;
+      }
+
+      .value {
+        border-color: @maxred;
+      }
+
+      .btn {
+        background: @maxred;
+      }
+    }
   }
 
   .prognosis_dash_line {
@@ -620,280 +722,144 @@ export default {
     border-bottom: 1px dotted @maxdarkgrey;
   }
 
-  .goals_block {
-    width: 100%;
+  .goal_block {
     display: flex;
     flex-direction: row;
-    gap: 4px;
+    align-items: center;
+    gap: 3px;
 
-    justify-content: space-between;
-
-    .goals_block_title {
-      width: 36px;
+    .value {
+      .flex_center;
+      .shadow_inset;
+      width: 26px;
+      height: 26px;
+      border: 2px solid @YesWrite;
+      padding: 2px 2px;
+      font-size: 14px;
+      border-radius: 3px;
     }
 
-    .goal_block {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 3px;
+    .goal_btn {
+      width: 26px;
+      height: 26px;
+      background: @YesWrite;
 
-      .value {
-        .flex_center;
-        .shadow_inset;
-        width: 26px;
-        height: 26px;
-        border: 2px solid @YesWrite;
-        padding: 2px 2px;
-        font-size: 14px;
-        border-radius: 3px;
-      }
-
-      .goal_btn {
-        width: 26px;
-        height: 26px;
-        background: @YesWrite;
-
-        .flex_center;
-        background: @colorText2;
-        color: @colorText;
-        cursor: pointer;
-        box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
-        padding: 2px 2px;
-        font-size: 14px;
-        border-radius: 3px;
-        text-align: center;
-        border: 1px solid transparent;
-        text-decoration: none;
-      }
+      .flex_center;
+      background: @colorText2;
+      color: @colorText;
+      cursor: pointer;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
+      padding: 2px 2px;
+      font-size: 14px;
+      border-radius: 3px;
+      text-align: center;
+      border: 1px solid transparent;
+      text-decoration: none;
     }
   }
 
-  .match_math_block {
-    width: 100%;
+  .match_result_el {
+    .flex_center;
+    .shadow_inset;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    border: 2px solid @maxdarkgrey;
+
+    &.active {
+      border-color: @YesWrite;
+    }
+  }
+
+  .math_btn {
+    width: 24px;
+    height: 24px;
+    background: @YesWrite;
+
+    .flex_center;
+    background: @colorText2;
+    color: @colorText;
+    cursor: pointer;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
+    padding: 2px 2px;
+    font-size: 14px;
+    border-radius: 3px;
+    text-align: center;
+    border: 1px solid transparent;
+    text-decoration: none;
+  }
+
+  .value {
+    .flex_center;
+    .shadow_inset;
+    width: 24px;
+    height: 24px;
+    border: 2px solid @YesWrite;
+    padding: 2px 2px;
+    font-size: 14px;
+    border-radius: 3px;
+  }
+
+  .match_domination_box {
     display: flex;
     flex-direction: row;
     gap: 3px;
 
-    justify-content: space-between;
-
-    .match_result_block {
-      display: flex;
-      flex-direction: row;
-
-      gap: 4px;
-
-      .match_result_title {
-        img {
-          width: 16px;
-          height: 16px;
-        }
-      }
-
-      .match_result_box {
-        display: flex;
-        flex-direction: row;
-        gap: 2px;
-
-        .match_result_el {
-          .flex_center;
-          .shadow_inset;
-          cursor: pointer;
-          padding: 0;
-          width: 24px;
-          height: 24px;
-          font-size: 12px;
-          border: 2px solid @maxdarkgrey;
-
-          &.active {
-            border-color: @YesWrite;
-          }
-        }
-      }
+    .domination_range {
+      width: 204px;
+      max-width: 59.8%;
     }
 
-    .match_sum_block {
-      display: flex;
-      flex-direction: row;
-      gap: 3px;
-
-      .match_sum_title {
-
-      }
-
-      .match_sum_box {
-        display: flex;
-        flex-direction: row;
-        gap: 3px;
-
-        .math_btn {
-          width: 24px;
-          height: 24px;
-          background: @YesWrite;
-
-          .flex_center;
-          background: @colorText2;
-          color: @colorText;
-          cursor: pointer;
-          box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
-          padding: 2px 2px;
-          font-size: 14px;
-          border-radius: 3px;
-          text-align: center;
-          border: 1px solid transparent;
-          text-decoration: none;
-        }
-
-        .value {
-          .flex_center;
-          .shadow_inset;
-          width: 24px;
-          height: 24px;
-          border: 2px solid @YesWrite;
-          padding: 2px 2px;
-          font-size: 14px;
-          border-radius: 3px;
-        }
-      }
-    }
-  }
-
-  .match_domination_block {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 3px;
-
-    .pb_title {
+    .value {
       width: 24px;
       height: 24px;
     }
 
-    .match_domination_box {
-      display: flex;
-      flex-direction: row;
-      gap: 3px;
+    .math_btn {
+      .prognosis_btn;
+      width: 24px;
+      height: 24px;
+    }
+  }
+  .box {
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+  }
+  .btn {
+    .prognosis_btn;
+    width: 24px;
+    height: 24px;
+  }
 
-      .domination_range {
-        width: 204px;
-        max-width: 59.8%;
-      }
 
-      .value {
-        width: 24px;
-        height: 24px;
-      }
+  &.yellow {
+    .title {
+      color: @maxYellow;
+    }
 
-      .math_btn {
-        .prognosis_btn;
-        width: 24px;
-        height: 24px;
-      }
+    .value {
+      border-color: @maxYellow;
+    }
+
+    .btn {
+      background: @maxYellow;
     }
   }
 
-  .cards_block {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .block {
-      display: flex;
-      flex-direction: row;
-      gap: 3px;
-
-      .title {
-        .pb_title;
-        width: 24px;
-        height: 24px;
-      }
-
-      .box {
-        display: flex;
-        flex-direction: row;
-        gap: 3px;
-      }
-
-      .value {
-        width: 24px;
-        height: 24px;
-      }
-
-      .btn {
-        .prognosis_btn;
-        width: 24px;
-        height: 24px;
-      }
-
-      &.yellow {
-        .title {
-          color: @maxYellow;
-        }
-
-        .value {
-          border-color: @maxYellow;
-        }
-
-        .btn {
-          background: @maxYellow;
-        }
-      }
-
-      &.red {
-        .title {
-          color: @maxred;
-        }
-
-        .value {
-          border-color: @maxred;
-        }
-
-        .btn {
-          background: @maxred;
-        }
-      }
+  &.red {
+    .title {
+      color: @maxred;
     }
 
-  }
+    .value {
+      border-color: @maxred;
+    }
 
-  .corner_penalty_block {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .block {
-      display: flex;
-      flex-direction: row;
-      gap: 3px;
-
-      .title {
-        .pb_title;
-        width: 24px;
-        height: 24px;
-      }
-
-      .box {
-        display: flex;
-        flex-direction: row;
-        gap: 3px;
-      }
-
-      .value {
-        width: 24px;
-        height: 24px;
-      }
-
-      .btn {
-        .prognosis_btn;
-        width: 24px;
-        height: 24px;
-      }
-
-      &.penalty {
-        .title {
-          font-size: 24px;
-        }
-      }
+    .btn {
+      background: @maxred;
     }
   }
 
@@ -917,11 +883,11 @@ export default {
       max-width: 40%;
       background: @kerling;
 
-      .annotation_arrow{
+      .annotation_arrow {
         position: absolute;
         right: 5px;
 
-        &.up{
+        &.up {
           transform: rotate(-180deg);
         }
       }
@@ -931,7 +897,8 @@ export default {
       .prognosis_btn;
       width: 140px;
       max-width: 40%;
-      &.rewrite{
+
+      &.rewrite {
         background: @NoWrite;
       }
     }
@@ -983,34 +950,36 @@ export default {
   gap: 4px;
 
   margin-top: 4px;
-  .header{
+
+  .header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: 4px;
-    .title{
+
+    .title {
       width: 95%;
       .shadow_inset;
       text-align: left;
 
     }
 
-    .close{
-     width: 27px;
+    .close {
+      width: 27px;
       .prognosis_btn;
       background: @boks;
     }
   }
 
 
-  .annotation_elem{
+  .annotation_elem {
     display: flex;
     flex-direction: row;
     gap: 4px;
     font-size: 13px;
     text-align: left;
 
-    .annotation_title{
+    .annotation_title {
       max-width: 35px;
       width: 9%;
       .shadow_inset;
@@ -1018,7 +987,7 @@ export default {
       font-size: 16px;
     }
 
-    .annotation_description{
+    .annotation_description {
       max-width: 355px;
       width: 90%;
       .shadow_inset;
@@ -1029,27 +998,29 @@ export default {
 
 .om_table_box {
   border-radius: 5px;
-  th, td{
+
+  th, td {
     padding: 2px;
     font-size: 11px;
   }
 
-  .result{
+  .result {
     color: @NoWrite;
   }
 
-  .prog_r{
-    td{
+  .prog_r {
+    td {
       color: @colorBlur;
     }
-    .green{
+
+    .green {
       color: @YesWrite;
     }
   }
 
 }
 
-.yellow_t{
+.yellow_t {
   color: @maxYellow;
 }
 
