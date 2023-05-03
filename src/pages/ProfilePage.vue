@@ -9,9 +9,9 @@
       <img class="ava" src="@/assets/img/ava_no_img.jpg" alt="" v-else>
     </div>
     <div class="right_block">
-      <div class="right_el">{{profileData.info.NAME}}</div>
-      <div class="right_el">{{profileData.info.reg}}</div>
-      <div class="right_el">Новичок</div>
+      <div class="right_el"><div class="title">Ник:</div> <span> {{profileData.info.NAME}}</span></div>
+      <div class="right_el"><div class="title">Рег. дата:</div> <span>{{profileData.info.reg}}</span></div>
+      <div class="right_el"><div class="title">Звание:</div> <span>Новичок</span></div>
     </div>
   </div>
   <div class="prognosis_block">
@@ -88,9 +88,10 @@ export default {
       border-radius: 5px;
       .flex_center;
       img{
+        border-radius: 50%;
         max-width: 100px;
         width: 100%;
-        border-radius: 5px;
+        border: 2px solid @darkbg;
       }
     }
 
@@ -105,10 +106,17 @@ export default {
       border-radius: 5px;
 
       .right_el{
+        display: flex;
+        flex-direction: row;
         .shadow_inset;
         color: @colorText;
-        justify-content: left;
+        justify-content: space-between;
         text-align: left;
+
+        .title{
+          display: inline-block;
+          color: @colorBlur;
+        }
       }
     }
   }
