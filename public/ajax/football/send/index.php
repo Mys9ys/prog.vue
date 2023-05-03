@@ -66,7 +66,7 @@ class SendUserPrognosis {
         $arFilter = [
             "IBLOCK_ID" => $this->prognIb,
             "PROPERTY_USER_ID" => $this->userId,
-            "PROPERTY_ID" => $this->arFields["17"]
+            "PROPERTY_MATCH_ID" => $this->arFields["17"]
         ];
 
 

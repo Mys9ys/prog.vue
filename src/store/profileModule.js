@@ -3,11 +3,9 @@ import axios from "axios";
 
 import {baseConfig} from "@/store/config";
 
-export const otherProfileModule = {
+export const profileModule = {
     state: () => ({
-        profileRequest: {
-            id: ''
-        },
+        profileRequest: {},
         profileData: {},
     }),
 
@@ -22,7 +20,7 @@ export const otherProfileModule = {
         async getProfileData({state, commit}) {
             commit('setMainLoading', true, { root: true })
             try {
-                const response = await axios.post(baseConfig.BASE_URL + 'events/', state.profileRequest,
+                const response = await axios.post(baseConfig.BASE_URL + 'profile/', state.profileRequest,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -33,7 +31,6 @@ export const otherProfileModule = {
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
                     commit('setProfileData', response.data.profile)
-                    commit('setMainLoading', false, { root: true })
                 } else {
                     if(response.data.mes) {
                         commit('setError', response.data.mes)

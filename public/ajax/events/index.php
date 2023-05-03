@@ -13,44 +13,55 @@ $_REQUEST['date'] = date(\CDatabase::DateFormatToPHP("DD.MM.YYYY HH:MI:SS"), tim
 
 file_put_contents('../../_logs/events.log', json_encode($_REQUEST) . PHP_EOL, FILE_APPEND);
 
-if($_REQUEST){
-    $res = new Prognos9ysGetEventsInfo();
+if ($_REQUEST) {
 
-    if($_REQUEST["type"] === 'all'){
-        echo json_encode($res->getAll());
-    } else {
-        echo json_encode($res->getResult());
-    }
+    $res = new Prognos9ysGetEventsInfo($_REQUEST);
+
+    echo json_encode($res->result());
+
 }
 
 
-class Prognos9ysGetEventsInfo{
+class Prognos9ysGetEventsInfo
+{
 
-    protected $eventsIb;
-    protected $eventsTypeIb;
+    protected $eventsTypeIb = 19;
 
     protected $arEvents = [];
 
-    protected $arrAll = [];
+    protected $fillResult = [];
 
-    public function __construct()
+    protected $arAll = [];
+
+    protected $arCode = [];
+
+    protected $arResult = [];
+
+    protected $ar = [];
+
+    public function __construct($data)
     {
         if (!Loader::includeModule('iblock')) {
             ShowError('Модуль Информационных блоков не установлен');
             return;
         }
 
-
-        $this->eventsIb = \CIBlock::GetList([], ['CODE' => 'events'], false)->Fetch()['ID'] ?: 1;
-        $this->eventsTypeIb = \CIBlock::GetList([], ['CODE' => 'eventtype'], false)->Fetch()['ID'] ?: 19;
-
+        $arEv = new GetPrognosisEvents();
+        $this->arEvents = $arEv->result()['events'];
 
         $this->getEventsType();
-        $this->getEvents();
+        $this->fillResult();
+
+        if ($data['type'] === 'all') {
+            $this->setResult('ok', '', $this->arAll);
+        } else {
+            $this->setResult('ok', '', $this->fillResult);
+        }
 
     }
 
-    protected function getEventsType(){
+    protected function getEventsType()
+    {
         $arFilter = [
             'IBLOCK_ID' => $this->eventsTypeIb,
         ];
@@ -60,53 +71,38 @@ class Prognos9ysGetEventsInfo{
             $arFilter,
             false,
             [],
-            ["ID","NAME", "CODE"]
+            ["ID", "NAME", "CODE"]
         );
-        while ($res=$response->GetNext()){
-            $this->arEvents[$res["ID"]]["info"] = $res;
+        while ($res = $response->GetNext()) {
+            $this->fillResult[$res["ID"]]["info"] = $res;
+            $this->arCode[$res["ID"]]['code'] = $res['CODE'];
         }
 
     }
 
-    protected function getEvents(){
-        $arFilter = [
-            'IBLOCK_ID' => $this->eventsIb,
-        ];
+    protected function fillResult()
+    {
 
-        $response = CIBlockElement::GetList(
-            [],
-            $arFilter,
-            false,
-            [],
-            ["ID","NAME","PREVIEW_PICTURE", "DETAIL_TEXT", "ACTIVE", "PREVIEW_TEXT", "EXTERNAL_ID", "PROPERTY_e_type"]
-        );
-        while ($res=$response->GetNext()){
+        foreach ($this->arEvents as $id => $res) {
+            $res['status'] = ($res["ACTIVE"] === 'Y') ? 'active' : 'old';
+            $this->fillResult[$res["code"]]['events'][$id] = $res;
 
-            $res["img"] = CFile::GetPath($res["PREVIEW_PICTURE"]);
+            $res['code'] = $this->arCode[$res["code"]]["code"];
 
-            $res['code'] = $this->arEvents[$res["PROPERTY_E_TYPE_VALUE"]]["info"]["CODE"];
-            $this->arrAll[$res["ID"]] = $res;
-
-            if($res["ACTIVE"] === 'Y') {
-                $this->arEvents[$res["PROPERTY_E_TYPE_VALUE"]]["active"][$res["ID"]] = $res;
-            } else {
-                $this->arEvents[$res["PROPERTY_E_TYPE_VALUE"]]["old"][$res["ID"]] = $res;
-            }
-
+            $this->arAll[$id] = $res;
         }
+
     }
 
-    public function getResult(){
-        return [
-            "status" => 'ok',
-            "events" =>$this->arEvents
-        ];
+    protected function setResult($status, $mes, $arr)
+    {
+        $this->arResult['status'] = $status;
+        $this->arResult['mes'] = $mes;
+        $this->arResult['info'] = $arr;
     }
 
-    public function getAll(){
-        return [
-            "status" => 'ok',
-            "events" => $this->arrAll
-        ];
+    public function result()
+    {
+        return $this->arResult;
     }
 }

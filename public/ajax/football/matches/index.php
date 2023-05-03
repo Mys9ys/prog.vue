@@ -122,7 +122,7 @@ class FootballHandlerClass
             $el["teams"]["guest"] = $this->getTeamData($this->arTeams[$res["PROPERTY_GUEST_VALUE"]], $res["PROPERTY_GOAL_GUEST_VALUE"]);
 
 //            $el["write"] = $this->arUserPrognosis[$res["ID"]] ?? '';
-            if ($this->eventId === 34) {
+            if ($this->eventId == 34) {
                 $this->arNumbertoMatchId[$res["ID"]] = $el["number"];
                 $this->getUserPrognosisOld($res["ID"]);
                 $this->getUserResultOld($res["ID"]);
@@ -219,7 +219,7 @@ class FootballHandlerClass
     {
         $arFilter = [
             'IBLOCK_ID' => $this->prognIb,
-            'PROPERTY_ID' => $matchId,
+            'PROPERTY_MATCH_ID' => $matchId,
             'PROPERTY_USER_ID' => $this->userId
         ];
 
@@ -230,12 +230,12 @@ class FootballHandlerClass
             [],
             [
                 "PROPERTY_number",
-                "PROPERTY_id",
+                "PROPERTY_match_id",
                 "DATE_ACTIVE_FROM",
             ]
         )->GetNext();
 
-        $this->arUserPrognosis[$this->arNumbertoMatchId[$res['PROPERTY_ID_VALUE']]] = ConvertDateTime($res["DATE_ACTIVE_FROM"], "DD.MM HH:Mi");
+        $this->arUserPrognosis[$this->arNumbertoMatchId[$res['PROPERTY_MATCH_ID_VALUE']]] = ConvertDateTime($res["DATE_ACTIVE_FROM"], "DD.MM HH:Mi");
 
     }
 
@@ -301,7 +301,7 @@ class FootballHandlerClass
 
         $arFilter = [
             'IBLOCK_ID' => $this->prognIb,
-            'PROPERTY_ID' => $matchId,
+            'PROPERTY_MATCH_ID' => $matchId,
         ];
 
         $arRatio = [

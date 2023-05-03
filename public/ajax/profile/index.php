@@ -13,7 +13,7 @@ $_REQUEST['date'] = date(\CDatabase::DateFormatToPHP("DD.MM.YYYY HH:MI:SS"), tim
 
 file_put_contents('../_logs/profile_log.log', json_encode($_REQUEST) . PHP_EOL, FILE_APPEND);
 
-$_REQUEST['userId'] = 1;
+$_REQUEST['userId'] = 20;
 
 if ($_REQUEST) {
 
@@ -29,10 +29,18 @@ class Prognos9ysProfile
 
     protected $arResult = [];
 
+    protected $arRes = [];
+
+    protected $arFresh = [];
+
+    protected $arEvents = [];
+
+    protected $arTeams = [];
+
     protected $arFootballIds = [
-        'matches' => ['code' => 'matches'],
-        'prognosis' => ['code' => 'prognosis'],
-        'result' => ['code' => 'result'],
+        'result' => ['id' => 7, 'filter' => 'PROPERTY_USER_ID', 'select' => 'PROPERTY_MATCH_ID_VALUE'],
+        'matches' => ['id' => 2 , 'filter' => '', 'select' => 'ID'],
+        'prognosis' => ['id' => 6, 'filter' => 'PROPERTY_USER_ID', 'select' => 'PROPERTY_MATCH_ID_VALUE'],
     ];
 
     public function __construct($data)
@@ -42,30 +50,26 @@ class Prognos9ysProfile
             return;
         }
 
-        var_dump($this->arFootballIds);
-        $itemsList = \CIBlock::GetList([], [], false)->Fetch();
-
-
-
-        var_dump($itemsList);
-
-
-        die;
-
-        foreach ($this->arFootballIds as $code => $el) {
-
-            $this->arFootballIds[$code]['id'] = \CIBlock::GetList([], ['ID' => $code])->fetch();
-            var_dump($this->arFootballIds);
-
+        if($data['token']) {
+            $token = new GetUserIdForToken($data['token']);
+            $this->data['userId'] = $token->getId();
+        } else {
+            $this->data['userId'] = $data['userId'];
         }
 
+        $arEv = new GetPrognosisEvents();
+        $this->arEvents = $arEv->result()['events'];
+
         $this->data = $data;
+
+        $team = new GetFootballTeams();
+        $this->arTeams = $team->result();
 
         $this->getUserInfo();
 
         $this->getUserPrognosis();
 
-        var_dump($this->arResult);
+        $this->setResult('ok', '');
 
     }
 
@@ -73,12 +77,18 @@ class Prognos9ysProfile
     {
         $filter['ID'] = $this->data['userId'];
         $dbUser = UserTable::getList(array(
-            'select' => array('ID', 'NAME', 'PERSONAL_PHOTO'),
+            'select' => array('ID', 'NAME', 'PERSONAL_PHOTO', 'DATE_REGISTER'),
             'filter' => $filter
         ))->fetch();
 
+        $dbUser['reg'] = $dbUser['DATE_REGISTER']->format("d.m.Y");
+
+        unset($dbUser['DATE_REGISTER']);
+
+        if($dbUser['PERSONAL_PHOTO']) $dbUser['img'] = CFile::GetPath($dbUser['PERSONAL_PHOTO']);
+
         if ($dbUser['ID']) {
-            $this->arResult['info'] = $dbUser;
+            $this->arRes['info'] = $dbUser;
         } else {
             $this->setResult('error', 'Пользователь не найден');
         }
@@ -87,27 +97,20 @@ class Prognos9ysProfile
 
     protected function getUserPrognosis()
     {
-
-        $arFootball = [];
-
-        foreach ($this->arFootballIds as $code => $el) {
-            $arFootball[$code] = $this->getFootBallPr($el['id']);
+        foreach ($this->arFootballIds as $code => $arr) {
+            $this->getFootBallPr($arr, $code);
         }
-
-        $this->arResult['football'] = $arFootball;
 
     }
 
-    protected function getFootBallPr($ib)
+    protected function getFootBallPr($info, $code)
     {
 
-        $arRes = [];
         $arFilter = [
-            "IBLOCK_ID" => $ib,
-            "PROPERTY_USER_ID" => $this->data['userId']
+            "IBLOCK_ID" => $info['id'],
         ];
 
-        var_dump($arFilter);
+        if($info['filter']) $arFilter[$info['filter']] = $this->data['userId'];
 
         $arSelect = [
             "ID",
@@ -128,9 +131,13 @@ class Prognos9ysProfile
             "PROPERTY_spenalty",
             "PROPERTY_all",
             "PROPERTY_score",
-        ];
 
-        var_dump($arSelect);
+            "PROPERTY_match_id",
+            "PROPERTY_events",
+
+            "PROPERTY_home",
+            "PROPERTY_guest",
+        ];
 
         $response = CIBlockElement::GetList(
             [],
@@ -140,14 +147,11 @@ class Prognos9ysProfile
             $arSelect,
         );
 
-        var_dump($response->GetNext());
-        die;
-
         while ($res = $response->GetNext()) {
 
             $arr = [];
 
-            $arr["id"] = $res["ID"];
+            $arr["id"] = $res[$info['select']];
             $arr["goal_home"] = $res["PROPERTY_GOAL_HOME_VALUE"];
             $arr["goal_guest"] = $res["PROPERTY_GOAL_GUEST_VALUE"];
             $arr["all"] = $res["PROPERTY_ALL_VALUE"];
@@ -163,19 +167,38 @@ class Prognos9ysProfile
             $arr["otime"] = $res["PROPERTY_OTIME_VALUE"];
             $arr["spenalty"] = $res["PROPERTY_SPENALTY_VALUE"];
 
-            $arRes[] = $arr;
+            if($res["PROPERTY_HOME_VALUE"]){
+                $arr['home'] = $this->arTeams[$res["PROPERTY_HOME_VALUE"]];
+                $arr['guest'] = $this->arTeams[$res["PROPERTY_GUEST_VALUE"]];
+            }
+
+            $events = $res['PROPERTY_EVENTS_VALUE'] ?? 34;
+
+            $this->arFresh[$code][$events][$res[$info['select']]] = $arr;
+
         }
 
-        var_dump($arRes);
+        $this->sortFootballInfo();
 
-        return $arRes;
+    }
+
+    protected function sortFootballInfo(){
+        foreach ($this->arFresh as $code=>$arEvents){
+            foreach ($arEvents as $eventId=>$arMatches){
+                foreach ($arMatches as $matchId=>$matchInfo){
+                    $this->arRes['football'][$eventId]['matches'][$matchId][$code] = $matchInfo;
+                }
+                $this->arRes['football'][$eventId]['info'] = $this->arEvents[$eventId];
+            }
+        }
+
     }
 
     protected function setResult($status, $mes, $info = '')
     {
+        $this->arResult['profile'] = $this->arRes;
         $this->arResult['status'] = $status;
         $this->arResult['mes'] = $mes;
-        if ($info) $this->arResult['profile'] = $info;
     }
 
     public function result()

@@ -164,7 +164,7 @@ class FootballMatchLoadInfo {
         }
 
         if($ib === 6) { // прогнозы
-            $arFilter["PROPERTY_ID"] = $matchId;
+            $arFilter["PROPERTY_MATCH_ID"] = $matchId;
             $arFilter["PROPERTY_USER_ID"] = $this->userId;
         }
         if($ib === 7) { // результаты
