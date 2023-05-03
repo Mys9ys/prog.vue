@@ -1,5 +1,5 @@
 <template>
-  <!--  <PreLoader v-if="this.mainLoader"></PreLoader>-->
+    <PreLoader v-if="thisLoader"></PreLoader>
 
   <div class="rating_wrapper">
     <div class="rating_header">
@@ -25,12 +25,13 @@
 
 import {mapActions, mapState} from "vuex";
 import FootballRatingBody from "@/components/football/FootballRatingBody";
-// import PreLoader from "@/components/main/PreLoader";
+import PreLoader from "@/components/main/PreLoader";
+
 
 export default {
   name: "FootballRatingBlock",
   components: {
-    // PreLoader
+    PreLoader,
     FootballRatingBody
   },
   props: {
@@ -40,6 +41,7 @@ export default {
   },
   data() {
     return {
+      thisLoader: false,
       activeCell: 1,
       relation: {
         1: 'all',
@@ -92,18 +94,22 @@ export default {
     this.loadRating(this.eventId)
   },
 
+  watch:{
+    eventId(){
+      this.thisLoader = true
+      this.loadRating(this.eventId)
+    }
+  },
+
   methods: {
     ...mapActions({
       getFootballRatings: 'rating/getFootballRatings',
     }),
 
     async loadRating(id) {
-
       this.ratingData.event = id
       await this.getFootballRatings()
-
-      console.log('footballRating', this.footballRating)
-
+      this.thisLoader = false
     }
   },
 

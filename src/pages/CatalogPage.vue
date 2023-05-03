@@ -2,39 +2,28 @@
   <div class="catalog_wrapper">
     <PageHeader class="header">Каталог событий</PageHeader>
 
-    <div class="events_block"
-         v-for="(event, index) in eventsData" :key="index">
-      <div class="event_title_wrapper">
-        <div class="title" :class="[event.info.CODE]">{{ event.info.NAME }}</div>
-      </div>
+    <div class="event_wrapper" v-if="catalog">
+      <div class="events_block"
+           v-for="(event, index) in catalog" :key="index">
+        <div class="event_title_wrapper">
+          <div class="title" :class="[event.info.CODE]">{{ event.info.NAME }}</div>
+        </div>
 
-      <div class="active event_box" v-if="event.active">
-        <div class="el_event" v-for="(el, index) in event.active" :key="index">
-         <div class="img_box">
-           <div class="active_lamp"></div>
-           <img :src="url+el.img" alt="">
-         </div>
-          <div class="name">{{el.NAME}}</div>
-          <div class="btn" @click="$router.push('/'+event.info.CODE+ '/' +index)">
-            <img src="@/assets/icon/btn/arrow.svg" alt="">
+        <div class="event_box">
+          <div class="el_event" v-for="(el, id) in event.events" :key="id">
+            <div class="img_box">
+              <div class="lamp" :class=[el.status]></div>
+              <img :src="url+el.img" alt="">
+            </div>
+            <div class="name">{{el.NAME}}</div>
+            <div class="btn" @click="$router.push('/'+event.info.CODE+ '/' +id)">
+              <img src="@/assets/icon/btn/arrow.svg" alt="">
+            </div>
           </div>
         </div>
-      </div>
-      <div class="old event_box" v-if="event.old">
-        <div class="el_event" v-for="(el, index) in event.old" :key="index">
-          <div class="img_box">
-            <div class="old_lamp"></div>
-            <img :src="url+el.img" alt="">
-          </div>
-          <div class="name">{{el.NAME}}</div>
-          <div class="btn" @click="$router.push('/'+event.info.CODE+ '/' +index)">
-            <img src="@/assets/icon/btn/arrow.svg" alt="">
-          </div>
-        </div>
-      </div>
 
+      </div>
     </div>
-
   </div>
 </template>
 
@@ -50,11 +39,19 @@ export default {
   data() {
     return {
       url:  'https://prognos9ys.ru/',
+      catalog: {}
     }
   },
 
   created() {
     this.fillCatalogElem()
+  },
+
+  watch:{
+    eventsData(){
+      console.log(this.eventsData)
+      this.catalog = this.eventsData
+    }
   },
 
   methods: {
@@ -158,7 +155,7 @@ export default {
   }
 }
 
-.active_lamp{
+.lamp{
   position: absolute;
   left: 3px;
   top: 50%;
@@ -168,9 +165,10 @@ export default {
   box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
   background: @green;
   border-radius: 50%;
+
+  &.old{
+    background: @red;
+  }
 }
-.old_lamp{
-  .active_lamp;
-  background: @red;
-}
+
 </style>

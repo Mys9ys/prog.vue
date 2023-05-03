@@ -22,7 +22,6 @@ export const catalogModule = {
     actions: {
 
         async getEventsInfo({state, commit}) {
-            commit('setMainLoading', true, { root: true })
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'events/', state.catalogData,
                     {
@@ -34,10 +33,8 @@ export const catalogModule = {
 
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
-                    commit('setEventsData', response.data.events)
-                    commit('setMainLoading', false, { root: true })
-                }
-                if (response.data.status == 'error') {
+                    commit('setEventsData', response.data.info)
+                } else {
                     commit('setError', response.data.mes)
                 }
 

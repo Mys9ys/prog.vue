@@ -1,8 +1,6 @@
 <template>
+  <PageHeader class="header">Соревнования</PageHeader>
   <div class="kvn_wrapper">
-    <div class="kvn_header">
-
-    </div>
     <div class="games">
       <div class="game" v-for="(game, index) in getGames" :key="index">
         <GameTitle :title="game.title"></GameTitle>
@@ -18,13 +16,15 @@ import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
 import GameTitle from "@/components/kvn/GameTitle";
 import GameTeams from "@/components/kvn/GameTeams";
 import GameBtns from "@/components/kvn/GameBtns";
+import PageHeader from "@/components/main/PageHeader";
 
 export default {
   name: "KvnEvent",
   components: {
     GameTitle,
     GameTeams,
-    GameBtns
+    GameBtns,
+    PageHeader
   },
 
 

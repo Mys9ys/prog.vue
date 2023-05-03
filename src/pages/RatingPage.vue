@@ -1,5 +1,5 @@
 <template>
-  <PreLoader v-if="mainLoader"></PreLoader>
+  <PreLoader v-if="catLoader"></PreLoader>
   <div class="ratings_wrapper">
     <PageHeader class="header">Рейтинги</PageHeader>
 
@@ -37,7 +37,8 @@ export default {
     return {
       url:  'https://prognos9ys.ru/',
       category: '',
-      eventId: ''
+      eventId: '',
+      catLoader: false
     }
   },
 
@@ -51,16 +52,16 @@ export default {
     }),
 
     async fillCatalogElem() {
+      this.catLoader = true
       this.catalogData['type'] = 'all'
 
       await this.getEventsInfo()
+      this.catLoader = false
     },
 
     async selectRating(id, code){
       this.eventId = id
       this.category = code
-
-      console.log('this.eventId', this.eventId)
     }
   },
 
