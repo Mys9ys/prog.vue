@@ -2,7 +2,7 @@
   <PreLoader v-if="profileLoader"></PreLoader>
   <PageHeader class="header">{{profileData.info.NAME}}</PageHeader>
 
-  <p>{{profileData}}</p>
+<!--  <p>{{profileData}}</p>-->
 
   <div class="user_block">
     <div class="ava_block">
@@ -13,6 +13,7 @@
       <div class="right_el"><div class="title">Ник:</div> <span> {{profileData.info.NAME}}</span></div>
       <div class="right_el"><div class="title">Рег. дата:</div> <span>{{profileData.info.reg}}</span></div>
       <div class="right_el"><div class="title">Звание:</div> <span>Новичок</span></div>
+      <div class="right_el"><div class="title">Прогнозов:</div> <span>{{profileData.info.count}}</span></div>
     </div>
   </div>
   <div class="prognosis_block">
@@ -25,11 +26,13 @@
 <script>
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
+import PageHeader from "@/components/main/PageHeader";
 
 export default {
   name: "ProfilePage",
   components: {
-    PreLoader
+    PreLoader,
+    PageHeader
   },
   data() {
     return {
@@ -85,14 +88,14 @@ export default {
     gap: 4px;
 
     .ava_block{
-      width: 40%;
+      width: 45%;
       background: @DarkColorBG;
       padding: 4px;
       border-radius: 5px;
       .flex_center;
       img{
         border-radius: 50%;
-        max-width: 100px;
+        max-width: 135px;
         width: 100%;
         border: 2px solid @darkbg;
       }
