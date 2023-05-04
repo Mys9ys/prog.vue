@@ -1,13 +1,13 @@
 <template>
-  <PageHeader class="header">Главная</PageHeader>
- <h2>Главная</h2>
+  <PageHeader class="header">Юмор</PageHeader>
+  <h4>тут будет околоспортивный юмор</h4>
 </template>
 
 <script>
 import PageHeader from "@/components/main/PageHeader";
 
 export default {
-  name: "MainPage",
+  name: "HumorPage",
   components: {
     PageHeader
   }

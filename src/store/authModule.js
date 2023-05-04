@@ -113,9 +113,7 @@ export const authModule = {
                     console.log('response.data', response.data)
                     commit('setUserInfo', response.data.info)
                     commit('setAuth', true)
-                }
-
-                if (response.data.status == 'error') {
+                } else {
                     commit('setAuth', false)
                 }
 

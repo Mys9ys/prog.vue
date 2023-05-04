@@ -11,12 +11,19 @@ import MyProfilePage from "@/pages/MyProfilePage";
 import ProfilePage from "@/pages/ProfilePage";
 import RecoverMail from "@/pages/auth/RecoverMail";
 import RecoverSuccess from "@/pages/auth/RecoverSuccess";
+import HumorPage from "@/pages/HumorPage";
+import HelloPage from "@/pages/HelloPage";
 
 const routes = [
     {
         path: '/',
+        component: HelloPage,
+    },
+    {
+        path: '/main',
         component: MainPage,
     },
+
     {
         path: '/auth',
         component: AuthPage,
@@ -39,6 +46,11 @@ const routes = [
     {
         path: '/football',
         component: FBCatalog,
+    },
+
+    {
+        path: '/humor',
+        component: HumorPage,
     },
 
     {

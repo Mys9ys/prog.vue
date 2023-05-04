@@ -9,10 +9,10 @@
           </div>
         </div>
         <div class="hm_btn_block">
-          <div class="header_button header_btn_menu" title="Меню">1<i class="fa fa-bars" aria-hidden="true"></i></div>
-          <a class="header_button" href="/" title="Главная">2<i class="fa fa-home" aria-hidden="true"></i></a>
-          <BtnMini @click="$router.push('/catalog')" :img="btns.get('catalog')"></BtnMini>
-          <a class="header_button" href="/p/ratings/" title="Рейтинги">4<i class="fa fa-list-ol" aria-hidden="true"></i></a>
+          <BtnMini v-for="(btn, index) in l_btns"
+                   :key="index"
+                   @click="$router.push('/' + btn.link).then(() => { this.$router.go() })"
+                   :img="btn.img"></BtnMini>
 
         </div>
       </div>
@@ -24,9 +24,7 @@
       <AvaComponent v-else class="hm_ava_block"
                     :img="$store.state.auth.userInfo.ava"
       ></AvaComponent>
-      <!--      <div class="hm_ava_block">-->
-      <!--        <img class="hm_ava_img" src="@/assets/img/ava_no_img.jpg" alt="">-->
-      <!--      </div>-->
+
       <div class="hm_right_block">
         <div class="hm_nick_box hm_box">
           <span v-if="$store.state.auth.userInfo.NAME">{{ $store.state.auth.userInfo.NAME }}</span>
@@ -34,91 +32,18 @@
         </div>
 
         <div class="hm_btn_block hm_right">
-          <a class="header_button" href="/p/faq/" title="Инструкции">1<i class="bi bi-patch-question"></i></a>
-          <!--                <a class="header_button" href="/p/match/-->
-          <!--" title="Ваши прогнозы"><i class="bi bi-pencil-square"></i></a>-->
-          <a class="header_button" href="/p/events/" title="События">2<i class="bi bi-menu-up"></i></a>
-          <a class="header_button" href="/p/profile/" title="Ваш профиль">3<i class="bi bi-person-square"></i></a>
-          <BtnMini @click="logoutProfile" :img="btns.get('logout')"></BtnMini>
+          <BtnMini v-for="(btn, index) in r_btns"
+                   :key="index"
+                   @click="$router.push('/' + btn.link).then(() => { this.$router.go() })"
+                   :img="btn.img"></BtnMini>
         </div>
 
       </div>
     </div>
-    <div class="header_menu_block">
-      <!--        <ul class="dropdown-menu">-->
-      <!--            <li><a class="dropdown-item" href="/p/faq/"><i class="bi bi-patch-question"></i> Инструкции</a></li>-->
-      <!--            <li><a class="dropdown-item" href="/p/matches/"><i class="bi bi-menu-up"></i> Матчи</a></li>-->
-      <!--            -->
-      <!--                <li><a class="dropdown-item" href="/p/admin/"><i class="fa fa-address-book" aria-hidden="true"></i> Админка</a></li>-->
-      <!--            --><!--            -->
-      <!--            <li><a class="dropdown-item" href="/p/match/"><i class="bi bi-pencil-square"></i> Мои прогнозы</a></li>-->
-      <!--            <li><a class="dropdown-item" href="/p/profile/"><i class="bi bi-person-square"></i> Мой профиль</a></li>-->
-      <!--            -->
-      <!--                <li><a class="dropdown-item" href="/auth/"><i class="fa fa-sign-in" aria-hidden="true"></i> Регистрация</a></li>-->
-      <!--            -->
-      <!--            <li><a class="dropdown-item" href="/p/ratings/"><i class="fa fa-list-ol" aria-hidden="true"></i> Рейтинги</a></li>-->
-      <!--            -->
-      <!--                <li><a class="dropdown-item" href="/p/logout/"><i class="bi bi-door-open"></i> Выйти</a></li>-->
-      <!--            --><!--        </ul>-->
-      <ul class="dropdown-menu">
-        <!--                <li><a class="dropdown-item" href="/p/match/"><i class="bi bi-pencil-square"></i> Мои прогнозы</a></li>-->
-        <li>
-          <div class="dropdown-item menu_events_btn" data-submenu="sub_prognos">
-            <i class="bi bi-pencil-square"></i> Прогнозы <i class="bi bi-caret bi-caret-right-fill"></i>
-          </div>
-        </li>
-        <div class="menu_events_box sub_prognos">
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <ul class="">
-            <li><a class="dropdown-item" href="/p/matches/">Футбол</a></li>
-            <li><a class="dropdown-item" href="/p/f1race/">Формула 1</a></li>
-            <li><a class="dropdown-item" href="/p/kvngame/">КВН</a></li>
-          </ul>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-        </div>
-        <li><a class="dropdown-item" href="/p/profile/"><i class="bi bi-person-square"></i> Профиль</a></li>
-        <li><a class="dropdown-item" href="/p/events/"><i class="bi bi-menu-up"></i> События</a></li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
 
-        <!--            <li>-->
-        <!--                <div class="dropdown-item menu_events_btn" data-submenu="sub_events">-->
-        <!--                    <i class="bi bi-menu-up"></i> События <i class="bi bi-caret bi-caret-right-fill"></i>-->
-        <!--                </div>-->
-        <!--            </li>-->
-        <!--            <div class="menu_events_box sub_events">-->
-        <!--            <li><hr class="dropdown-divider"></li>-->
-        <!--                <ul class="">-->
-        <!--                    <li><a class="dropdown-item" href="/p/match/">Футбол</a></li>-->
-        <!--                    <li><a class="dropdown-item" href="/p/kvngame/">КВН</a></li>-->
-        <!--                    <li><a class="dropdown-item"  href="/p/f1race/">Ф1</a></li>-->
-        <!--                </ul>-->
-        <!--            <li><hr class="dropdown-divider"></li>-->
-        <!--            </div>-->
-        <li><a class="dropdown-item" href="/p/admin/"><i class="fa fa-address-book" aria-hidden="true"></i> Админка</a>
-        </li>
-        <li><a class="dropdown-item" href="/p/ratings/"><i class="fa fa-list-ol" aria-hidden="true"></i> Рейтинги</a>
-        </li>
-        <li><a class="dropdown-item" href="/p/faq/"><i class="bi bi-patch-question"></i> Инструкции</a></li>
+  </div>
 
-      </ul>
-    </div>
-  </div>
-  <div class="nick">
-    {{$store.state.auth.userInfo.NAME}}
-  </div>
-  <div class="alter_btns">
-    <BtnMini @click="$router.push('/ratings').then(() => { this.$router.go() })" :img="btns.get('ratings')"></BtnMini>
-    <BtnMini @click="$router.push('/catalog').then(() => { this.$router.go() })" :img="btns.get('catalog')"></BtnMini>
-    <BtnMini @click="logoutProfile" :img="btns.get('logout')"></BtnMini>
-  </div>
 </template>
-
 <script>
 import BtnMini from "@/components/ui/btn/BtnMini";
 import {mapActions, mapState} from "vuex";
@@ -129,25 +54,35 @@ export default {
   components: {BtnMini, AvaComponent},
   data() {
     return {
-      btns: new Map([
-        ['logout', require('@/assets/icon/profile/exit.svg')],
-        ['catalog', require('@/assets/icon/profile/list.svg')],
-        ['ratings', require('@/assets/icon/profile/shield.svg')],
-      ]),
+      l_btns: [
+        {link:'main', img: require('@/assets/icon/header/home.svg'), name: 'Главная'},
+        {link:'catalog', img: require('@/assets/icon/header/list.svg'), name: 'Каталог'},
+        {link:'humor', img: require('@/assets/icon/header/fio.svg'), name: 'Шутки'},
+      ],
+
+      r_btns: [
+        {link:'ratings', img: require('@/assets/icon/header/bonus.svg'), name: 'Рейтинги'},
+        {link:'profile', img: require('@/assets/icon/header/profile.svg'), name: 'Профиль'},
+        {link:'logout', img: require('@/assets/icon/header/exit.svg'), name: 'Выход'},
+      ],
+      menu: false
     }
   },
 
-  computed: {
-    ...mapState({
-      token: state => state.auth.authData.token,
-    })
+  watch: {
+    token(){
+      console.log('watch token yes')
+      this.checkAuth()
+    }
   },
+
+
   mounted() {
-    //
+
     this.$nextTick(function () {
       if (this.token) {
         // проверка токена на актуальность
-        console.log('token yes')
+        console.log('mounted token yes')
         this.checkAuth()
       } else {
         console.log('token no')
@@ -155,6 +90,12 @@ export default {
       }
     })
   },
+  computed: {
+    ...mapState({
+      token: state => state.auth.authData.token,
+    })
+  },
+
 
   methods: {
     ...mapActions({
@@ -179,7 +120,7 @@ export default {
 @import "src/assets/css/variables.less";
 
 .header_wrapper {
-  position: absolute;
+  position: relative;
   margin: 0 auto;
   max-width: 400px;
   width: 100%;
@@ -193,9 +134,9 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
 
-  border-radius: 0 0 5px 5px;
+  margin-bottom: 40px;
 
-  display: none;
+  border-radius: 0 0 5px 5px;
 
   .h_header_block {
     display: flex;
@@ -245,7 +186,16 @@ export default {
     }
 
     .hm_btn_block {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
       width: 128px;
+      z-index: 15;
+
+      &.hm_right{
+        justify-content: flex-end;
+      }
 
       .header_button {
         display: inline-block;
@@ -265,6 +215,7 @@ export default {
       left: 50%;
       bottom: -55px;
       transform: translateX(-50%);
+      z-index: 5;
     }
 
     .hm_box {

@@ -60,8 +60,10 @@ export default {
     },
 
     async selectRating(id, code){
+      this.catLoader = true
       this.eventId = id
       this.category = code
+      this.catLoader = false
     }
   },
 

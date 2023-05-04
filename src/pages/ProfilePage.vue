@@ -1,5 +1,6 @@
 <template>
   <PreLoader v-if="profileLoader"></PreLoader>
+  <PageHeader class="header">{{profileData.info.NAME}}</PageHeader>
 
   <p>{{profileData}}</p>
 
@@ -15,7 +16,9 @@
     </div>
   </div>
   <div class="prognosis_block">
+    <div class="football_block" v-if="profileData.football">
 
+    </div>
   </div>
 </template>
 

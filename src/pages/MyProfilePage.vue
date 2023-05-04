@@ -1,10 +1,16 @@
 <template>
-  <h1>1</h1>
+  <PageHeader class="header">Ваш профиль</PageHeader>
+  <h1>Профиль в разработке</h1>
 </template>
 
 <script>
+import PageHeader from "@/components/main/PageHeader";
+
 export default {
-  name: "MyProfilePage"
+  name: "MyProfilePage",
+  components: {
+    PageHeader
+  }
 }
 </script>
 

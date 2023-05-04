@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <div class="header_block">
-      <div class="block_title">
-        <slot></slot>
+  <div class="header_wrapper">
+    <div class="header_absolute">
+      <div class="header_block">
+        <div class="block_title">
+          <slot></slot>
+        </div>
+        <div v-if="path" class="btn_prev" @click="$router.push(path).then(() => { this.$router.go() })">Назад</div>
+        <div v-else class="btn_prev" @click="$router.go(-1)">Назад</div>
       </div>
-      <div v-if="path" class="btn_prev" @click="$router.push(path).then(() => { this.$router.go() })">Назад</div>
-      <div v-else class="btn_prev" @click="$router.go(-1)">Назад</div>
     </div>
   </div>
 </template>
@@ -23,11 +25,24 @@ export default {
 
 <style lang="less" scoped>
 @import "../../assets/css/variables.less";
+.header_wrapper{
+  position: relative;
+  height: 25px;
+  .header_absolute{
+    position: absolute;
+    top:-20px;
+    width: 100%;
+  }
+}
   .header_block{
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    z-index: 20;
+
     .block_title{
       font-weight: 500;
       font-size: 16px;

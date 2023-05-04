@@ -1,9 +1,6 @@
 <template>
-<!--  <PreLoader v-if="$store.state.football.matchLoading"></PreLoader>-->
-<!--  <div v-else>-->
     <HeaderBlock></HeaderBlock>
     <router-view></router-view>
-<!--  </div>-->
 </template>
 
 <script>
@@ -63,9 +60,6 @@ body{
   padding: 0;
   box-sizing: border-box;
 }
-
-
-
 
 #app {
   font-family: Roboto, Avenir, Helvetica, Arial, sans-serif;
