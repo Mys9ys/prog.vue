@@ -3,17 +3,15 @@
     <div class="h_main_block">
       <div class="hm_left_block">
         <div class="hm_achieve_block">
-          <div class="hm_achieve_box hm_box">1
-            <i class="bi bi-award"></i>
-            <i class="bi bi-award-fill"></i>
+          <div class="hm_achieve_box hm_box">
+            Новичок
           </div>
         </div>
-        <div class="hm_btn_block">
+        <div class="hm_btn_block" v-if="token">
           <BtnMini v-for="(btn, index) in l_btns"
                    :key="index"
-                   @click="$router.push('/' + btn.link).then(() => { this.$router.go() })"
+                   @click="$router.push('/' + btn.link)"
                    :img="btn.img"></BtnMini>
-
         </div>
       </div>
       <AvaComponent v-if="$router.currentRoute.value.path === '/register'" class="hm_ava_block"
@@ -31,11 +29,13 @@
           <span v-else>Гость</span>
         </div>
 
-        <div class="hm_btn_block hm_right">
+        <div class="hm_btn_block hm_right" v-if="token">
           <BtnMini v-for="(btn, index) in r_btns"
                    :key="index"
-                   @click="$router.push('/' + btn.link).then(() => { this.$router.go() })"
+                   @click="$router.push('/' + btn.link)"
                    :img="btn.img"></BtnMini>
+          <BtnMini @click="logoutProfile"
+                   :img="require('@/assets/icon/header/exit.svg')"></BtnMini>
         </div>
 
       </div>
@@ -63,7 +63,7 @@ export default {
       r_btns: [
         {link:'ratings', img: require('@/assets/icon/header/bonus.svg'), name: 'Рейтинги'},
         {link:'profile', img: require('@/assets/icon/header/profile.svg'), name: 'Профиль'},
-        {link:'logout', img: require('@/assets/icon/header/exit.svg'), name: 'Выход'},
+        // {link:'logout', img: require('@/assets/icon/header/exit.svg'), name: 'Выход'},
       ],
       menu: false
     }
@@ -78,7 +78,6 @@ export default {
 
 
   mounted() {
-
     this.$nextTick(function () {
       if (this.token) {
         // проверка токена на актуальность
@@ -105,7 +104,7 @@ export default {
 
     logoutProfile() {
       this.logoutVue()
-      this.$router.push('/')
+      this.$router.push('/').then(() => { this.$router.go() })
     },
 
     async checkAuth() {
@@ -133,6 +132,7 @@ export default {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
+  height: 80px;
 
   margin-bottom: 40px;
 
@@ -223,6 +223,9 @@ export default {
       padding: 2px 10px;
       box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
       //background: linear-gradient(rgb(70,70,70), rgb(120,120,120));
+    }
+    .hm_achieve_box{
+      text-align: left;
     }
   }
 }
