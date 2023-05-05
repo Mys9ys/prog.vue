@@ -13,6 +13,7 @@ import RecoverMail from "@/pages/auth/RecoverMail";
 import RecoverSuccess from "@/pages/auth/RecoverSuccess";
 import HumorPage from "@/pages/HumorPage";
 import HelloPage from "@/pages/HelloPage";
+import F1raceEvent from "@/pages/race/F1raceEvent";
 
 const routes = [
     {
@@ -46,6 +47,11 @@ const routes = [
     {
         path: '/football',
         component: FBCatalog,
+    },
+
+    {
+        path: '/f1race/:id',
+        component: F1raceEvent,
     },
 
     {

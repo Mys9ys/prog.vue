@@ -1,5 +1,5 @@
 <template>
-  <PreLoader v-if="this.matchLoading"></PreLoader>
+  <PreLoader v-if="prognosisLoader"></PreLoader>
   <SendSuccess v-if="prognosisSuccess"></SendSuccess>
   <div v-else class="match_wrapper">
     <PageHeader class="header" :path="'/football/' + $route.params.event">Матч № {{ $route.params.number }}</PageHeader>
@@ -9,23 +9,23 @@
       <div class="time title_cell">&#128344; {{ arMatch.time }}</div>
       <div class="stage title_cell">{{ arMatch.step }}</div>
     </div>
-    <div class="match_record_wrapper" v-if="arMatch.active === 'Y'">
 
-      <div class="teams_block">
-        <div class="team">
-          <div class="flag">
-            <img :src="urlImg + home.flag" alt="">
-          </div>
-          <div class="name name_home">{{ home.name }}</div>
+    <div class="teams_block" v-if=" home.flag">
+      <div class="team">
+        <div class="flag">
+          <img :src="urlImg + home.flag" alt="">
         </div>
-        <div class="dash">–</div>
-        <div class="team">
-          <div class="name name_guest">{{ guest.name }}</div>
-          <div class="flag">
-            <img :src="urlImg + guest.flag" alt="">
-          </div>
+        <div class="name name_home">{{ home.name }}</div>
+      </div>
+      <div class="dash">–</div>
+      <div class="team">
+        <div class="name name_guest">{{ guest.name }}</div>
+        <div class="flag">
+          <img :src="urlImg + guest.flag" alt="">
         </div>
       </div>
+    </div>
+    <div class="match_record_wrapper" v-if="arMatch.active === 'Y'">
       <div class="prognosis_block">
         <div class="part_block">
           <div class="title_block">
@@ -54,7 +54,7 @@
         <div class="prognosis_dash_line"></div>
 
         <div class="part_block">
-          <div class="title_block">
+          <div class="title_block block_absolute">
             <div class="item icon">{{ icons[18] }}</div>
             <div class="item title">{{ title[18] }}:</div>
           </div>
@@ -69,7 +69,7 @@
         <div class="prognosis_dash_line"></div>
 
         <div class="part_block">
-          <div class="title_block">
+          <div class="title_block block_absolute">
             <div class="item icon">{{ icons[28] }}</div>
             <div class="item title">{{ title[28] }}:</div>
           </div>
@@ -83,7 +83,7 @@
         <div class="prognosis_dash_line"></div>
 
         <div class="part_block">
-          <div class="title_block">
+          <div class="title_block block_absolute">
             <div class="item icon">{{ icons[19] }}</div>
             <div class="item title">{{ title[19] }}:</div>
           </div>
@@ -112,7 +112,7 @@
         </div>
         <div class="prognosis_dash_line"></div>
         <div class="part_block yellow">
-          <div class="title_block">
+          <div class="title_block block_absolute">
             <div class="item icon">{{ icons[21] }}</div>
             <div class="item title">{{ title[21] }}:</div>
             </div>
@@ -128,7 +128,7 @@
         </div>
         <div class="prognosis_dash_line"></div>
         <div class="part_block red">
-          <div class="title_block">
+          <div class="title_block block_absolute">
             <div class="item icon">{{ icons[22] }}</div>
             <div class="item title">{{ title[22] }}:</div>
           </div>
@@ -144,7 +144,7 @@
         </div>
         <div class="prognosis_dash_line"></div>
         <div class="part_block">
-          <div class="title_block">
+          <div class="title_block block_absolute">
             <div class="item icon">{{ icons[20] }}</div>
             <div class="item title">{{ title[20] }}:</div>
           </div>
@@ -160,7 +160,7 @@
         </div>
         <div class="prognosis_dash_line"></div>
         <div class="part_block">
-          <div class="title_block">
+          <div class="title_block block_absolute">
             <div class="item icon">{{ icons[23] }}</div>
             <div class="item title">{{ title[23] }}:</div>
           </div>
@@ -308,6 +308,7 @@ export default {
 
   data() {
     return {
+      prognosisLoader: false,
       moreInfo: false,
       urlImg: 'https://prognos9ys.ru/',
       ball: '⚽',
@@ -389,6 +390,7 @@ export default {
 
   watch: {
     prognosis() {
+      this.prognosisLoader = false
       console.log('prognosis load')
     }
   },
@@ -488,7 +490,7 @@ export default {
     },
 
     async fillMatchElem() {
-      this.matchLoading = true
+      this.prognosisLoader = true
 
       this.queryMatch.number = this.$route.params.number
       this.queryMatch.eventId = this.$route.params.event
@@ -521,7 +523,6 @@ export default {
       guest: state => state.football.match.guest,
       queryMatch: state => state.football.queryMatch,
       queryPrognosis: state => state.football.queryPrognosis,
-      matchLoading: state => state.football.matchLoading,
       prognosisSuccess: state => state.football.prognosisSuccess,
       token: state => state.auth.authData.token,
       prognosis: state => state.football.match.prognosis,
@@ -651,10 +652,10 @@ export default {
   gap: 4px;
 
   .part_block {
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
-
     gap: 4px;
 
     .title_block {
@@ -715,6 +716,10 @@ export default {
         background: @maxred;
       }
     }
+  }
+
+  .block_absolute{
+    position: absolute;
   }
 
   .prognosis_dash_line {
