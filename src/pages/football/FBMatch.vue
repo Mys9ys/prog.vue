@@ -279,11 +279,18 @@
     </div>
 
     <div class="btn_select_other_wrapper">
-      <div class="prev_btn other_match_btn" @click="$router.push(prevLink).then(() => { this.$router.go() })">
+      <div class="other_match_btn" v-if="$route.params.number>1" @click="$router.push(prevLink).then(() => { this.$router.go() })">
         <img src="@/assets/icon/pagination/left.svg" alt=""><span>Предыдущий</span>
       </div>
 
-      <div class="next_btn other_match_btn" @click="$router.push(nextLink).then(() => { this.$router.go() })">
+      <div class="other_match_btn inactive" v-else>
+        <img src="@/assets/icon/pagination/left.svg" alt=""><span>Предыдущий</span>
+      </div>
+
+      <div class="other_match_btn" v-if="$route.params.number<arMatch.max" @click="$router.push(nextLink).then(() => { this.$router.go() })">
+        <span>Следующий</span><img src="@/assets/icon/pagination/right.svg" alt="">
+      </div>
+      <div class="other_match_btn inactive" v-else>
         <span>Следующий</span><img src="@/assets/icon/pagination/right.svg" alt="">
       </div>
     </div>
@@ -881,6 +888,11 @@ export default {
       height: 26px;
     }
 
+    .inactive{
+      background: @colorBlur;
+      border: 2px solid crimson;
+    }
+
     .annotation_btn {
       position: relative;
       .prognosis_btn;
@@ -1031,5 +1043,8 @@ export default {
 
 .red_t {
   color: @maxred;
+}
+.inactive{
+  background: @colorBlur!important;
 }
 </style>
