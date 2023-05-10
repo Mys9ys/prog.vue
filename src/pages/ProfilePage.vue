@@ -2,8 +2,6 @@
   <PreLoader v-if="profileLoader"></PreLoader>
   <PageHeader class="header">{{profileData.info.NAME}}</PageHeader>
 
-<!--  <p>{{profileData}}</p>-->
-
   <div class="user_block">
     <div class="ava_block">
       <img src="" alt="" v-if="profileData.info.img">
@@ -17,8 +15,26 @@
     </div>
   </div>
   <div class="prognosis_block">
+    <div class="title_wrapper">
+      <div class="title">
+        Прогнозы
+      </div>
+    </div>
     <div class="football_block" v-if="profileData.football">
-
+     <div class="football_title_block">
+       <ProfileTitle v-for="(arr, index) in profileData.football"
+                     @click="setActiveEvent(index)"
+                     :info="arr.info"
+                     :class="{'active': index === activeEvent}"
+                     :key="index"></ProfileTitle>
+     </div>
+      <div class="football_body_block" v-for="(arr, index) in profileData.football"
+           :key="index">
+        <ProfileEventBody v-if="index == activeEvent"
+                          :matches="arr.matches"
+                          :title="arr.info.NAME"
+                          ></ProfileEventBody>
+      </div>
     </div>
   </div>
 </template>
@@ -27,17 +43,22 @@
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
 import PageHeader from "@/components/main/PageHeader";
+import ProfileTitle from "@/components/football/ProfileTitle";
+import ProfileEventBody from "@/components/football/ProfileEventBody";
 
 export default {
   name: "ProfilePage",
   components: {
     PreLoader,
-    PageHeader
+    PageHeader,
+    ProfileTitle,
+    ProfileEventBody
   },
   data() {
     return {
       url:  'https://prognos9ys.ru/',
-      profileLoader: false
+      profileLoader: false,
+      activeEvent: ''
     }
   },
 
@@ -57,6 +78,10 @@ export default {
     ...mapActions({
       getProfileInfo: 'profile/getProfileData',
     }),
+
+    setActiveEvent(id){
+      this.activeEvent = id
+    },
 
     async fillProfile() {
       if(this.$route.params.id){
@@ -126,4 +151,28 @@ export default {
       }
     }
   }
+
+.prognosis_block{
+  .title_wrapper{
+    background: @DarkColorBG;
+    padding: 4px;
+    border-radius: 5px;
+    color: @colorText;
+    margin-top: 25px;
+    .title{
+      .shadow_inset;
+    }
+  }
+  margin-bottom: 20px;
+}
+.football_block{
+  .football_title_block{
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+  }
+}
+.active{
+  background: @colorText2;
+}
 </style>
