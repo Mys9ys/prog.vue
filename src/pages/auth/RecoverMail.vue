@@ -1,4 +1,4 @@
-RecoverSuccess.vue<template>
+<template>
   <div class="wrapper">
     <PageHeader class="header">Восстановление пароля</PageHeader>
 
@@ -119,6 +119,7 @@ export default {
 @import "@/assets/css/variables.less";
 .wrapper {
   .wrapper_template;
+  padding-top: 45px;
   .title{
     margin-top: 16px;
     margin-bottom: 25px;

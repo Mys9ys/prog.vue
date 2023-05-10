@@ -7,7 +7,7 @@
             Новичок
           </div>
         </div>
-        <div class="hm_btn_block" v-if="token">
+        <div class="hm_btn_block">
           <BtnMini v-for="(btn, index) in l_btns"
                    :key="index"
                    @click="$router.push('/' + btn.link)"
@@ -29,7 +29,7 @@
           <span v-else>Гость</span>
         </div>
 
-        <div class="hm_btn_block hm_right" v-if="token">
+        <div class="hm_btn_block hm_right">
           <BtnMini v-for="(btn, index) in r_btns"
                    :key="index"
                    @click="$router.push('/' + btn.link)"
@@ -37,10 +37,8 @@
           <BtnMini @click="logoutProfile"
                    :img="require('@/assets/icon/header/exit.svg')"></BtnMini>
         </div>
-
       </div>
     </div>
-
   </div>
 
 </template>

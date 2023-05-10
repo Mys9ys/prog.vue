@@ -142,7 +142,7 @@ export default {
   height: 100vh;
   text-align: center;
   padding: 0 24px;
-  padding-top: 95px;
+  padding-top: 45px;
 
   .form {
     margin-top: 55px;

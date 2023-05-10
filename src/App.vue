@@ -1,11 +1,12 @@
 <template>
-    <HeaderBlock></HeaderBlock>
+    <HeaderBlock v-if="token"></HeaderBlock>
     <router-view></router-view>
 </template>
 
 <script>
 
 import HeaderBlock from "@/components/main/HeaderBlock";
+import {mapState} from "vuex";
 // import PreLoader from "@/components/main/PreLoader";
 
 
@@ -15,6 +16,21 @@ export default {
     HeaderBlock,
     // PreLoader
   },
+
+  data() {
+    return {
+      links: [
+          "main", ""
+      ]
+
+    }
+  },
+  computed: {
+    ...mapState({
+      token: state => state.auth.authData.token,
+    })
+  },
+
 
 
 }
