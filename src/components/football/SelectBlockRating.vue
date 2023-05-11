@@ -85,11 +85,11 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     gap: 4px;
 
     .user_ava{
-      width: 26px;
-      height: 26px;
+      width: 36px;
       background: @colorBlur;
       border-radius: 5px;
       display: flex;
