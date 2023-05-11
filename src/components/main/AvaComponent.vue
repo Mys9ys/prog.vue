@@ -1,20 +1,19 @@
 <template>
   <div class="ava_wrapper">
-    <div class="modal" v-if="error">
+    <div class="myModal" v-if="error">
       <div class="close" @click="errorClear()"><span>+</span></div>
       <div class="body">{{errorText}}</div>
     </div>
     <div class="ava_block">
       <div class="background" :class="{'error': error}">
         <img v-if="img" class="icon_temp icon" :src="url+img">
-<!--        <img v-else class="icon_temp" src="@/assets/icon/auth/profile.svg">-->
         <img v-else class="icon" src="@/assets/img/ava_no_img.jpg">
       </div>
       <input class="file_container"
              type="file" id="file"
              ref="file" accept="image/png, image/gif, image/jpeg"
              @change="handleFileUpload()"/>
-      <div v-if="img" class="plus" @click="loadFile()">+</div>
+      <div class="plus" @click="loadFile()">+</div>
     </div>
   </div>
 </template>
@@ -26,7 +25,8 @@ export default {
   name: "AvaComponent",
   data() {
     return {
-      url:  window.location.href.includes('localhost') ? 'http://prog.work' : 'https://prognos9ys.ru',
+      // url:  window.location.href.includes('localhost') ? 'http://prog.work' : 'https://prognos9ys.ru',
+      url: 'https://prognos9ys.ru',
       // error: null
       errorText: 'загружаемое изображение превышает 500кб',
       error: false
@@ -62,6 +62,7 @@ export default {
     },
 
     loadFile(){
+      console.log('btn load')
       this.$refs.file.click();
     },
 
@@ -97,20 +98,21 @@ export default {
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
 .ava_wrapper {
-  width: 100%;
+  width: 110px;
+  height: 110px;
   position: relative;
   display: inline-block;
   margin: 0 auto;
   margin-top: 24px;
-  z-index: -1;
+  z-index: 25;
 
-  .modal{
-    z-index: 4;
+  .myModal{
+    z-index: 40;
     position: absolute;
     left: 50%;
     top:25px;
     transform: translateX(-50%);
-    width: 60%;
+    width: 200px;
     color: @darkbg;
     background: rgba(255,92,92,0.7);
     border-radius: 20px;
@@ -178,12 +180,15 @@ export default {
     width: 24px;
     height: 24px;
     background: @DarkColorBG;
+
+    cursor: pointer;
     /* Белый */
 
     border: 3px solid @DarkColorBG;
     border-radius: 100px;
 
     color: #FFFFFF;
+    z-index: 35;
   }
 }
 </style>

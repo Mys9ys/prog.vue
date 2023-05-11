@@ -1,10 +1,11 @@
 <template>
   <PreLoader v-if="profileLoader"></PreLoader>
   <PageHeader class="header">{{profileData.info.NAME}}</PageHeader>
+  {{profileData.info.img}}
 
   <div class="user_block">
     <div class="ava_block">
-      <img src="" alt="" v-if="profileData.info.img">
+      <img class="ava" :src="url+profileData.info.img" alt="" v-if="profileData.info.img">
       <img class="ava" src="@/assets/img/ava_no_img.jpg" alt="" v-else>
     </div>
     <div class="right_block">
@@ -56,7 +57,7 @@ export default {
   },
   data() {
     return {
-      url:  'https://prognos9ys.ru/',
+      url:  'https://prognos9ys.ru',
       profileLoader: false,
       activeEvent: ''
     }

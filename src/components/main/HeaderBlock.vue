@@ -136,6 +136,8 @@ export default {
 
   border-radius: 0 0 5px 5px;
 
+  z-index: 15;
+
   .h_header_block {
     display: flex;
     flex-direction: column;
@@ -209,6 +211,7 @@ export default {
     }
 
     .hm_ava_block {
+      width: 120px;
       position: absolute;
       left: 50%;
       bottom: -55px;

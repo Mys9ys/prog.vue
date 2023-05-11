@@ -28,10 +28,12 @@ export default {
 .header_wrapper{
   position: relative;
   height: 25px;
+  z-index: 0;
   .header_absolute{
     position: absolute;
     top:-20px;
     width: 100%;
+    z-index: 0;
   }
 }
   .header_block{
@@ -41,15 +43,13 @@ export default {
     justify-content: space-between;
     align-items: center;
 
-    z-index: 20;
+    z-index: 0;
 
     .block_title{
       font-weight: 500;
       font-size: 16px;
       line-height: 22px;
       /* identical to box height, or 138% */
-
-      letter-spacing: -0.408px;
 
       /* Черный */
       color: @darkbg;
@@ -61,7 +61,6 @@ export default {
       /* identical to box height, or 157% */
 
       text-align: right;
-      letter-spacing: -0.408px;
 
       /* Серый */
       color: @colorBack

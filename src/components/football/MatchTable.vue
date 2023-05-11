@@ -126,6 +126,13 @@ export default {
   }
 
 }
+.yellow_t {
+  color: @maxYellow;
+}
+
+.red_t {
+  color: @maxred;
+}
 .desc_block{
   background: @DarkColorBG;
   padding: 4px;
