@@ -1,8 +1,6 @@
 <template>
   <PreLoader v-if="profileLoader"></PreLoader>
   <PageHeader class="header">{{profileData.info.NAME}}</PageHeader>
-  {{profileData.info.img}}
-
   <div class="user_block">
     <div class="ava_block">
       <img class="ava" :src="url+profileData.info.img" alt="" v-if="profileData.info.img">

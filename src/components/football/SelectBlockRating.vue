@@ -20,8 +20,13 @@
             <td class="pr_table_col" v-if="el.diff === 0"><div class="zero_diff">–</div></td>
             <td class="pr_table_col" v-else-if="el.diff >0"><div class="plus_diff">{{el.diff}}</div></td>
             <td class="pr_table_col" v-else-if="el.diff <0"><div class="minus_diff">{{el.diff}}</div></td>
-            <td class="pr_table_col user_cell"><span>{{el.user.name}}</span><span class="user_info" @click="$router.push('/profile/' + el.user.id)">i</span></td>
-            <td class="pr_table_col">{{el.score}}</td>
+            <td class="pr_table_col user_cell">
+              <span class="user_ava">
+                <img :src="url+el.user.img" alt="" v-if="el.user.img">
+                <img src="@/assets/img/ava_no_img.jpg" alt="" v-else>
+              </span>
+              <div class="user_nick">{{el.user.name}}</div><span class="user_info" @click="$router.push('/profile/' + el.user.id)">i</span></td>
+            <td class="pr_table_col score">{{el.score}}</td>
           </tr>
           </tbody>
         </table>
@@ -41,7 +46,8 @@ export default {
   data(){
     return{
       matchNumbers: [],
-      selected: ''
+      selected: '',
+      url:  'https://prognos9ys.ru',
     }
   },
 
@@ -79,6 +85,27 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: 4px;
+
+    .user_ava{
+      width: 26px;
+      height: 26px;
+      background: @colorBlur;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      img{
+        border: 1px solid @YesWrite;
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+    .user_nick{
+      width: 85%;
+      text-align: left;
+    }
 
     .user_info{
       cursor: pointer;
@@ -86,12 +113,16 @@ export default {
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      width: 20px;
-      height: 20px;
-      color: @pearl;
-      border: 1px solid @pearl;
-      border-radius: 3px;
+      width: 24px;
+      height: 24px;
+      font-weight: 700;
+      color: @YesWrite;
+      border: 2px solid @YesWrite;
+      border-radius: 5px;
     }
+  }
+  .score{
+    text-align: right;
   }
 }
 .zero_diff{
