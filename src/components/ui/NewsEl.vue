@@ -1,13 +1,11 @@
 <template>
   <div class="news_el">
-    <div class="news_title">Обновление 2.33</div>
-    <div class="news_preview" :class="{'small': smallNews}">Добавлена возможность загружать аватарку.
-      Доступные форматы: png, gif, jpeg.
-      Размер изображения не более 500кб.
-      Форма - квадрат (обрезки пока нет).
+    <div class="news_title">{{news.title}}</div>
+    <div class="news_preview" :class="{'small': smallNews}" v-html="news.text"></div>
+    <div class="btn_box">
+      <span v-if="smallNews" class="btn_open" @click="smallNews = !smallNews">Подробнее</span>
+      <span v-else class="btn_open" @click="smallNews = !smallNews">Скрыть</span>
     </div>
-    <div v-if="smallNews" class="btn_open" @click="smallNews = !smallNews">Подробнее</div>
-    <div v-else class="btn_open" @click="smallNews = !smallNews">Скрыть</div>
   </div>
 </template>
 
@@ -18,12 +16,11 @@ export default {
     return {
       news: {
         title: 'Обновление 2.33',
-        text: 'Добавлена возможность загружать аватарку.\n' +
-            '        Доступные форматы: png, gif, jpeg.\n' +
-            '        Размер изображения не более 500кб.\n' +
-            '        Форма - квадрат (обрезки пока нет).        '
+        text: 'Добавлена возможность загружать аватарку.<br>' +
+            '        Доступные форматы: png, gif, jpeg.<br>' +
+            '        Размер картинки: не более 500кб.<br>' +
+            '        Форма картинки: квадрат (обрезки пока нет).        '
       },
-      nearest: false,
       smallNews: true
     }
   }
@@ -54,8 +51,13 @@ export default {
     text-align: left;
   }
   .small{
-    height: 24px;
+    height: 22px;
     overflow: hidden;
+  }
+  .btn_box{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
   }
   .btn_open{
     display: inline;
@@ -63,6 +65,7 @@ export default {
     border-radius: 5px;
     .shadow_template;
     cursor: pointer;
+    font-size: 12px;
     &:hover{
       opacity: 0.8;
     }

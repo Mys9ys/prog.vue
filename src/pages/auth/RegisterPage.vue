@@ -56,10 +56,10 @@ export default {
     return {
       errors: [],
       inputs: [
-        { f_icon: require('@/assets/icon/form/fio.svg'), title: 'NickName', l_icon: '', vmod: 'nick', value: 'Нострадамус № 12'},
-        { f_icon: require('@/assets/icon/form/mail.svg'), title: 'E-mail', l_icon: '', vmod: 'mail', value: 'rere@faf.tr'},
-        { f_icon: require('@/assets/icon/form/pass.svg'), title: 'Пароль', l_icon: require('@/assets/icon/form/eye.svg'), vmod: 'pass', value: '123456'},
-        { f_icon: require('@/assets/icon/form/pass.svg'), title: 'Повторите пароль', l_icon: require('@/assets/icon/form/eye.svg'), vmod: 'pass2', value: '123456'},
+        { f_icon: require('@/assets/icon/form/fio.svg'), title: 'NickName', l_icon: '', vmod: 'nick', value: 'Нострадамус №'},
+        { f_icon: require('@/assets/icon/form/mail.svg'), title: 'E-mail', l_icon: '', vmod: 'mail', value: ''},
+        { f_icon: require('@/assets/icon/form/pass.svg'), title: 'Пароль', l_icon: require('@/assets/icon/form/eye.svg'), vmod: 'pass', value: ''},
+        { f_icon: require('@/assets/icon/form/pass.svg'), title: 'Повторите пароль', l_icon: require('@/assets/icon/form/eye.svg'), vmod: 'pass2', value: ''},
       ],
     }
   },
