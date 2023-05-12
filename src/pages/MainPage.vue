@@ -14,9 +14,7 @@
     <div class="title_wrapper humor">
       <div class="title">Минутка юмора</div>
     </div>
-    <div class="humor_el">
-
-    </div>
+    <HumorEl></HumorEl>
     <div class="btn_all humor" @click="$router.push('/humor')">Весь юмор <img src="@/assets/icon/pagination/right.svg" alt=""></div>
   </div>
   <div class="news_wrapper block_wrapper">
@@ -31,19 +29,21 @@
 <script>
 import PageHeader from "@/components/main/PageHeader";
 import NewsEl from "@/components/ui/NewsEl";
+import HumorEl from "@/components/ui/HumorEl";
 
 export default {
   name: "MainPage",
   components: {
     PageHeader,
-    NewsEl
+    NewsEl,
+    HumorEl
   },
   data() {
     return {
       nearest: false,
       smallNews: true
     }
-  }
+  },
 }
 </script>
 
@@ -96,4 +96,5 @@ export default {
 .news{
   background: @kerling;
 }
+
 </style>

@@ -58,6 +58,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    padding: 2px 0;
   }
   .btn_open{
     display: inline;
