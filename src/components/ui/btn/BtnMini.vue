@@ -22,7 +22,7 @@ export default {
     background: @YesWrite;
     color: @colorText;
     cursor: pointer;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4), 0 -1px 0 rgba(0, 0, 0, 0.2);
+    .shadow_template;
     padding: 3px;
     border-radius: 3px;
     min-width: 22px;

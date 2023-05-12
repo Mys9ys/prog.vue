@@ -628,7 +628,7 @@ export default {
   background: @colorText2;
   color: @colorText;
   cursor: pointer;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
+  .shadow_template;
   padding: 2px 2px;
   font-size: 14px;
   border-radius: 3px;
@@ -761,7 +761,7 @@ export default {
       background: @colorText2;
       color: @colorText;
       cursor: pointer;
-      box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
+      .shadow_template;
       padding: 2px 2px;
       font-size: 14px;
       border-radius: 3px;
@@ -795,7 +795,7 @@ export default {
     background: @colorText2;
     color: @colorText;
     cursor: pointer;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
+    .shadow_template;
     padding: 2px 2px;
     font-size: 14px;
     border-radius: 3px;

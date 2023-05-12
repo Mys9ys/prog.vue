@@ -14,6 +14,7 @@ import RecoverSuccess from "@/pages/auth/RecoverSuccess";
 import HumorPage from "@/pages/HumorPage";
 import HelloPage from "@/pages/HelloPage";
 import F1raceEvent from "@/pages/race/F1raceEvent";
+import NewsPage from "@/pages/NewsPage";
 
 const routes = [
     {
@@ -57,6 +58,11 @@ const routes = [
     {
         path: '/humor',
         component: HumorPage,
+    },
+
+    {
+        path: '/news',
+        component: NewsPage,
     },
 
     {
