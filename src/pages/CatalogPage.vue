@@ -7,7 +7,7 @@
       <div class="events_block"
            v-for="(event, index) in catalog" :key="index">
         <div class="event_title_wrapper">
-          <div class="title" :class="[index]">{{ event.name }}</div>
+          <div class="title" :class="[event.info.CODE]" v-if="event.info['CODE']">{{ event.info.NAME }}</div>
         </div>
 
         <div class="event_box">
@@ -74,9 +74,9 @@ export default {
 
   computed: {
     ...mapState({
-      catalogData: state => state.catalog.catalogData,
       matchLoading: state => state.football.matchLoading,
       eventsData: state => state.catalog.eventsData,
+      catalogData: state => state.catalog.catalogData,
     })
   },
 }
