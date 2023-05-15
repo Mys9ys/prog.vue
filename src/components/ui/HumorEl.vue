@@ -6,7 +6,7 @@
     <div class="btn_block">
       <div class="like btn" @click="humors[id].likes++">Нравится ❤</div>
       <div class="like_count">{{ humors[id].likes }} ❤</div>
-      <div class="send btn">Поделиться ↶</div>
+      <div class="send btn">Следующая </div>
       <div class="add btn">Добавить +</div>
     </div>
   </div>

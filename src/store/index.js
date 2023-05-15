@@ -8,6 +8,7 @@ import {ratingModule} from "@/store/ratingModule";
 import {recoverModule} from "@/store/recoverModule";
 import {profileModule} from "@/store/profileModule";
 import {iconModule} from "@/store/iconModule";
+import {mainPageModule} from "@/store/mainPageModule";
 
 export default createStore({
     state: {
@@ -29,7 +30,8 @@ export default createStore({
         rating: ratingModule,
         recover: recoverModule,
         profile: profileModule,
-        icons: iconModule
+        icons: iconModule,
+        mainPage: mainPageModule
     },
     root: true
 })
