@@ -74,7 +74,6 @@ export default {
       catalogData: state => state.catalog.catalogData,
       ratingData: state => state.rating.ratingData,
       footballRating: state => state.rating.footballRating,
-      mainLoader: state => state.mainLoader,
     })
   },
 }

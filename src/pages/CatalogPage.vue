@@ -1,4 +1,5 @@
 <template>
+  <PreLoader v-if="catLoader"></PreLoader>
   <div class="catalog_wrapper">
     <PageHeader class="header">Каталог событий</PageHeader>
 
@@ -6,7 +7,7 @@
       <div class="events_block"
            v-for="(event, index) in catalog" :key="index">
         <div class="event_title_wrapper">
-          <div class="title" :class="[event.info.CODE]">{{ event.info.NAME }}</div>
+          <div class="title" :class="[index]">{{ event.name }}</div>
         </div>
 
         <div class="event_box">
@@ -30,27 +31,31 @@
 <script>
 import {mapActions, mapState} from "vuex";
 import PageHeader from "@/components/main/PageHeader";
+import PreLoader from "@/components/main/PreLoader";
 
 export default {
   name: "CatalogPage",
   components: {
-    PageHeader
+    PageHeader,
+    PreLoader
+
   },
   data() {
     return {
       url:  'https://prognos9ys.ru/',
-      catalog: {}
+      catalog: {},
+      catLoader: false
     }
   },
 
-  created() {
+  mounted() {
     this.fillCatalogElem()
   },
 
   watch:{
     eventsData(){
-      console.log(this.eventsData)
       this.catalog = this.eventsData
+      this.catLoader = false
     }
   },
 
@@ -60,12 +65,16 @@ export default {
     }),
 
     async fillCatalogElem() {
+      this.catLoader = true
+      this.catalogData['type'] = 'catalog'
       await this.getEventsInfo()
+      this.catLoader = false
     }
   },
 
   computed: {
     ...mapState({
+      catalogData: state => state.catalog.catalogData,
       matchLoading: state => state.football.matchLoading,
       eventsData: state => state.catalog.eventsData,
     })

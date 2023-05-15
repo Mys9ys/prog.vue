@@ -23,6 +23,7 @@ export const catalogModule = {
 
         async getEventsInfo({state, commit}) {
             try {
+
                 const response = await axios.post(baseConfig.BASE_URL + 'events/', state.catalogData,
                     {
                         headers: {

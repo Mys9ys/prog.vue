@@ -84,17 +84,13 @@ export default {
     }
   }
   .footer_title_box{
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
     .title_rus{
       width: 100%;
       height: 18px;
-
       font-weight: 700;
       font-size: 16px;
       line-height: 18px;
