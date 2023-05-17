@@ -12,7 +12,9 @@ export const humorModule = {
 
         errors: {},
 
-        likeData: {}
+        likeData: {},
+
+        newPrank: {}
 
     }),
 
@@ -54,6 +56,30 @@ export const humorModule = {
 
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'humor/likes/', state.likeData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                )
+
+                if (response.data.status == 'ok') {
+
+                } else {
+                    commit('setErrors', response.data.mes)
+                }
+
+            } catch (e) {
+                console.log('error', e)
+            }
+        },
+
+        async sendNewPrank({state, commit}) {
+
+            console.log('sendNewPrank')
+
+            try {
+                const response = await axios.post(baseConfig.BASE_URL + 'humor/send/', state.newPrank,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
