@@ -12,8 +12,8 @@
       <div class="send btn" @click="getNextPrank">Следующая ↝</div>
       <div class="add btn">Добавить +</div>
 
-      <div class="like btn" @click="setLikes(prank.ID)" v-if="!like">Нравится ❤</div>
-      <div class="like btn" @click="dropLikes(prank.ID)" v-else>Не нравится 💔</div>
+      <div class="like btn" @click="setLikes(prank.ID, 'up')" v-if="!like">Нравится ❤</div>
+      <div class="like btn" @click="setLikes(prank.ID, 'down')" v-else>Не нравится 💔</div>
     </div>
   </div>
 </template>
@@ -31,42 +31,48 @@ export default {
 
   mounted() {
     this.$nextTick(function () {
-
         console.log('mounted humor')
       this.getPrank()
-
-
     })
   },
   methods:{
     ...mapActions({
       getOnePrank: 'humor/getOnePrank',
+      setLikesToPrank: 'humor/setLikesToPrank',
     }),
 
     getNextPrank(){
       this.getPrank()
+      this.like = false
     },
 
-    setLikes(id){
-      this.prank.likes++
-      this.like = !this.like
-      console.log('id', id)
-    },
+    setLikes(id, type){
+      if(type === 'up') this.prank.likes++
+      if(type === 'down') this.prank.likes--
 
-    dropLikes(id){
-      this.prank.likes--
       this.like = !this.like
-      console.log('id', id)
+      this.setLikeFunc(id, this.prank.likes)
     },
 
     async getPrank(){
       await this.getOnePrank()
+    },
+
+    async setLikeFunc(id, likes){
+
+      this.likeData['prankId'] = id
+      this.likeData['likes'] = likes
+      this.likeData['userToken'] = this.token
+
+      await this.setLikesToPrank()
     }
   },
 
   computed: {
     ...mapState({
       prank: state => state.humor.prank,
+      likeData: state => state.humor.likeData,
+      token: state => state.auth.authData.token,
     })
   },
 }

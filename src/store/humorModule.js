@@ -10,7 +10,9 @@ export const humorModule = {
 
         setToken: {},
 
-        errors: {}
+        errors: {},
+
+        likeData: {}
 
     }),
 
@@ -39,6 +41,28 @@ export const humorModule = {
 
                 if (response.data.status == 'ok') {
                     commit('setPrank', response.data.info)
+                } else {
+                    commit('setErrors', response.data.mes)
+                }
+
+            } catch (e) {
+                console.log('error', e)
+            }
+        },
+
+        async setLikesToPrank({state, commit}) {
+
+            try {
+                const response = await axios.post(baseConfig.BASE_URL + 'humor/likes/', state.likeData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                )
+
+                if (response.data.status == 'ok') {
+
                 } else {
                     commit('setErrors', response.data.mes)
                 }
