@@ -18,7 +18,7 @@ export const humorModule = {
     mutations: {
 
         setPrank(state, data) {
-            state.setPrank = data
+            state.prank = data
         },
 
         setErrors(state, data){
@@ -38,7 +38,7 @@ export const humorModule = {
                 )
 
                 if (response.data.status == 'ok') {
-                    commit('setPrank', response.data.nearest)
+                    commit('setPrank', response.data.info)
                 } else {
                     commit('setErrors', response.data.mes)
                 }

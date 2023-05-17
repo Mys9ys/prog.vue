@@ -9,6 +9,7 @@ import {recoverModule} from "@/store/recoverModule";
 import {profileModule} from "@/store/profileModule";
 import {iconModule} from "@/store/iconModule";
 import {mainPageModule} from "@/store/mainPageModule";
+import {humorModule} from "@/store/humorModule";
 
 export default createStore({
     state: {
@@ -31,7 +32,8 @@ export default createStore({
         recover: recoverModule,
         profile: profileModule,
         icons: iconModule,
-        mainPage: mainPageModule
+        mainPage: mainPageModule,
+        humor: humorModule
     },
     root: true
 })

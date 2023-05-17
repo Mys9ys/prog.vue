@@ -1,31 +1,31 @@
 <template>
-  <div class="humor_el" v-if="id">
+  <div class="humor_el" v-if="prank">
+    <div class="header">
+      <div class="author like_count"><b>Добавил: </b> Mys9ysilii</div>
+      <div class="like_count">{{ prank.seen ?? 0}} 👁</div>
+      <div class="like_count">{{ prank.likes ?? 0}} ❤</div>
+    </div>
     <div class="text">
-      {{humors[id].text}}
+      {{prank.PREVIEW_TEXT}}
     </div>
     <div class="btn_block">
-      <div class="like btn" @click="humors[id].likes++">Нравится ❤</div>
-      <div class="like_count">{{ humors[id].likes }} ❤</div>
-      <div class="send btn" @click="$router.go(0)">Следующая ↝</div>
+      <div class="send btn" @click="getNextPrank">Следующая ↝</div>
       <div class="add btn">Добавить +</div>
+
+      <div class="like btn" @click="setLikes(prank.ID)" v-if="!like">Нравится ❤</div>
+      <div class="like btn" @click="dropLikes(prank.ID)" v-else>Не нравится 💔</div>
     </div>
   </div>
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex";
+
 export default {
   name: "HumorEl",
   data() {
     return {
-      id: '',
-      humors: [
-        {text: 'Вместо подачи он сделал непонятно что.', likes: 6},
-        {text: 'Всем активно это не нравится.', likes: 12},
-        {text: 'Глядишь, сегодня и раскроется его звезда.', likes: 21},
-        {text: '"Стенка" сборной Японии походила на Великую китайскую стену.', likes: 11},
-        {text: 'Охрана на трибунах работает хорошо, судье ничего не угрожает, и он может показывать все, что ему захочется.', likes: 8},
-        {text: '"Локомотив" выглядит задумчивой командой.', likes: 17},
-      ]
+     like: false
     }
   },
 
@@ -33,16 +33,42 @@ export default {
     this.$nextTick(function () {
 
         console.log('mounted humor')
-      this.generateId()
+      this.getPrank()
 
 
     })
   },
   methods:{
-    generateId(){
-      this.id = Math.ceil(Math.random() * (this.humors.length-1));
+    ...mapActions({
+      getOnePrank: 'humor/getOnePrank',
+    }),
+
+    getNextPrank(){
+      this.getPrank()
+    },
+
+    setLikes(id){
+      this.prank.likes++
+      this.like = !this.like
+      console.log('id', id)
+    },
+
+    dropLikes(id){
+      this.prank.likes--
+      this.like = !this.like
+      console.log('id', id)
+    },
+
+    async getPrank(){
+      await this.getOnePrank()
     }
-  }
+  },
+
+  computed: {
+    ...mapState({
+      prank: state => state.humor.prank,
+    })
+  },
 }
 </script>
 
@@ -57,7 +83,6 @@ export default {
   flex-direction: column;
 
   padding: 4px;
-  padding-right: 32px;
   border-radius: 5px;
 
   gap: 4px;
@@ -69,8 +94,23 @@ export default {
     .shadow_inset;
     text-align: left;
   }
+}
 
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 4px;
+  padding-right: 28px;
 
+  .like_count {
+    .shadow_inset;
+    .flex_center;
+    font-size: 12px;
+    gap: 2px;
+    padding: 3px 4px;
+    min-width: 36px;
+  }
 }
 
 .humor_el:after {
@@ -99,17 +139,14 @@ export default {
     .shadow_template;
     cursor: pointer;
     font-size: 12px;
+    min-width: 105px;
 
     &:hover {
       opacity: 0.8;
     }
   }
 
-  .like_count {
-    .shadow_inset;
-    .flex_center;
-    font-size: 12px;
-  }
+
 }
 
 </style>
