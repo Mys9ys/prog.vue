@@ -16,14 +16,9 @@ export default {
     HeaderBlock,
     // PreLoader
   },
-
-  data() {
-    return {
-      links: [
-          "main", ""
-      ]
-
-    }
+  metaInfo: {
+    title: 'Прогносяус - сайт прогнозов на интерес',
+    titleTemplate: '%s | vue-meta Example App'
   },
   computed: {
     ...mapState({

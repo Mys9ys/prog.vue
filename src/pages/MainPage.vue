@@ -59,6 +59,10 @@ export default {
     }
   },
 
+  // metaInfo: {
+  //   title: 'Главная страница прогнозов',
+  // },
+
   mounted() {
     this.getNearestFootball()
   },

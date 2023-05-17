@@ -5,6 +5,7 @@ import "bootstrap"
 import store from "@/store";
 import router from "@/router/router";
 import directives from "@/directives";
+// import VueMeta from 'vue-meta';
 const app = createApp(App)
 
 directives.forEach(directive => {
@@ -14,4 +15,7 @@ directives.forEach(directive => {
 app
     .use(store)
     .use(router)
+    // .use(VueMeta, {
+    //     // optional pluginOptions
+    //     refreshOnceOnNavigation: true})
     .mount('#app')
