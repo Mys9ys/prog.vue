@@ -85,10 +85,11 @@ export default {
   .event_block{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 4px;
     .el_event{
       background: @DarkColorBG;
-      width: 25%;
+      width: 19%;
       padding: 4px;
       border-radius: 5px;
       .img_box{

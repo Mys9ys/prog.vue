@@ -168,6 +168,7 @@ export default {
   .football_title_block{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 4px;
   }
 }
