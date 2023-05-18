@@ -18,6 +18,7 @@
     </div>
   </div>
   <div class="humor_add" v-else>
+      <div class="btn close" @click="add=false">x</div>
       <div class="error_mes" v-if="error">{{error}}</div>
       <div class="error_mes success_mes" v-if="success">{{success}}</div>
       <textarea ref="prankText" class="prank_text" v-model="textPrank" @click="error = ''"></textarea>
@@ -39,7 +40,7 @@ export default {
       add: false,
       textPrank: '',
       error: '',
-      success: 'dfgfdfd'
+      success: ''
     }
   },
 
@@ -240,5 +241,12 @@ export default {
     color: @colorText;
     font-size: 12px;
   }
+}
+
+.close{
+  position: absolute;
+  top:0px;
+  right: 6px;
+  padding: 0;
 }
 </style>
