@@ -1,4 +1,5 @@
 <template>
+<!--  <SubscribeBtn></SubscribeBtn>-->
   <div class="header_wrapper">
     <div class="h_main_block">
       <div class="hm_left_block">

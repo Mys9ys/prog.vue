@@ -10,6 +10,7 @@ import {profileModule} from "@/store/profileModule";
 import {iconModule} from "@/store/iconModule";
 import {mainPageModule} from "@/store/mainPageModule";
 import {humorModule} from "@/store/humorModule";
+import {subscribeModule} from "@/store/subscribeModule";
 
 export default createStore({
     state: {
@@ -33,7 +34,8 @@ export default createStore({
         profile: profileModule,
         icons: iconModule,
         mainPage: mainPageModule,
-        humor: humorModule
+        humor: humorModule,
+        subscribe: subscribeModule
     },
     root: true
 })
