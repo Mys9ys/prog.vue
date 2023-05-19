@@ -13,8 +13,8 @@ import RecoverMail from "@/pages/auth/RecoverMail";
 import RecoverSuccess from "@/pages/auth/RecoverSuccess";
 import HumorPage from "@/pages/HumorPage";
 import HelloPage from "@/pages/HelloPage";
-import F1raceEvent from "@/pages/race/F1raceEvent";
 import NewsPage from "@/pages/NewsPage";
+import RaceEvent from "@/pages/race/RaceEvent";
 
 const routes = [
     {
@@ -51,8 +51,8 @@ const routes = [
     },
 
     {
-        path: '/f1race/:id',
-        component: F1raceEvent,
+        path: '/race/:event',
+        component: RaceEvent,
     },
 
     {
