@@ -11,6 +11,7 @@ import {iconModule} from "@/store/iconModule";
 import {mainPageModule} from "@/store/mainPageModule";
 import {humorModule} from "@/store/humorModule";
 import {subscribeModule} from "@/store/subscribeModule";
+import {raceModule} from "@/store/raceModule";
 
 export default createStore({
     state: {
@@ -35,7 +36,8 @@ export default createStore({
         icons: iconModule,
         mainPage: mainPageModule,
         humor: humorModule,
-        subscribe: subscribeModule
+        subscribe: subscribeModule,
+        race: raceModule
     },
     root: true
 })

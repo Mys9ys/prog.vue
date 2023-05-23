@@ -1,0 +1,110 @@
+<template>
+  <div class="element_box" v-if="element">
+    <div class="title">
+      <div class="grand_name">
+        <div class="name">Гранд-при</div>
+        <div class="name">{{element.name}}</div>
+      </div>
+      <div class="country" v-if="element.country">
+        <div class="name">{{element.country.NAME}}</div>
+        <div class="flag">
+          <img :src="urlImg + element.country.flag" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="qualification event_box">
+      <div class="date">{{element.qual.date}}</div>
+      <div class="time">{{element.qual.time}}</div>
+      <div class="title">Квалификация</div>
+    </div>
+    <div class="race event_box" v-if="element.sprint">
+      <div class="date">{{element.sprint.date}}</div>
+      <div class="time">{{element.sprint.time}}</div>
+      <div class="title">Спринт</div>
+    </div>
+    <div class="race event_box">
+      <div class="date">{{element.race.date}}</div>
+      <div class="time">{{element.race.time}}</div>
+      <div class="title">Гонка</div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+export default {
+  name: "EventRace",
+  props: {
+    element: {
+      type: Object
+    }
+  },
+  data() {
+    return {
+      moreInfo: false,
+      link: '/race/' + this.element.event + '/' + this.element.number,
+      urlImg: 'https://prognos9ys.ru/'
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+@import "src/assets/css/variables.less";
+
+.element_box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: @DarkColorBG;
+  color: @colorText;
+  padding: 4px;
+  border-radius: 5px;
+
+  .title{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 4px;
+
+    .grand_name{
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+    }
+    .country{
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+    }
+
+    .flag{
+      width: 24px;
+      height: 24px;
+      padding: 1px;
+
+      .shadow_inset;
+      img{
+        width: 100%;
+      }
+    }
+
+    .name{
+      .shadow_inset;
+    }
+  }
+
+  .event_box{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    font-size: 12px;
+
+    .date, .time, .title{
+      .shadow_inset;
+    }
+  }
+}
+</style>
