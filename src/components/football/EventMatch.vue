@@ -210,7 +210,7 @@ export default {
         padding: 2px 2px;
         border-radius: 3px;
         cursor: pointer;
-        box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
+        .shadow_template;
 
         .close {
           transform: rotate(90deg);
@@ -234,7 +234,7 @@ export default {
         background: @colorText2;
         color: @colorText;
         cursor: pointer;
-        box-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 -1px 0 rgba(0, 0, 0, .2);
+        .shadow_template;
         padding: 2px 2px;
         font-size: 10px;
         border-radius: 3px;

@@ -28,6 +28,13 @@
       <div class="title">Гонка</div>
     </div>
 
+    <div class="btn_block">
+      <div class="btn" v-if="element.active === 'Y'"
+           @click="$router.push(link)"
+      >Заполнить</div>
+      <div class="btn btn_grey" v-else @click="$router.push(link)">Посмотреть</div>
+    </div>
+
   </div>
 </template>
 
@@ -106,5 +113,29 @@ export default {
       .shadow_inset;
     }
   }
+}
+.btn{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: @colorText2;
+  color: @colorText;
+  cursor: pointer;
+  .shadow_template;
+  padding: 2px 2px;
+  font-size: 10px;
+  border-radius: 3px;
+  text-align: center;
+  border: 1px solid transparent;
+  text-decoration: none;
+  width: 76%;
+  max-width: 75px;
+  &:hover{
+    opacity: 0.8;
+  }
+}
+.btn_grey{
+  background: @maxdarkgrey;
+  color: @darkbg;
 }
 </style>

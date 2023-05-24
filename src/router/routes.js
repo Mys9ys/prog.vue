@@ -15,6 +15,7 @@ import HumorPage from "@/pages/HumorPage";
 import HelloPage from "@/pages/HelloPage";
 import NewsPage from "@/pages/NewsPage";
 import RaceEvent from "@/pages/race/RaceEvent";
+import RacePage from "@/pages/race/RacePage";
 
 const routes = [
     {
@@ -53,6 +54,11 @@ const routes = [
     {
         path: '/race/:event',
         component: RaceEvent,
+    },
+
+    {
+        path: '/race/:event/:number',
+        component: RacePage,
     },
 
     {
