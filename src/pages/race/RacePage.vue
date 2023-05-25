@@ -2,11 +2,11 @@
   <PreLoader v-if="loader"></PreLoader>
   <PageHeader class="header" :path="'/race/' + $route.params.event">Гонка № {{ $route.params.number }}</PageHeader>
 
-  <div class="item_wrapper" v-if="item">
+  <div class="item_wrapper" v-if="item && qualRacers">
     <div class="item_title">
       <div class="number title_cell"># {{ item.number }}</div>
-      <div class="date title_cell">&#128197; {{ item.date }}</div>
-      <div class="time title_cell">&#128344; {{ item.time }}</div>
+      <div class="date title_cell">&#128197; {{ item.qual.date }}</div>
+      <div class="time title_cell">&#128344; {{ item.qual.time }}</div>
     </div>
 
     <div class="item_name">
@@ -35,11 +35,13 @@
         <div class="drag_block">
           <div class="race_list">
             <RaceListItem
-                v-for="el in item.racers"
+                v-for="el in qualRacers.racers"
                 :item="el"
                 :key="el.ID"
+                :ref="'el'+el.ID"
                 draggable="true"
                 @dragstart="onDragStart($event, el.ID)"
+                :onMoveRight = "onMoveRight"
             ></RaceListItem>
           </div>
           <div class="race_list_disable" v-if="qualData.length === 10"></div>
@@ -53,9 +55,8 @@
                 :key = "id"
                 :item = "item.racers[id]"
                 :place="index"
-                @click="deleteElement(item.racers[id], index)"
+                :deleteElement="deleteElement"
             ></DragResultList>
-
           </div>
         </div>
       </div>
@@ -83,12 +84,19 @@ export default {
     return{
       urlImg: 'https://prognos9ys.ru/',
       loader: false,
-      qualData: []
+      qualData: [],
+      qualRacers: [],
     }
   },
 
   created() {
     this.fillElem()
+  },
+  watch:{
+    item(){
+      this.qualRacers = this.item
+      this.loader = false
+    }
   },
 
   methods: {
@@ -107,14 +115,13 @@ export default {
 
       await this.getOneElement()
 
-      this.loader = false
     },
 
     onDragStart(e, index) {
       e.dataTransfer.dropEffect = 'move'
       e.dataTransfer.effectAllowed = 'move'
       e.dataTransfer.setData('itemId', index.toString())
-      this.dragStart = true
+
       setTimeout(() => {
         e.target.style.visibility = 'hidden'
       }, 0)
@@ -124,18 +131,22 @@ export default {
 
     onDrop(e) {
       const itemId = parseInt(e.dataTransfer.getData('itemId'))
-      console.log('itemId', itemId)
-      // this.result[Object.keys(this.result).length + 1] = this.items[itemId]
+
       this.qualData.push(itemId)
-      // delete this.items[itemId];
     },
 
-    deleteElement(id, index) {
-      // this.items[id] = this.result[id]
+    onMoveRight(e, id){
+      this.qualData.push(parseInt(id))
 
-      console.log('id', id)
-      // this.result = this.result.filter((i) => {i !== id})
+      this.$refs['el'+id][0].$el.style.visibility = 'hidden'
+
+
+    },
+
+    deleteElement(index, id) {
       delete this.qualData[index];
+
+      this.$refs['el'+id][0].$el.style.visibility = 'visible'
 
       this.qualData = this.qualData.filter(i => i !== undefined)
 
@@ -146,7 +157,8 @@ export default {
     ...mapState({
       token: state => state.auth.authData.token,
       queryEvent: state => state.race.queryEvent,
-      item: state => state.race.oneRace
+      item: state => state.race.oneRace,
+      // qualRacers: state => state.race.oneRace
     })
   },
 }

@@ -1,13 +1,18 @@
 <template>
-  <div class="item_block">
-    <div class="foto img">
-      <img :src="urlImg + item.img" alt="">
-    </div>
-    <div class="country img">
-      <img :src="urlImg + item.country.flag" alt="">
+  <div class="item_block" >
+    <div class="img_block">
+      <div class="foto img">
+        <img :src="urlImg + item.img" alt="">
+      </div>
+      <div class="country img">
+        <img :src="urlImg + item.country.flag" alt="">
+      </div>
     </div>
     <div class="name">
       {{Array.from(item.NAME)[0]}}. {{item.NAME.split(' ')[1]}}
+    </div>
+    <div class="btn_drag" @click="onMoveRight($event.$parent, item.ID)">
+      >
     </div>
   </div>
 </template>
@@ -18,6 +23,9 @@ export default {
   props: {
     item: {
       type: Object
+    },
+    onMoveRight:{
+      type: Function
     }
   },
   data(){
@@ -34,13 +42,20 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 4px;
+  justify-content: space-between;
+  gap: 3px;
   border-radius: 5px;
 
   background: @hockei;
+  padding-right: 2px;
 
   .shadow_template;
 
+  .img_block{
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+  }
   .img{
     display: flex;
     flex-direction: row;
@@ -57,7 +72,21 @@ export default {
   }
 
   .name{
+    width: 80%;
     font-size: 12px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .btn_drag{
+    width: 20px;
+    height: 20px;
+    .shadow_template;
+    border-radius: 5px;
+    .flex_center;
+    cursor: pointer;
   }
 }
 </style>
