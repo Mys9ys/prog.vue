@@ -2,7 +2,7 @@
   <PreLoader v-if="loader"></PreLoader>
   <PageHeader class="header" :path="'/race/' + $route.params.event">Гонка № {{ $route.params.number }}</PageHeader>
 
-  <div class="item_wrapper" v-if="item && qualRacers">
+  <div class="item_wrapper" v-if="item">
     <div class="item_title">
       <div class="number title_cell"># {{ item.number }}</div>
       <div class="date title_cell">&#128197; {{ item.qual.date }}</div>
@@ -12,55 +12,22 @@
     <div class="item_name">
       <div class="box">
         <div class="name_cell">Гран-при</div>
-        <div class="name_cell">{{item.name}}</div>
+        <div class="name_cell">{{ item.name }}</div>
       </div>
       <div class="box">
-        <div class="name_cell">{{item.country.NAME}}</div>
+        <div class="name_cell">{{ item.country.NAME }}</div>
         <div class="name_cell flag_cell">
           <img :src="urlImg + item.country.flag" alt="">
         </div>
       </div>
     </div>
-
-    <div class="qual_block">
-      <div class="title_block">
-        <div class="title">
-          Прогноз на квалификацию
-        </div>
-        <div class="close">V</div>
-      </div>
-      <div class="data_block">
-        <div class="title_count" v-if="qualData.length !==10">Осталось выбрать еще {{10-qualData.length}}</div>
-        <div class="title_count" v-else>Выбрано 10 гонщиков</div>
-        <div class="drag_block">
-          <div class="race_list">
-            <RaceListItem
-                v-for="el in qualRacers.racers"
-                :item="el"
-                :key="el.ID"
-                :ref="'el'+el.ID"
-                draggable="true"
-                @dragstart="onDragStart($event, el.ID)"
-                :onMoveRight = "onMoveRight"
-            ></RaceListItem>
-          </div>
-          <div class="race_list_disable" v-if="qualData.length === 10"></div>
-          <div class="result_list"
-               @drop="onDrop($event)"
-               @dragover.prevent
-               @dragenter.prevent
-          >
-            <DragResultList
-                v-for="(id, index) in qualData"
-                :key = "id"
-                :item = "item.racers[id]"
-                :place="index"
-                :deleteElement="deleteElement"
-            ></DragResultList>
-          </div>
-        </div>
-      </div>
-    </div>
+      <RacerSelectBlock
+          v-for="(el, index) in progBlocks"
+          :key="index"
+          :dataBlock="el"
+          :racers="item.racers"
+          :raceInfo="raceInfo">
+      </RacerSelectBlock>
   </div>
 
 </template>
@@ -69,33 +36,40 @@
 import PageHeader from "@/components/main/PageHeader";
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
-import RaceListItem from "@/components/race/RaceListItem";
-import DragResultList from "@/components/race/DragResultList";
+import RacerSelectBlock from "@/components/race/RacerSelectBlock";
 
 export default {
   name: "RacePage",
   components: {
+    RacerSelectBlock,
     PageHeader,
     PreLoader,
-    RaceListItem,
-    DragResultList
   },
-  data(){
-    return{
+  data() {
+    return {
       urlImg: 'https://prognos9ys.ru/',
       loader: false,
-      qualData: [],
-      qualRacers: [],
+
+      progBlocks: [
+        {title: 'квалификацию', type: 'qual', count: 10, active: true},
+        {title: 'гонку', type: 'race', count: 10, active: false},
+      ],
+      raceInfo: {}
     }
   },
 
   created() {
     this.fillElem()
   },
-  watch:{
-    item(){
-      this.qualRacers = this.item
+  watch: {
+    item() {
       this.loader = false
+
+      this.raceInfo['race_id'] = this.item.id
+      this.raceInfo['number'] = this.item.number
+      this.raceInfo['events'] = this.item.event
+      if(this.item.send_date) this.raceInfo['fill'] = this.item.send_date
+      this.raceInfo['userToken'] = this.token
     }
   },
 
@@ -105,7 +79,7 @@ export default {
       sendUserPrognosis: 'football/sendUserPrognosis',
     }),
 
-    async fillElem(){
+    async fillElem() {
 
       this.loader = true
 
@@ -116,41 +90,6 @@ export default {
       await this.getOneElement()
 
     },
-
-    onDragStart(e, index) {
-      e.dataTransfer.dropEffect = 'move'
-      e.dataTransfer.effectAllowed = 'move'
-      e.dataTransfer.setData('itemId', index.toString())
-
-      setTimeout(() => {
-        e.target.style.visibility = 'hidden'
-      }, 0)
-      // e.target.style.opacity = '1'
-      e.target.classList.add('drag')
-    },
-
-    onDrop(e) {
-      const itemId = parseInt(e.dataTransfer.getData('itemId'))
-
-      this.qualData.push(itemId)
-    },
-
-    onMoveRight(e, id){
-      this.qualData.push(parseInt(id))
-
-      this.$refs['el'+id][0].$el.style.visibility = 'hidden'
-
-
-    },
-
-    deleteElement(index, id) {
-      delete this.qualData[index];
-
-      this.$refs['el'+id][0].$el.style.visibility = 'visible'
-
-      this.qualData = this.qualData.filter(i => i !== undefined)
-
-    }
   },
 
   computed: {
@@ -158,7 +97,6 @@ export default {
       token: state => state.auth.authData.token,
       queryEvent: state => state.race.queryEvent,
       item: state => state.race.oneRace,
-      // qualRacers: state => state.race.oneRace
     })
   },
 }
@@ -166,12 +104,14 @@ export default {
 
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
-.item_wrapper{
+
+.item_wrapper {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
-.item_title{
+
+.item_title {
   display: flex;
   flex-direction: row;
   gap: 4px;
@@ -180,13 +120,13 @@ export default {
   padding: 4px;
   border-radius: 5px;
 
-  .title_cell{
+  .title_cell {
     .shadow_inset;
     .flex_center;
   }
 }
 
-.item_name{
+.item_name {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -196,103 +136,24 @@ export default {
   padding: 4px;
   border-radius: 5px;
 
-  .box{
+  .box {
     display: flex;
     flex-direction: row;
     gap: 4px;
   }
-  .name_cell{
+
+  .name_cell {
     .shadow_inset;
     .flex_center;
   }
 }
 
-.flag_cell{
+.flag_cell {
   width: 24px;
   height: 24px;
-  img{
+
+  img {
     width: 100%;
   }
-}
-.qual_block{
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  background: @DarkColorBG;
-  color: @colorText;
-  padding: 4px;
-  border-radius: 5px;
-
-  .title_block{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 4px;
-  }
-  .title{
-    .shadow_inset;
-  }
-  .close{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 24px;
-    height: 24px;
-    width: 24%;
-    background: @valleyball;
-    padding: 2px 2px;
-    border-radius: 3px;
-    cursor: pointer;
-    .shadow_template;
-  }
-}
-.data_block{
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex-wrap: nowrap;
-}
-.title_count{
-  width: 100%;
-  .shadow_inset;
-  font-size: 11px;
-  color: @maxGreen;
-}
-.drag_block{
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  flex-wrap: nowrap;
-}
-.race_list{
-  width: 45%;
-  display: flex;
-  flex-direction: column;
-
-  gap: 2px;
-}
-.race_list_disable{
-  top:0;
-  left: 0;
-
-  position: absolute;
-  width: 45%;
-  height: 100%;
-  background: @maxdarkgrey;
-  opacity: 0.15;
-}
-
-.result_list{
-  width: 55%;
-  display: flex;
-  flex-direction: column;
-
-  gap: 2px;
-
-  .shadow_inset;
-
-  min-height: 120px;
-  padding-bottom: 30px;
 }
 </style>

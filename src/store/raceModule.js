@@ -12,7 +12,9 @@ export const raceModule = {
 
         oneRace: {},
 
-        errors: {}
+        errors: {},
+
+        sendSuccess: true
 
     }),
     getters: {},
@@ -59,6 +61,31 @@ export const raceModule = {
         async getOneElement({state, commit}) {
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'race/one/', state.queryEvent,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                )
+
+                if (response.data.status == 'ok') {
+
+                    commit('setOneRace', response.data.info)
+                } else {
+                    commit('setError', 'что то пошло не так')
+                    if (response.data.status == 'error') {
+                        commit('setError', response.data.mes)
+                    }
+                }
+
+            } catch (e) {
+                console.log('error', e)
+            }
+        },
+
+        async sendPognosisData({state, commit}) {
+            try {
+                const response = await axios.post(baseConfig.BASE_URL + 'race/send/', state.queryEvent,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'

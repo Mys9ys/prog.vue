@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="name">
-      {{ Array.from(item.NAME)[0] }}. {{ item.NAME.split(' ')[1] }}
+      {{ item.short_name}}
     </div>
     <div class="btn_del" @click="deleteElement(place, item.ID)">
       x
