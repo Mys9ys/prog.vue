@@ -60,6 +60,7 @@
 <script>
 import RaceListItem from "@/components/race/RaceListItem";
 import DragResultList from "@/components/race/DragResultList";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "RacerSelectBlock",
@@ -93,6 +94,9 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      sendPognosisData: 'race/sendPognosisData',
+    }),
     onDragStart(e, index) {
       e.dataTransfer.dropEffect = 'move'
       e.dataTransfer.effectAllowed = 'move'
@@ -142,7 +146,18 @@ export default {
 
     async sendPrognosis(){
       console.log('raceInfo', this.raceInfo, 'dragData',this.dragData)
+      this.queryEvent = this.raceInfo
+      this.queryEvent['data'] = this.dragData
+      this.queryEvent['race_id'] = this.raceInfo.race_id
+      this.queryEvent['type'] = this.dataBlock.type
+
+      await this.sendPognosisData()
     }
+  },
+  computed: {
+    ...mapState({
+      queryEvent: state => state.race.queryEvent,
+    })
   }
 }
 </script>

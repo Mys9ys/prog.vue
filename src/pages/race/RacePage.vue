@@ -51,7 +51,7 @@ export default {
       loader: false,
 
       progBlocks: [
-        {title: 'квалификацию', type: 'qual', count: 10, active: true},
+        {title: 'квалификацию', type: 'qual', count: 1, active: true},
         {title: 'гонку', type: 'race', count: 10, active: false},
       ],
       raceInfo: {}
@@ -76,7 +76,6 @@ export default {
   methods: {
     ...mapActions({
       getOneElement: 'race/getOneElement',
-      sendUserPrognosis: 'football/sendUserPrognosis',
     }),
 
     async fillElem() {

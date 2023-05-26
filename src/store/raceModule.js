@@ -84,6 +84,7 @@ export const raceModule = {
         },
 
         async sendPognosisData({state, commit}) {
+            console.log('state.queryEvent', state.queryEvent)
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'race/send/', state.queryEvent,
                     {
