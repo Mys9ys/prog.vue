@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper_success">
     <div class="logo_block">
       <div class="logo">
         <img class="logo_img" src="@/assets/icon/football/ballf.svg">
@@ -20,6 +20,11 @@ import FillBtn from "@/components/ui/btn/FillBtn";
 export default {
   name: "SendSuccess",
   components: {FillBtn},
+  props: {
+    closeSuccess: {
+      type: Function
+    }
+  },
 
   mounted() {
     setTimeout(() => {
@@ -28,6 +33,7 @@ export default {
   },
   methods: {
     closeSuccessWindow() {
+      this.closeSuccess()
       this.$store.state.football.prognosisSuccess = false
     }
   },
@@ -36,13 +42,13 @@ export default {
 
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
-.wrapper {
+.wrapper_success {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   background: @YesWrite;
-  width: 100vw;
+  width: 100%;
   max-width: 400px;
   margin: 0 auto;
   height: 100vh;

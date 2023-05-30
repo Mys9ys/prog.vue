@@ -78,8 +78,8 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  width: 400px;
-  max-width: 100%;
+  width: 100vw;
+  max-width: 400px;
   margin: 0 auto;
   height: 100vh;
   padding: 0 5px;

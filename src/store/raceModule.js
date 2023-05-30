@@ -14,7 +14,7 @@ export const raceModule = {
 
         errors: {},
 
-        sendSuccess: true
+        sendSuccess: false
 
     }),
     getters: {},
@@ -25,6 +25,10 @@ export const raceModule = {
 
         setOneRace(state, data){
             state.oneRace = data
+        },
+
+        setSendSuccess(state, data){
+            state.sendSuccess = data
         },
 
         setError(state, data) {
@@ -96,7 +100,7 @@ export const raceModule = {
 
                 if (response.data.status == 'ok') {
 
-                    commit('setOneRace', response.data.info)
+                    commit('setSendSuccess', true)
                 } else {
                     commit('setError', 'что то пошло не так')
                     if (response.data.status == 'error') {

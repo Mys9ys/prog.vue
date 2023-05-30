@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper_loader">
     <div class="logo_block">
       <div class="logo">
         <img class="logo_img" src="@/assets/icon/football/ballf.svg">
@@ -32,13 +32,13 @@ export default {
 
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
-.wrapper{
+.wrapper_loader{
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   background:@YesWrite;
-  width: 100vw;
+  width: 100%;
   max-width: 400px;
   margin: 0 auto;
   height: 100vh;

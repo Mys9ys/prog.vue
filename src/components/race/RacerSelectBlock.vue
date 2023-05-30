@@ -1,17 +1,28 @@
 <template>
-  <div class="wrapper">
+  <PreLoader v-if="loader"></PreLoader>
+  <SendSuccess v-if="success" :closeSuccess="closeSuccess"></SendSuccess>
+  <div v-else class="wrapper">
     <div class="title_block">
-      <div class="title">
-        Прогноз на {{dataBlock.title}}
+      <div class="title" :class="{'blur': !active}">
+        Прогноз на {{ dataBlock.title }}
       </div>
-      <div class="close" @click="active = !active">
-        <span :class="{'active': active}">V</span>
+
+      <div class="btn_box">
+        <div class="check_box">
+          <div class="fill_mark" v-if="dragData.length === dataBlock.count"></div>
+        </div>
+        <div class="close" @click="active = !active">
+          <span :class="{'active': active}">V</span>
+        </div>
       </div>
+
     </div>
     <div class="data_block" v-if="active">
       <div class="title_block">
-        <div class="title_count" v-if="dragData.length !==dataBlock.count">Осталось выбрать еще {{ dataBlock.count - dragData.length }}</div>
-        <div class="title_count" v-else>Выбрано {{dataBlock.count}} гонщиков</div>
+        <div class="title_count" v-if="dragData.length !==dataBlock.count">Осталось выбрать еще
+          {{ dataBlock.count - dragData.length }}
+        </div>
+        <div class="title_count" v-else>Выбрано {{ dataBlock.count }} гонщиков</div>
         <div class="reset" @click="resetData">Сбросить</div>
       </div>
 
@@ -61,6 +72,8 @@
 import RaceListItem from "@/components/race/RaceListItem";
 import DragResultList from "@/components/race/DragResultList";
 import {mapActions, mapState} from "vuex";
+import SendSuccess from "@/components/main/SendSuccess";
+import PreLoader from "@/components/main/PreLoader";
 
 export default {
   name: "RacerSelectBlock",
@@ -77,18 +90,22 @@ export default {
   },
   components: {
     RaceListItem,
-    DragResultList
+    DragResultList,
+    SendSuccess,
+    PreLoader
   },
   data() {
     return {
       urlImg: 'https://prognos9ys.ru/',
       dragData: [],
-      active: this.dataBlock.active ?? false
+      active: this.dataBlock.active ?? false,
+      loader: false,
+      success: false
     }
   },
 
   watch: {
-    dataBlock(){
+    dataBlock() {
       this.active = this.dataBlock.active
     }
   },
@@ -109,54 +126,68 @@ export default {
       e.target.classList.add('drag')
     },
 
+    closeSuccess(){
+      this.success = false
+    },
+
     onDrop(e) {
       const itemId = parseInt(e.dataTransfer.getData('itemId'))
 
       this.dragData.push(itemId)
     },
 
-    recoverElem(e){
+    recoverElem(e) {
       console.log('recover', e.dataTransfer.getData('itemId'))
       // const id = parseInt(e.dataTransfer.getData('itemId'))
       // this.$refs['el'+id][0].$el.style.visibility = 'visible'
     },
 
-    resetData(){
-      Object.keys(this.racers).forEach(id=>{
-        this.$refs['el'+id][0].$el.style.visibility = 'visible'
+    resetData() {
+      Object.keys(this.racers).forEach(id => {
+        this.$refs['el' + id][0].$el.style.visibility = 'visible'
       })
       this.dragData = []
     },
 
-    onMoveRight(e, id){
+    onMoveRight(e, id) {
       this.dragData.push(parseInt(id))
 
-      this.$refs['el'+id][0].$el.style.visibility = 'hidden'
+      this.$refs['el' + id][0].$el.style.visibility = 'hidden'
 
     },
 
     deleteElement(index, id) {
       delete this.dragData[index];
 
-      this.$refs['el'+id][0].$el.style.visibility = 'visible'
+      this.$refs['el' + id][0].$el.style.visibility = 'visible'
 
       this.dragData = this.dragData.filter(i => i !== undefined)
 
     },
 
-    async sendPrognosis(){
-      console.log('raceInfo', this.raceInfo, 'dragData',this.dragData)
+    async sendPrognosis() {
+
+      this.loader = true
+
       this.queryEvent = this.raceInfo
       this.queryEvent['data'] = this.dragData
       this.queryEvent['race_id'] = this.raceInfo.race_id
       this.queryEvent['type'] = this.dataBlock.type
 
       await this.sendPognosisData()
+
+      this.loader = false
+
+      if(this.prognosisSuccess) this.success = true
+
+      this.active = false
+
     }
   },
   computed: {
     ...mapState({
       queryEvent: state => state.race.queryEvent,
+      prognosisSuccess: state => state.race.sendSuccess
     })
   }
 }
@@ -185,20 +216,52 @@ export default {
     .shadow_inset;
   }
 
-  .close {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 24px;
-    height: 24px;
-    width: 24%;
-    background: @valleyball;
-    padding: 2px 2px;
-    border-radius: 3px;
-    cursor: pointer;
-    .shadow_template;
+  .blur{
+    color: @hockei;
   }
-  .active{
+
+  .btn_box{
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+
+    .check_box{
+      position: relative;
+      .shadow_inset;
+      max-width: 24px;
+      height: 24px;
+      width: 24px;
+      .fill_mark{
+        position: relative;
+        width: 20px;
+        height: 10px;
+
+        border-left: 2px solid @colorText2;
+        border-bottom: 2px solid @colorText2;
+
+        left: 50%;
+
+        transform:  rotate(-45deg) translate(-50%, -50%);
+      }
+    }
+    .close {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 24px;
+      height: 24px;
+      width: 24px;
+      background: @valleyball;
+      padding: 2px 2px;
+      border-radius: 3px;
+      cursor: pointer;
+      .shadow_template;
+    }
+  }
+
+
+
+  .active {
     transform: rotate(180deg);
   }
 
@@ -209,7 +272,8 @@ export default {
   flex-direction: column;
   gap: 4px;
   flex-wrap: nowrap;
-  .title_block{
+
+  .title_block {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -224,7 +288,8 @@ export default {
       color: @maxGreen;
 
     }
-    .reset{
+
+    .reset {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -243,7 +308,6 @@ export default {
     }
   }
 }
-
 
 
 .drag_block {
@@ -286,13 +350,13 @@ export default {
   padding-bottom: 30px;
 }
 
-.btn_block{
+.btn_block {
   display: flex;
   flex-direction: row;
 
   justify-content: space-between;
 
-  .write_wrapper{
+  .write_wrapper {
     display: flex;
     flex-direction: row;
     gap: 4px;
@@ -301,12 +365,13 @@ export default {
     padding: 2px;
     border-radius: 5px;
     font-size: 12px;
-    .write, .write_date{
+
+    .write, .write_date {
       .shadow_inset;
     }
   }
 
-  .send{
+  .send {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -324,7 +389,7 @@ export default {
     max-width: 75px;
   }
 
-  .fill{
+  .fill {
     background: @NoWrite;
   }
 }

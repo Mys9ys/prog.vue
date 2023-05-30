@@ -48,11 +48,12 @@ export default {
   data() {
     return {
       urlImg: 'https://prognos9ys.ru/',
-      loader: false,
+      loader: true,
 
       progBlocks: [
         {title: 'квалификацию', type: 'qual', count: 10, active: true},
-        {title: 'гонку', type: 'race', count: 10, active: false},
+        {title: 'гонку', type: 'race', count: 10, active: true},
+        {title: 'лучший круг', type: 'best_lap', count: 1, active: true},
       ],
       raceInfo: {}
     }
