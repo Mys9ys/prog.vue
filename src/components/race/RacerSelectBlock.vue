@@ -1,7 +1,7 @@
 <template>
   <PreLoader v-if="loader"></PreLoader>
   <SendSuccess v-if="success" :closeSuccess="closeSuccess"></SendSuccess>
-  <div v-else class="wrapper">
+  <div v-else class="wrapper" :class="{'admin' : role === 'admin'}">
     <div class="title_block">
       <div class="title" :class="{'blur': !active}">
         Прогноз на {{ dataBlock.title }}
@@ -86,6 +86,9 @@ export default {
     },
     raceInfo: {
       type: Object
+    },
+    role: {
+      type: String
     }
   },
   components: {
@@ -100,7 +103,7 @@ export default {
       dragData: [],
       active: this.dataBlock.active ?? false,
       loader: false,
-      success: false
+      success: false,
     }
   },
 
@@ -113,6 +116,7 @@ export default {
   methods: {
     ...mapActions({
       sendPognosisData: 'race/sendPognosisData',
+      setEventResult: 'admin/setRaceResult',
     }),
     onDragStart(e, index) {
       e.dataTransfer.dropEffect = 'move'
@@ -126,7 +130,7 @@ export default {
       e.target.classList.add('drag')
     },
 
-    closeSuccess(){
+    closeSuccess() {
       this.success = false
     },
 
@@ -169,16 +173,25 @@ export default {
 
       this.loader = true
 
-      this.queryEvent = this.raceInfo
-      this.queryEvent['data'] = this.dragData
-      this.queryEvent['race_id'] = this.raceInfo.race_id
-      this.queryEvent['type'] = this.dataBlock.type
+      this.adminQueryEvent = this.queryEvent = this.raceInfo
+      this.adminQueryEvent['data'] = this.queryEvent['data'] = this.dragData
+      this.adminQueryEvent['race_id'] = this.queryEvent['race_id'] = this.raceInfo.race_id
+      this.adminQueryEvent['type'] = this.queryEvent['type'] = this.dataBlock.type
 
-      await this.sendPognosisData()
+      if (this.role === 'admin') {
 
+        this.adminQueryEvent['role'] = this.role
+
+        await this.setEventResult()
+        if (this.sensSuccess) this.success = true
+
+      } else {
+
+        await this.sendPognosisData()
+        if (this.prognosisSuccess) this.success = true
+
+      }
       this.loader = false
-
-      if(this.prognosisSuccess) this.success = true
 
       this.active = false
 
@@ -187,7 +200,10 @@ export default {
   computed: {
     ...mapState({
       queryEvent: state => state.race.queryEvent,
-      prognosisSuccess: state => state.race.sendSuccess
+      prognosisSuccess: state => state.race.sendSuccess,
+
+      adminQueryEvent: state => state.admin.queryEvent,
+      sensSuccess: state => state.admin.sendSuccess
     })
   }
 }
@@ -216,22 +232,23 @@ export default {
     .shadow_inset;
   }
 
-  .blur{
+  .blur {
     color: @hockei;
   }
 
-  .btn_box{
+  .btn_box {
     display: flex;
     flex-direction: row;
     gap: 4px;
 
-    .check_box{
+    .check_box {
       position: relative;
       .shadow_inset;
       max-width: 24px;
       height: 24px;
       width: 24px;
-      .fill_mark{
+
+      .fill_mark {
         position: relative;
         width: 20px;
         height: 10px;
@@ -241,9 +258,10 @@ export default {
 
         left: 50%;
 
-        transform:  rotate(-45deg) translate(-50%, -50%);
+        transform: rotate(-45deg) translate(-50%, -50%);
       }
     }
+
     .close {
       display: flex;
       flex-direction: column;
@@ -258,7 +276,6 @@ export default {
       .shadow_template;
     }
   }
-
 
 
   .active {
@@ -392,5 +409,9 @@ export default {
   .fill {
     background: @NoWrite;
   }
+}
+
+.admin {
+  background: @red;
 }
 </style>

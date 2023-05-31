@@ -21,6 +21,26 @@
         </div>
       </div>
     </div>
+
+    <div class="btn_admin_block" v-if="role === 'admin'">
+      <div class="title">Выбран {{admin ? 'Админский' : 'Простой'}} режим</div>
+      <div class="btn_block">
+        <div class="btn" v-if="admin" @click="admin = false">Простой</div>
+        <div class="btn" v-else @click="admin = true">Админ</div>
+      </div>
+    </div>
+
+    <div v-if="admin">
+      <RacerSelectBlock
+          v-for="(el, index) in progBlocks"
+          :key="index"
+          :dataBlock="el"
+          :role="role"
+          :racers="item.racers"
+          :raceInfo="raceInfo">
+      </RacerSelectBlock>
+    </div>
+    <div v-else>
       <RacerSelectBlock
           v-for="(el, index) in progBlocks"
           :key="index"
@@ -28,6 +48,8 @@
           :racers="item.racers"
           :raceInfo="raceInfo">
       </RacerSelectBlock>
+    </div>
+
   </div>
 
 </template>
@@ -50,12 +72,14 @@ export default {
       urlImg: 'https://prognos9ys.ru/',
       loader: true,
 
+      admin: false,
+
       progBlocks: [
-        {title: 'квалификацию', type: 'qual', count: 10, active: true},
+        {title: 'квалификацию', type: 'qual', count: 2, active: true},
         {title: 'гонку', type: 'race', count: 10, active: true},
         {title: 'лучший круг', type: 'best_lap', count: 1, active: true},
       ],
-      raceInfo: {}
+      raceInfo: {},
     }
   },
 
@@ -69,7 +93,7 @@ export default {
       this.raceInfo['race_id'] = this.item.id
       this.raceInfo['number'] = this.item.number
       this.raceInfo['events'] = this.item.event
-      if(this.item.send_date) this.raceInfo['fill'] = this.item.send_date
+      if (this.item.send_date) this.raceInfo['fill'] = this.item.send_date
       this.raceInfo['userToken'] = this.token
     }
   },
@@ -97,6 +121,7 @@ export default {
       token: state => state.auth.authData.token,
       queryEvent: state => state.race.queryEvent,
       item: state => state.race.oneRace,
+      role: state => state.auth.userInfo.role
     })
   },
 }
@@ -154,6 +179,33 @@ export default {
 
   img {
     width: 100%;
+  }
+}
+
+.btn_admin_block{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 4px;
+  background: @red;
+  color: @colorText;
+  padding: 4px;
+  border-radius: 5px;
+
+  .title{
+    .shadow_inset;
+    .flex_center;
+  }
+
+  .btn_block{
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    justify-content: flex-end;
+
+    .btn{
+      .shadow_inset;
+    }
   }
 }
 </style>

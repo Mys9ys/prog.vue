@@ -12,6 +12,7 @@ import {mainPageModule} from "@/store/mainPageModule";
 import {humorModule} from "@/store/humorModule";
 import {subscribeModule} from "@/store/subscribeModule";
 import {raceModule} from "@/store/raceModule";
+import {adminModule} from "@/store/adminModule";
 
 export default createStore({
     state: {
@@ -37,7 +38,8 @@ export default createStore({
         mainPage: mainPageModule,
         humor: humorModule,
         subscribe: subscribeModule,
-        race: raceModule
+        race: raceModule,
+        admin: adminModule
     },
     root: true
 })
