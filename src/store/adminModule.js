@@ -18,13 +18,17 @@ export const adminModule = {
         setElementsData(state, data) {
             state.elements = data
         },
+        setError(state, data) {
+            state.errors = data
+        },
+
     },
 
     actions: {
 
         async setRaceResult({state, commit}) {
             try {
-                const response = await axios.post(baseConfig.BASE_URL + 'admin/race/result/', state.queryEvent,
+                const response = await axios.post(baseConfig.BASE_URL + 'admin/race/result/', state.queryEvent.info,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'

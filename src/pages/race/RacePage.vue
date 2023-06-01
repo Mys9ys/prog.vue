@@ -23,7 +23,7 @@
     </div>
 
     <div class="btn_admin_block" v-if="role === 'admin'">
-      <div class="title">Выбран {{admin ? 'Админский' : 'Простой'}} режим</div>
+      <div class="title">Выбран {{ admin ? 'Админский' : 'Простой' }} режим</div>
       <div class="btn_block">
         <div class="btn" v-if="admin" @click="admin = false">Простой</div>
         <div class="btn" v-else @click="admin = true">Админ</div>
@@ -31,23 +31,28 @@
     </div>
 
     <div v-if="admin">
-      <RacerSelectBlock
-          v-for="(el, index) in progBlocks"
-          :key="index"
-          :dataBlock="el"
-          :role="role"
-          :racers="item.racers"
-          :raceInfo="raceInfo">
-      </RacerSelectBlock>
+      <div class="block_gap">
+        <RacerSelectBlock
+            v-for="(el, index) in progBlocks"
+            :key="index"
+            :dataBlock="el"
+            :role="role"
+            :racers="item.racers"
+            :raceInfo="raceInfo">
+        </RacerSelectBlock>
+      </div>
+
     </div>
     <div v-else>
-      <RacerSelectBlock
-          v-for="(el, index) in progBlocks"
-          :key="index"
-          :dataBlock="el"
-          :racers="item.racers"
-          :raceInfo="raceInfo">
-      </RacerSelectBlock>
+      <div class="block_gap">
+        <RacerSelectBlock
+            v-for="(el, index) in progBlocks"
+            :key="index"
+            :dataBlock="el"
+            :racers="item.racers"
+            :raceInfo="raceInfo">
+        </RacerSelectBlock>
+      </div>
     </div>
 
   </div>
@@ -75,7 +80,7 @@ export default {
       admin: false,
 
       progBlocks: [
-        {title: 'квалификацию', type: 'qual', count: 2, active: true},
+        {title: 'квалификацию', type: 'qual', count: 10, active: true},
         {title: 'гонку', type: 'race', count: 10, active: true},
         {title: 'лучший круг', type: 'best_lap', count: 1, active: true},
       ],
@@ -182,7 +187,7 @@ export default {
   }
 }
 
-.btn_admin_block{
+.btn_admin_block {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -192,20 +197,26 @@ export default {
   padding: 4px;
   border-radius: 5px;
 
-  .title{
+  .title {
     .shadow_inset;
     .flex_center;
   }
 
-  .btn_block{
+  .btn_block {
     display: flex;
     flex-direction: row;
     gap: 4px;
     justify-content: flex-end;
 
-    .btn{
+    .btn {
       .shadow_inset;
     }
   }
+}
+
+.block_gap{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 </style>

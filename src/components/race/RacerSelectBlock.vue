@@ -19,11 +19,24 @@
     </div>
     <div class="data_block" v-if="active">
       <div class="title_block">
+
+        <div class="reset" @click="resetData">Сбросить</div>
+
         <div class="title_count" v-if="dragData.length !==dataBlock.count">Осталось выбрать еще
           {{ dataBlock.count - dragData.length }}
         </div>
         <div class="title_count" v-else>Выбрано {{ dataBlock.count }} гонщиков</div>
-        <div class="reset" @click="resetData">Сбросить</div>
+      </div>
+
+      <div class="btn_block" v-if="dragData.length === dataBlock.count">
+        <div class="write_wrapper" :class="{'fill' : raceInfo.fill}">
+          <div class="write" v-if="raceInfo.fill">Заполнено:</div>
+          <div class="write" v-else>Не заполнено</div>
+          <div class="write_date" v-if="raceInfo.fill">12.04 22:12</div>
+        </div>
+
+        <div class="send fill" v-if="raceInfo.fill" @click="sendPrognosis">Изменить</div>
+        <div class="send" v-else @click="sendPrognosis">Отправить</div>
       </div>
 
       <div class="drag_block">
@@ -54,16 +67,7 @@
         </div>
       </div>
 
-      <div class="btn_block" v-if="dragData.length === dataBlock.count">
-        <div class="write_wrapper" :class="{'fill' : raceInfo.fill}">
-          <div class="write" v-if="raceInfo.fill">Заполнено:</div>
-          <div class="write" v-else>Не заполнено</div>
-          <div class="write_date" v-if="raceInfo.fill">12.04 22:12</div>
-        </div>
 
-        <div class="send fill" v-if="raceInfo.fill" @click="sendPrognosis">Изменить</div>
-        <div class="send" v-else @click="sendPrognosis">Отправить</div>
-      </div>
     </div>
   </div>
 </template>
@@ -104,6 +108,7 @@ export default {
       active: this.dataBlock.active ?? false,
       loader: false,
       success: false,
+      sendData: {}
     }
   },
 
@@ -173,19 +178,24 @@ export default {
 
       this.loader = true
 
-      this.adminQueryEvent = this.queryEvent = this.raceInfo
-      this.adminQueryEvent['data'] = this.queryEvent['data'] = this.dragData
-      this.adminQueryEvent['race_id'] = this.queryEvent['race_id'] = this.raceInfo.race_id
-      this.adminQueryEvent['type'] = this.queryEvent['type'] = this.dataBlock.type
+      this.sendData = this.raceInfo
+
+      this.sendData['data'] =  this.dragData
+      this.sendData['race_id'] = this.raceInfo.race_id
+      this.sendData['type'] = this.dataBlock.type
 
       if (this.role === 'admin') {
 
-        this.adminQueryEvent['role'] = this.role
+        this.sendData['role'] = this.role
+
+        this.adminQueryEvent['info'] = this.sendData
 
         await this.setEventResult()
         if (this.sensSuccess) this.success = true
 
       } else {
+
+        this.queryEvent = this.sendData
 
         await this.sendPognosisData()
         if (this.prognosisSuccess) this.success = true
