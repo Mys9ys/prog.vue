@@ -42,6 +42,8 @@
         </RacerSelectBlock>
       </div>
 
+      <div class="btn_set_result" @click="calcResult">Рассчитать результаты</div>
+
     </div>
     <div v-else>
       <div class="block_gap">
@@ -106,6 +108,7 @@ export default {
   methods: {
     ...mapActions({
       getOneElement: 'race/getOneElement',
+      calcRaceResult: 'admin/calcRaceResult'
     }),
 
     async fillElem() {
@@ -119,6 +122,17 @@ export default {
       await this.getOneElement()
 
     },
+
+    async calcResult(){
+      this.loader = true
+
+      this.adminQueryEvent.number = this.raceInfo['race_id']
+
+      await this.calcRaceResult()
+
+      this.loader = false
+
+    }
   },
 
   computed: {
@@ -126,7 +140,10 @@ export default {
       token: state => state.auth.authData.token,
       queryEvent: state => state.race.queryEvent,
       item: state => state.race.oneRace,
-      role: state => state.auth.userInfo.role
+      role: state => state.auth.userInfo.role,
+
+      adminQueryEvent: state => state.admin.queryEvent,
+      sensSuccess: state => state.admin.sendSuccess
     })
   },
 }
@@ -218,5 +235,23 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.btn_set_result{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: @red;
+  color: @colorText;
+  cursor: pointer;
+  .shadow_template;
+  padding: 2px 2px;
+  font-size: 10px;
+  border-radius: 3px;
+  text-align: center;
+  border: 1px solid transparent;
+  text-decoration: none;
+  margin-top: 8px;
+  margin-bottom: 38px;
 }
 </style>
