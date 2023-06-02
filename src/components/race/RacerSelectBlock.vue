@@ -1,73 +1,75 @@
 <template>
-  <PreLoader v-if="loader"></PreLoader>
-  <SendSuccess v-if="success" :closeSuccess="closeSuccess"></SendSuccess>
-  <div v-else class="wrapper" :class="{'admin' : role === 'admin'}">
-    <div class="title_block">
-      <div class="title" :class="{'blur': !active}">
-        Прогноз на {{ dataBlock.title }}
-      </div>
-
-      <div class="btn_box">
-        <div class="check_box">
-          <div class="fill_mark" v-if="dragData.length === dataBlock.count"></div>
-        </div>
-        <div class="close" @click="active = !active">
-          <span :class="{'active': active}">V</span>
-        </div>
-      </div>
-
-    </div>
-    <div class="data_block" v-if="active">
+  <div class="exist" v-if="dataBlock.exist">
+    <PreLoader v-if="loader"></PreLoader>
+    <SendSuccess v-if="success" :closeSuccess="closeSuccess"></SendSuccess>
+    <div v-else class="wrapper" :class="{'admin' : role === 'admin'}">
       <div class="title_block">
-
-        <div class="reset" @click="resetData">Сбросить</div>
-
-        <div class="title_count" v-if="dragData.length !==dataBlock.count">Осталось выбрать еще
-          {{ dataBlock.count - dragData.length }}
+        <div class="title" :class="{'blur': !active}">
+          Прогноз на {{ dataBlock.title }}
         </div>
-        <div class="title_count" v-else>Выбрано {{ dataBlock.count }} гонщиков</div>
+
+        <div class="btn_box">
+          <div class="check_box">
+            <div class="fill_mark" v-if="dragData.length === dataBlock.count"></div>
+          </div>
+          <div class="close" @click="active = !active">
+            <span :class="{'active': active}">V</span>
+          </div>
+        </div>
+
       </div>
+      <div class="data_block" v-if="active">
+        <div class="title_block">
 
-      <div class="btn_block" v-if="dragData.length === dataBlock.count">
-        <div class="write_wrapper" :class="{'fill' : raceInfo.fill}">
-          <div class="write" v-if="raceInfo.fill">Заполнено:</div>
-          <div class="write" v-else>Не заполнено</div>
-          <div class="write_date" v-if="raceInfo.fill">12.04 22:12</div>
+          <div class="reset" @click="resetData">Сбросить</div>
+
+          <div class="title_count" v-if="dragData.length !==dataBlock.count">Осталось выбрать еще
+            {{ dataBlock.count - dragData.length }}
+          </div>
+          <div class="title_count" v-else>Выбрано {{ dataBlock.count }} гонщиков</div>
         </div>
 
-        <div class="send fill" v-if="raceInfo.fill" @click="sendPrognosis">Изменить</div>
-        <div class="send" v-else @click="sendPrognosis">Отправить</div>
+        <div class="btn_block" v-if="dragData.length === dataBlock.count">
+          <div class="write_wrapper" :class="{'fill' : raceInfo.fill}">
+            <div class="write" v-if="raceInfo.fill">Заполнено:</div>
+            <div class="write" v-else>Не заполнено</div>
+            <div class="write_date" v-if="raceInfo.fill">12.04 22:12</div>
+          </div>
+
+          <div class="send fill" v-if="raceInfo.fill" @click="sendPrognosis">Изменить</div>
+          <div class="send" v-else @click="sendPrognosis">Отправить</div>
+        </div>
+
+        <div class="drag_block">
+          <div class="race_list">
+            <RaceListItem
+                v-for="el in racers"
+                :item="el"
+                :key="el.ID"
+                :ref="'el'+el.ID"
+                draggable="true"
+                @dragstart="onDragStart($event, el.ID)"
+                :onMoveRight="onMoveRight"
+            ></RaceListItem>
+          </div>
+          <div class="race_list_disable" v-if="dragData.length === dataBlock.count"></div>
+          <div class="result_list"
+               @drop="onDrop($event)"
+               @dragover.prevent
+               @dragenter.prevent
+          >
+            <DragResultList
+                v-for="(id, index) in dragData"
+                :key="id"
+                :item="racers[id]"
+                :place="index"
+                :deleteElement="deleteElement"
+            ></DragResultList>
+          </div>
+        </div>
+
+
       </div>
-
-      <div class="drag_block">
-        <div class="race_list">
-          <RaceListItem
-              v-for="el in racers"
-              :item="el"
-              :key="el.ID"
-              :ref="'el'+el.ID"
-              draggable="true"
-              @dragstart="onDragStart($event, el.ID)"
-              :onMoveRight="onMoveRight"
-          ></RaceListItem>
-        </div>
-        <div class="race_list_disable" v-if="dragData.length === dataBlock.count"></div>
-        <div class="result_list"
-             @drop="onDrop($event)"
-             @dragover.prevent
-             @dragenter.prevent
-        >
-          <DragResultList
-              v-for="(id, index) in dragData"
-              :key="id"
-              :item="racers[id]"
-              :place="index"
-              :deleteElement="deleteElement"
-          ></DragResultList>
-        </div>
-      </div>
-
-
     </div>
   </div>
 </template>
@@ -195,7 +197,7 @@ export default {
 
       } else {
 
-        this.queryEvent = this.sendData
+        this.queryEvent['info'] = this.sendData
 
         await this.sendPognosisData()
         if (this.prognosisSuccess) this.success = true

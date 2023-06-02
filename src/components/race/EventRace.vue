@@ -20,22 +20,34 @@
       <div class="date">{{element.qual.date}}</div>
       <div class="time">{{element.qual.time}}</div>
       <div class="title">Квалификация</div>
+      <div class="score_wrapper" v-if="element.result">
+      <div class="score">{{element.result.qual_sum}}</div>
+      </div>
     </div>
     <div class="race event_box" v-if="element.sprint">
       <div class="date">{{element.sprint.date}}</div>
       <div class="time">{{element.sprint.time}}</div>
       <div class="title">Спринт</div>
+      <div class="score_wrapper" v-if="element.result">
+        <div class="score">{{element.result.sprint_sum}}</div>
+      </div>
     </div>
     <div class="race event_box">
       <div class="date">{{element.race.date}}</div>
       <div class="time">{{element.race.time}}</div>
       <div class="title">Гонка</div>
+      <div class="score_wrapper" v-if="element.result">
+        <div class="score" >{{element.result.race_sum}}</div>
+      </div>
     </div>
 
     <div class="btn_block">
+      <div class="status_wrapper" :class="{'close' : element.status==='Завершена', 'block' : element.status==='Отменена'}">
+        <div class="status">{{element.status}}</div>
+      </div>
       <div class="btn" v-if="element.active === 'Y'"
            @click="$router.push(link)"
-      >Заполнить</div>
+      >{{element.fill ? 'Изменить' : 'Заполнить'}}</div>
       <div class="btn btn_grey" v-else @click="$router.push(link)">Посмотреть</div>
     </div>
 
@@ -144,5 +156,46 @@ export default {
 .number_cell{
   .shadow_inset;
   .flex_center;
+}
+.btn_block{
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: space-between;
+}
+.status_wrapper{
+  background: @YesWrite;
+  color: @colorText;
+  padding: 2px;
+  border-radius: 5px;
+  .flex_center;
+}
+.status{
+  .shadow_inset;
+  .flex_center;
+  font-size: 11px;
+}
+
+.close{
+  background: @maxdarkgrey;
+  color: @darkbg;
+}
+.block{
+  background: @red;
+}
+
+.score_wrapper{
+  background: @pearl;
+  color: @colorText;
+  padding: 2px;
+  border-radius: 5px;
+
+  .flex_center;
+  .score{
+    .shadow_inset;
+    .flex_center;
+    min-width: 35px;
+    font-size: 11px;
+  }
 }
 </style>

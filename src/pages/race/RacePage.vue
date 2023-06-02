@@ -81,11 +81,13 @@ export default {
 
       admin: false,
 
-      progBlocks: [
-        {title: 'квалификацию', type: 'qual', count: 10, active: true},
-        {title: 'гонку', type: 'race', count: 10, active: true},
-        {title: 'лучший круг', type: 'best_lap', count: 1, active: true},
-      ],
+      progBlocks: {
+        qual :{title: 'квалификацию', type: 'qual', count: 10, active: true, exist: true},
+        sprint :{title: 'спринт', type: 'sprint', count: 8, active: true, exist: false},
+        race: {title: 'гонку', type: 'race', count: 10, active: true, exist: true},
+        best_lap:{title: 'лучший круг', type: 'best_lap', count: 1, active: true, exist: true},
+      },
+
       raceInfo: {},
     }
   },
@@ -102,6 +104,8 @@ export default {
       this.raceInfo['events'] = this.item.event
       if (this.item.send_date) this.raceInfo['fill'] = this.item.send_date
       this.raceInfo['userToken'] = this.token
+
+      if(this.item.sprint) this.progBlocks.sprint.exist = true
     }
   },
 
