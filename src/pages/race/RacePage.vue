@@ -82,10 +82,10 @@ export default {
       admin: false,
 
       progBlocks: {
-        qual :{title: 'квалификацию', type: 'qual', count: 10, active: true, exist: true},
-        sprint :{title: 'спринт', type: 'sprint', count: 8, active: true, exist: false},
-        race: {title: 'гонку', type: 'race', count: 10, active: true, exist: true},
-        best_lap:{title: 'лучший круг', type: 'best_lap', count: 1, active: true, exist: true},
+        qual_res :{title: 'квалификацию', type: 'qual', count: 10, active: true, exist: true},
+        sprint_res :{title: 'спринт', type: 'sprint', count: 8, active: true, exist: false},
+        race_res: {title: 'гонку', type: 'race', count: 10, active: true, exist: true},
+        best_lap: {title: 'лучший круг', type: 'best_lap', count: 1, active: true, exist: true},
       },
 
       raceInfo: {},
@@ -106,6 +106,14 @@ export default {
       this.raceInfo['userToken'] = this.token
 
       if(this.item.sprint) this.progBlocks.sprint.exist = true
+
+      Object.keys(this.progBlocks).forEach((selector)=>{
+
+        this.progBlocks[selector].data = this.item.prognosis[selector] ?? []
+
+      })
+
+      console.log(this.progBlocks)
     }
   },
 

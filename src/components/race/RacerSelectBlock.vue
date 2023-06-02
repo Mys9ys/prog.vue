@@ -8,6 +8,8 @@
           Прогноз на {{ dataBlock.title }}
         </div>
 
+        <p>{{dragData}}</p>
+
         <div class="btn_box">
           <div class="check_box">
             <div class="fill_mark" v-if="dragData.length === dataBlock.count"></div>
@@ -117,6 +119,10 @@ export default {
   watch: {
     dataBlock() {
       this.active = this.dataBlock.active
+      this.dragData = this.dataBlock.data ?? []
+
+      console.log('this.dataBlock.data', this.dataBlock.data)
+
     }
   },
 
