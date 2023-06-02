@@ -2,9 +2,13 @@
   <div class="element_box" v-if="element">
     <div class="title">
       <div class="grand_name">
+        <div class="number_cell">
+          # {{element.number}}
+        </div>
         <div class="name">Гранд-при</div>
         <div class="name">{{element.name}}</div>
       </div>
+
       <div class="country" v-if="element.country">
         <div class="name">{{element.country.NAME}}</div>
         <div class="flag">
@@ -75,15 +79,13 @@ export default {
     justify-content: space-between;
     gap: 4px;
 
-    .grand_name{
+    font-size: 14px;
+
+    .grand_name, .country{
       display: flex;
       flex-direction: row;
       gap: 4px;
-    }
-    .country{
-      display: flex;
-      flex-direction: row;
-      gap: 4px;
+      .flex_center;
     }
 
     .flag{
@@ -137,5 +139,10 @@ export default {
 .btn_grey{
   background: @maxdarkgrey;
   color: @darkbg;
+}
+
+.number_cell{
+  .shadow_inset;
+  .flex_center;
 }
 </style>

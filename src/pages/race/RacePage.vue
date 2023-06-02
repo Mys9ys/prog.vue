@@ -126,7 +126,7 @@ export default {
     async calcResult(){
       this.loader = true
 
-      this.adminQueryEvent.number = this.raceInfo['race_id']
+      this.adminQueryEvent.race_id = this.raceInfo['race_id']
 
       await this.calcRaceResult()
 
