@@ -33,7 +33,7 @@
     <div v-if="admin">
       <div class="block_gap">
         <RacerSelectBlock
-            v-for="(el, index) in progBlocks"
+            v-for="(el, index) in adminResult"
             :key="index"
             :dataBlock="el"
             :role="role"
@@ -45,8 +45,10 @@
       <div class="btn_set_result" @click="calcResult">Рассчитать результаты</div>
 
     </div>
+
+
     <div v-else>
-      <div class="block_gap">
+      <div class="block_gap" v-if="!item.result_race">
         <RacerSelectBlock
             v-for="(el, index) in progBlocks"
             :key="index"
@@ -54,6 +56,14 @@
             :racers="item.racers"
             :raceInfo="raceInfo">
         </RacerSelectBlock>
+      </div>
+      <div class="result_race" v-else>
+        <ResultRaceBlock
+            v-for="(el, index) in progBlocks"
+            :key="index"
+            :dataBlock="el"
+            :racers="item.racers">
+        </ResultRaceBlock>
       </div>
     </div>
 
@@ -66,6 +76,7 @@ import PageHeader from "@/components/main/PageHeader";
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
 import RacerSelectBlock from "@/components/race/RacerSelectBlock";
+import ResultRaceBlock from "@/components/race/ResultRaceBlock";
 
 export default {
   name: "RacePage",
@@ -73,6 +84,7 @@ export default {
     RacerSelectBlock,
     PageHeader,
     PreLoader,
+    ResultRaceBlock
   },
   data() {
     return {
@@ -82,10 +94,17 @@ export default {
       admin: false,
 
       progBlocks: {
-        qual_res :{title: 'квалификацию', type: 'qual', count: 10, active: true, exist: true},
-        sprint_res :{title: 'спринт', type: 'sprint', count: 8, active: true, exist: false},
-        race_res: {title: 'гонку', type: 'race', count: 10, active: true, exist: true},
-        best_lap: {title: 'лучший круг', type: 'best_lap', count: 1, active: true, exist: true},
+        qual_res: {title: 'Квалификация', type: 'qual', count: 10, active: true, exist: true},
+        sprint_res: {title: 'Спринт', type: 'sprint', count: 8, active: true, exist: false},
+        race_res: {title: 'Гонка', type: 'race', count: 10, active: true, exist: true},
+        best_lap: {title: 'Лучший круг', type: 'best_lap', count: 1, active: true, exist: true},
+      },
+
+      adminResult: { // костыль - так как похоже по ссылке ставится если присвоить админке progBlock
+        qual_res: {title: 'Квалификация', type: 'qual', count: 10, active: true, exist: true},
+        sprint_res: {title: 'Спринт', type: 'sprint', count: 8, active: true, exist: false},
+        race_res: {title: 'Гонка', type: 'race', count: 10, active: true, exist: true},
+        best_lap: {title: 'Лучший круг', type: 'best_lap', count: 1, active: true, exist: true},
       },
 
       raceInfo: {},
@@ -105,15 +124,19 @@ export default {
       if (this.item.send_date) this.raceInfo['fill'] = this.item.send_date
       this.raceInfo['userToken'] = this.token
 
-      if(this.item.sprint) this.progBlocks.sprint.exist = true
+      if(this.item.sprint) {
+        this.progBlocks.sprint.exist = true
+        this.adminResult.sprint.exist = true
+      }
 
       Object.keys(this.progBlocks).forEach((selector)=>{
+
+        this.adminResult[selector].data = this.item.result_data[selector] ?? []
 
         this.progBlocks[selector].data = this.item.prognosis[selector] ?? []
 
       })
 
-      console.log(this.progBlocks)
     }
   },
 

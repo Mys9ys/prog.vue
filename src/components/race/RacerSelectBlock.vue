@@ -5,10 +5,8 @@
     <div v-else class="wrapper" :class="{'admin' : role === 'admin'}">
       <div class="title_block">
         <div class="title" :class="{'blur': !active}">
-          Прогноз на {{ dataBlock.title }}
+          {{ dataBlock.title }}. Прогноз
         </div>
-
-        <p>{{dragData}}</p>
 
         <div class="btn_box">
           <div class="check_box">
@@ -116,14 +114,13 @@ export default {
     }
   },
 
-  watch: {
-    dataBlock() {
-      this.active = this.dataBlock.active
-      this.dragData = this.dataBlock.data ?? []
-
-      console.log('this.dataBlock.data', this.dataBlock.data)
-
-    }
+  mounted() {
+    this.$nextTick(function () {
+      this.dataBlock.data.forEach((el, id)=>
+      {
+        this.onMoveRight(id, el)
+      })
+    })
   },
 
   methods: {
