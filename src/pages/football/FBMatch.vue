@@ -185,8 +185,8 @@
             </div>
             <div class="value_block">
               <div class="box">
-                <div class="match_result_el play_off_el" :class="{'active' : data[45] == 'Будет'}" @click="setPlayOffResult(45,'Будет')">Будет</div>
-                <div class="match_result_el play_off_el" :class="{'active' : data[45] == 'Не будет'}" @click="setPlayOffResult(45, 'Не будет')">Не будет</div>
+                <div class="match_result_el play_off_el" :class="{'active' : data[45] === 'Будет'}" @click="setPlayOffResult(45,'Будет')">Будет</div>
+                <div class="match_result_el play_off_el" :class="{'active' : data[45] === 'Не будет'}" @click="setPlayOffResult(45, 'Не будет')">Не будет</div>
               </div>
             </div>
           </div>
@@ -200,8 +200,8 @@
             </div>
             <div class="value_block">
               <div class="box">
-                <div class="match_result_el play_off_el" :class="{'active' : data[46] == 'Будет'}" @click="setPlayOffResult(46,'Будет')">Будет</div>
-                <div class="match_result_el play_off_el" :class="{'active' : data[46] == 'Не будет'}" @click="setPlayOffResult(46,'Не будет')">Не будет</div>
+                <div class="match_result_el play_off_el" :class="{'active' : data[46] === 'Будет'}" @click="setPlayOffResult(46,'Будет')">Будет</div>
+                <div class="match_result_el play_off_el" :class="{'active' : data[46] === 'Не будет'}" @click="setPlayOffResult(46,'Не будет')">Не будет</div>
               </div>
             </div>
           </div>
