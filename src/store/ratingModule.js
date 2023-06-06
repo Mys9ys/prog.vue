@@ -7,24 +7,26 @@ export const ratingModule = {
     state: () => ({
         footballRating: [],
 
+        raceRating: [],
+
         ratingData: {
             event: '',
         },
 
-        ratingLoader: false
     }),
     getters: {},
     mutations: {
         setFootballRatings(state, data) {
             state.footballRating = data
         },
-        setFootballLoader(state, data){
-            state.ratingLoader = data
+
+        setRaceRatings(state, data){
+            state.raceRating = data
         }
+
     },
     actions: {
         async getFootballRatings({state, commit}) {
-            commit('setFootballLoader', true)
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'football/ratings/', state.ratingData,
                     {
@@ -35,12 +37,40 @@ export const ratingModule = {
                 )
 
                 if (response.data.status == 'ok') {
-                    console.log('axios data', response.data)
-                    commit('setFootballLoader', false)
                     commit('setFootballRatings', response.data.ratings)
+                } else {
+                    if (response.data.status == 'error') {
+                        commit('setError', response.data.mes)
+                    } else {
+                        commit('setError', 'Что то пошло не так')
+                    }
                 }
-                if (response.data.status == 'error') {
-                    commit('setError', response.data.mes)
+
+
+            } catch (e) {
+                console.log('error', e)
+            }
+        },
+
+        async getRaceRatings({state, commit}) {
+            try {
+                const response = await axios.post(baseConfig.BASE_URL + 'race/ratings/', state.ratingData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                )
+
+                if (response.data.status == 'ok') {
+                    console.log('response.data.ratings',response.data.ratings)
+                    commit('setRaceRatings', response.data.ratings)
+                } else {
+                    if (response.data.status == 'error') {
+                        commit('setError', response.data.mes)
+                    } else {
+                        commit('setError', 'Что то пошло не так')
+                    }
                 }
 
             } catch (e) {

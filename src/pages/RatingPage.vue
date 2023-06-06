@@ -16,6 +16,7 @@
         <div class="rating_title">{{eventsData[eventId]["NAME"]}}</div>
       </div>
       <FootballRatingBlock v-if="category === 'football'" :eventId="eventId"></FootballRatingBlock>
+      <RaceRatingBlock v-if="category === 'race'" :eventId="eventId"></RaceRatingBlock>
     </div>
   </div>
 </template>
@@ -25,13 +26,15 @@ import PageHeader from "@/components/main/PageHeader";
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
 import FootballRatingBlock from "@/components/football/FootballRatingBlock";
+import RaceRatingBlock from "@/components/race/RaceRatingBlock";
 
 export default {
   name: "RatingPage",
   components: {
     PageHeader,
     PreLoader,
-    FootballRatingBlock
+    FootballRatingBlock,
+    RaceRatingBlock
   },
   data() {
     return {

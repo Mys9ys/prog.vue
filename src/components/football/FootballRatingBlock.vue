@@ -115,11 +115,9 @@ export default {
 
   computed: {
     ...mapState({
-      matchLoading: state => state.football.matchLoading,
-      catalogData: state => state.catalog.catalogData,
       ratingData: state => state.rating.ratingData,
       footballRating: state => state.rating.footballRating,
-      ratingLoader: state => state.rating.ratingLoader,
+
     })
   },
 }

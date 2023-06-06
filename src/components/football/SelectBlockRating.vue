@@ -1,7 +1,7 @@
 <template>
   <div class="select_wrapper">
     <select class="select" v-if="arRating" v-model="selected">
-      <option v-for="(id) in matchNumbers" :value="id" :key="id">Матч №: {{id}}</option>
+      <option v-for="(id) in matchNumbers" :value="id" :key="id">№: {{id}}</option>
     </select>
     <div v-for="(data, index) in arRating" :key="index">
       <div v-if="selected==index">
