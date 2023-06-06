@@ -1,6 +1,6 @@
 <template>
   <PreLoader v-if="prognosisLoader"></PreLoader>
-  <SendSuccess v-if="prognosisSuccess"></SendSuccess>
+  <SendSuccess v-if="prognosisSuccess" :closeSuccess="closeSuccess"></SendSuccess>
   <div v-else class="match_wrapper">
     <PageHeader class="header" :path="'/football/' + $route.params.event">Матч № {{ $route.params.number }}</PageHeader>
     <div class="match_title">
@@ -176,6 +176,39 @@
         </div>
 
         <div class="prognosis_dash_line"></div>
+
+        <div class="play_off_block" v-if="matchR.stage==='Плей-офф'">
+          <div class="part_block">
+            <div class="title_block block_absolute">
+              <div class="item icon">{{ icons[45] }}</div>
+              <div class="item title">{{ title[45] }}:</div>
+            </div>
+            <div class="value_block">
+              <div class="box">
+                <div class="match_result_el play_off_el" :class="{'active' : data[45] == 'Будет'}" @click="setPlayOffResult(45,'Будет')">Будет</div>
+                <div class="match_result_el play_off_el" :class="{'active' : data[45] == 'Не будет'}" @click="setPlayOffResult(45, 'Не будет')">Не будет</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prognosis_dash_line"></div>
+
+          <div class="part_block">
+            <div class="title_block block_absolute">
+              <div class="item icon">{{ icons[46] }}</div>
+              <div class="item title">{{ title[46] }}:</div>
+            </div>
+            <div class="value_block">
+              <div class="box">
+                <div class="match_result_el play_off_el" :class="{'active' : data[46] == 'Будет'}" @click="setPlayOffResult(46,'Будет')">Будет</div>
+                <div class="match_result_el play_off_el" :class="{'active' : data[46] == 'Не будет'}" @click="setPlayOffResult(46,'Не будет')">Не будет</div>
+              </div>
+            </div>
+          </div>
+          <div class="prognosis_dash_line"></div>
+        </div>
+
+
 
         <div class="btns_block">
 
@@ -428,6 +461,10 @@ export default {
       }
     },
 
+    closeSuccess() {
+      this.success = false
+    },
+
     setGoals(type, id) {
 
       if (type === 'minus') {
@@ -464,6 +501,10 @@ export default {
 
     setResult(res) {
       this.data[18] = res
+    },
+
+    setPlayOffResult(id, res){
+      this.data[id] = res
     },
 
     rangeChange() {
@@ -520,8 +561,8 @@ export default {
       this.data[20] = this.prognosis.corner ?? ''
       this.data[23] = this.prognosis.penalty ?? ''
 
-      this.data[45] = this.prognosis.spenalty ?? ''
-      this.data[46] = this.prognosis.otime ?? ''
+      this.data[45] = this.prognosis.otime ?? ''
+      this.data[46] = this.prognosis.spenalty ?? ''
     }
   },
   computed: {
@@ -784,6 +825,10 @@ export default {
     &.active {
       border-color: @YesWrite;
     }
+  }
+
+  .play_off_el{
+    width: 65px;
   }
 
   .math_btn {
