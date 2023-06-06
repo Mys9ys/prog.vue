@@ -88,7 +88,7 @@ export default {
     }),
 
     async loadRating(id) {
-      this.ratingData.event = id
+      this.ratingData.events = id
       await this.getRaceRatings()
       this.thisLoader = false
     }

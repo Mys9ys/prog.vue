@@ -7,7 +7,7 @@
       <div class="like_count">{{ prank.likes ?? 0}} ❤</div>
     </div>
     <div class="text">
-      {{prank.PREVIEW_TEXT}}
+      {{prank.text}}
     </div>
     <div class="btn_block">
       <div class="send btn" @click="getNextPrank">Следующая ↝</div>
