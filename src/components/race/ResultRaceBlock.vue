@@ -32,6 +32,10 @@
         </td>
         <td class="pr_table_col"><div>{{score[place]}}</div></td>
       </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
       </tbody>
     </table>
   </div>

@@ -22,6 +22,24 @@
       </div>
     </div>
 
+    <div class="btn_select_other_wrapper">
+      <div class="other_match_btn" v-if="$route.params.number>1"
+           @click="$router.push(prevLink).then(() => { this.$router.go() })">
+        <img src="@/assets/icon/pagination/left.svg" alt=""><span>Назад</span>
+      </div>
+      <div class="other_match_btn inactive" v-else>
+        <img src="@/assets/icon/pagination/left.svg" alt=""><span>Назад</span>
+      </div>
+
+      <div class="other_match_btn" v-if="$route.params.number"
+           @click="$router.push(nextLink).then(() => { this.$router.go() })">
+        <span>Вперед</span><img src="@/assets/icon/pagination/right.svg" alt="">
+      </div>
+      <div class="other_match_btn inactive" v-else>
+        <span>Вперед</span><img src="@/assets/icon/pagination/right.svg" alt="">
+      </div>
+    </div>
+
     <div class="btn_admin_block" v-if="role === 'admin'">
       <div class="title">Выбран {{ admin ? 'Админский' : 'Простой' }} режим</div>
       <div class="btn_block">
@@ -96,6 +114,9 @@ export default {
 
       admin: false,
 
+      prevLink:'',
+      nextLink:'',
+
       progBlocks: {
         qual_res: {title: 'Квалификация', type: 'qual', count: 10, active: true, exist: true},
         sprint_res: {title: 'Спринт', type: 'sprint', count: 8, active: true, exist: false},
@@ -116,6 +137,7 @@ export default {
 
   created() {
     this.fillElem()
+    this.setOtherLink()
   },
   watch: {
     item() {
@@ -128,8 +150,8 @@ export default {
       this.raceInfo['userToken'] = this.token
 
       if (this.item.sprint) {
-        this.progBlocks.sprint.exist = true
-        this.adminResult.sprint.exist = true
+        this.progBlocks.sprint_res.exist = true
+        this.adminResult.sprint_res.exist = true
       }
 
       Object.keys(this.progBlocks).forEach((selector) => {
@@ -170,8 +192,15 @@ export default {
 
       this.loader = false
 
-    }
+    },
+
+    setOtherLink() {
+      this.prevLink = '/race/' + this.$route.params.event + '/' + String(Number(this.$route.params.number) - 1)
+      this.nextLink = '/race/' + this.$route.params.event + '/' + String(Number(this.$route.params.number) + 1)
+    },
   },
+
+
 
   computed: {
     ...mapState({
@@ -291,5 +320,46 @@ export default {
   text-decoration: none;
   margin-top: 8px;
   margin-bottom: 38px;
+}
+.prognosis_btn {
+  background: @YesWrite;
+
+  .flex_center;
+  background: @colorText2;
+  color: @colorText;
+  cursor: pointer;
+  .shadow_template;
+  padding: 2px 2px;
+  font-size: 14px;
+  border-radius: 3px;
+  text-align: center;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.btn_select_other_wrapper {
+  background: @DarkColorBG;
+  color: @colorText;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 4px;
+  border-radius: 5px;
+
+  gap: 4px;
+
+  margin-top: 4px;
+
+  .other_match_btn {
+    .prognosis_btn;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    width: 100px;
+    max-width: 40%;
+
+    font-size: 12px;
+  }
 }
 </style>
