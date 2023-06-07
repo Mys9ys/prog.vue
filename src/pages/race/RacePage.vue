@@ -62,6 +62,9 @@
             v-for="(el, index) in progBlocks"
             :key="index"
             :dataBlock="el"
+            :prognosis="item.prognosis[index]"
+            :score="item.result_score[index]"
+            :result="item.result_race[index]"
             :racers="item.racers">
         </ResultRaceBlock>
       </div>
@@ -124,14 +127,14 @@ export default {
       if (this.item.send_date) this.raceInfo['fill'] = this.item.send_date
       this.raceInfo['userToken'] = this.token
 
-      if(this.item.sprint) {
+      if (this.item.sprint) {
         this.progBlocks.sprint.exist = true
         this.adminResult.sprint.exist = true
       }
 
-      Object.keys(this.progBlocks).forEach((selector)=>{
+      Object.keys(this.progBlocks).forEach((selector) => {
 
-        this.adminResult[selector].data = this.item.result_data[selector] ?? []
+        this.adminResult[selector].data = this.item.result_race[selector] ?? []
 
         this.progBlocks[selector].data = this.item.prognosis[selector] ?? []
 
@@ -158,7 +161,7 @@ export default {
 
     },
 
-    async calcResult(){
+    async calcResult() {
       this.loader = true
 
       this.adminQueryEvent.race_id = this.raceInfo['race_id']
@@ -266,13 +269,13 @@ export default {
   }
 }
 
-.block_gap{
+.block_gap {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.btn_set_result{
+.btn_set_result {
   display: flex;
   flex-direction: column;
   justify-content: center;
