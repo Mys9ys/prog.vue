@@ -156,9 +156,9 @@ export default {
 
       Object.keys(this.progBlocks).forEach((selector) => {
 
-        this.adminResult[selector].data = this.item.result_race[selector] ?? []
+        if(this.item.result_race) this.adminResult[selector].data = this.item.result_race[selector] ?? []
 
-        this.progBlocks[selector].data = this.item.prognosis[selector] ?? []
+        if(this.item.prognosis) this.progBlocks[selector].data = this.item.prognosis[selector] ?? []
 
       })
 
