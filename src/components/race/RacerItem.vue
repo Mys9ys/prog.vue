@@ -30,7 +30,7 @@ export default {
       type: Number
     },
     score: {
-      type: Number
+      type: String
     }
   }
 
