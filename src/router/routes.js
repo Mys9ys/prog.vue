@@ -3,7 +3,6 @@ import AuthPage from "@/pages/auth/AuthPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 import {kvnEvent, kvnGame} from "@/pages/kvn/routes";
 import CatalogPage from "@/pages/CatalogPage";
-import FBMatch from "@/pages/football/FBMatch";
 import FBCatalog from "@/pages/football/FBCatalog";
 import FBEvent from "@/pages/football/FBEvent";
 import RatingPage from "@/pages/RatingPage";
@@ -16,6 +15,7 @@ import HelloPage from "@/pages/HelloPage";
 import NewsPage from "@/pages/NewsPage";
 import RaceEvent from "@/pages/race/RaceEvent";
 import RacePage from "@/pages/race/RacePage";
+import FootballPage from "@/pages/football/FootballPage";
 
 const routes = [
     {
@@ -98,7 +98,7 @@ const routes = [
 
     {
         path: '/football/:event/:number',
-        component: FBMatch,
+        component: FootballPage,
         props: true
     },
     // квновские роуты -->

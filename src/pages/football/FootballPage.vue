@@ -25,169 +25,81 @@
         </div>
       </div>
     </div>
-    <div class="match_record_wrapper" v-if="arMatch.active === 'Y'">
-      <div class="prognosis_block">
-        <div class="part_block">
-          <div class="title_block">
-            <div class="item icon">{{ icons[1] }}</div>
-            <div class="item title">{{ title[1] }}:</div>
-          </div>
-          <div class="value_block">
-            <div class="goal_block">
-              <div class="zero goal_btn" @click="setGoals('zero', 15)">0</div>
-              <div class="minus goal_btn" @click="setGoals('minus', 15)">-</div>
-              <div class="value">{{ data[15] }}</div>
-              <div class="plus goal_btn" @click="setGoals('plus', 15)">+</div>
-              <div class="two goal_btn" @click="setGoals('two', 15)">2</div>
-            </div>
-            <div class="dash">–</div>
-            <div class="goal_block">
-              <div class="zero goal_btn" @click="setGoals('zero', 16)">0</div>
-              <div class="minus goal_btn" @click="setGoals('minus', 16)">-</div>
-              <div class="value">{{ data[16] }}</div>
-              <div class="plus goal_btn" @click="setGoals('plus', 16)">+</div>
-              <div class="two goal_btn" @click="setGoals('two', 16)">2</div>
-            </div>
-          </div>
 
-        </div>
-        <div class="prognosis_dash_line"></div>
+    <div class="btn_admin_block" v-if="role === 'admin'">
+      <div class="title">Выбран {{ admin ? 'Админский' : 'Простой' }} режим</div>
+      <div class="btn_block">
+        <div class="btn" v-if="admin" @click="admin = false">Простой</div>
+        <div class="btn" v-else @click="admin = true">Админ</div>
+      </div>
+    </div>
 
-        <div class="part_block">
-          <div class="title_block block_absolute">
-            <div class="item icon">{{ icons[18] }}</div>
-            <div class="item title">{{ title[18] }}:</div>
-          </div>
-          <div class="value_block">
-            <div class="value_box">
-              <div class="match_result_el" :class="{'active' : data[18] === 'п1'}" @click="setResult('п1')">п1</div>
-              <div class="match_result_el" :class="{'active' : data[18] === 'н'}" @click="setResult('н')">н</div>
-              <div class="match_result_el" :class="{'active' : data[18] === 'п2'}" @click="setResult('п2')">п2</div>
-            </div>
-          </div>
-        </div>
-        <div class="prognosis_dash_line"></div>
+    <div v-if="admin">
+      <div class="block_gap">
+        <FootballSelectBlock
+            :id="arMatch.id"
+            :stage = "matchR.stage"
+            >
+        </FootballSelectBlock>
+      </div>
 
-        <div class="part_block">
-          <div class="title_block block_absolute">
-            <div class="item icon">{{ icons[28] }}</div>
-            <div class="item title">{{ title[28] }}:</div>
-          </div>
-          <div class="value_block">
-            <div class="minus math_btn" @click="setMath('minus', 28, 'sum')">-</div>
-            <div class="value">{{ data[28] }}</div>
-            <div class="plus math_btn" @click="setMath('plus', 28, 'sum')">+</div>
-          </div>
-        </div>
+<!--      <div class="btn_set_result" @click="calcResult">Рассчитать результаты</div>-->
 
-        <div class="prognosis_dash_line"></div>
+    </div>
 
-        <div class="part_block">
-          <div class="title_block block_absolute">
-            <div class="item icon">{{ icons[19] }}</div>
-            <div class="item title">{{ title[19] }}:</div>
-          </div>
-          <div class="value_block">
-            <div class="minus math_btn" @click="setMath('minus', 19)">-</div>
-            <div class="value">{{ data[19] }}</div>
-            <div class="plus math_btn" @click="setMath('plus', 19)">+</div>
-          </div>
-        </div>
-        <div class="prognosis_dash_line"></div>
-        <div class="part_block">
-          <div class="title_block">
-            <div class="item icon">{{ icons[32] }}</div>
-            <div class="item title">{{ title[32] }}:</div>
-          </div>
-          <div class="value_block">
-            <div class="match_domination_box">
-              <div class="minus math_btn" @click="setRangeBtn('minus')">-</div>
-              <div class="value left">{{ data[32] }}</div>
-              <input class="domination_range" type="range" ref="iRange" :value="data[32]" @change="rangeChange()">
-              <div class="value right">{{ 100 - data[32] }}</div>
-              <div class="plus math_btn" @click="setRangeBtn('plus')">-</div>
-              <div class="plus math_btn" @click="setRangeBtn('half')">50</div>
-            </div>
-          </div>
-        </div>
-        <div class="prognosis_dash_line"></div>
-        <div class="part_block yellow">
-          <div class="title_block block_absolute">
-            <div class="item icon">{{ icons[21] }}</div>
-            <div class="item title">{{ title[21] }}:</div>
-            </div>
-          <div class="value_block">
-            <div class="box">
-              <div class="btn" @click="setValue('zero', 21)">0</div>
-              <div class="btn" @click="setValue('minus', 21)">-</div>
-              <div class="value">{{ data[21] }}</div>
-              <div class="btn" @click="setValue('plus', 21)">+</div>
-              <div class="btn" @click="setValue('five', 21)">5</div>
-            </div>
-          </div>
-        </div>
-        <div class="prognosis_dash_line"></div>
-        <div class="part_block red">
-          <div class="title_block block_absolute">
-            <div class="item icon">{{ icons[22] }}</div>
-            <div class="item title">{{ title[22] }}:</div>
-          </div>
-          <div class="value_block">
-            <div class="box">
-              <div class="btn" @click="setValue('zero', 22)">0</div>
-              <div class="btn" @click="setValue('minus', 22)">-</div>
-              <div class="value">{{ data[22] }}</div>
-              <div class="btn" @click="setValue('plus', 22)">+</div>
-              <div class="btn" @click="setValue('one', 22)">1</div>
-            </div>
-          </div>
-        </div>
-        <div class="prognosis_dash_line"></div>
-        <div class="part_block">
-          <div class="title_block block_absolute">
-            <div class="item icon">{{ icons[20] }}</div>
-            <div class="item title">{{ title[20] }}:</div>
-          </div>
-          <div class="value_block">
-            <div class="box">
-              <div class="btn" @click="setValue('zero', 20)">0</div>
-              <div class="btn" @click="setValue('minus', 20)">-</div>
-              <div class="value">{{ data[20] }}</div>
-              <div class="btn" @click="setValue('plus', 20)">+</div>
-              <div class="btn" @click="setValue('six', 20)">6</div>
-            </div>
-          </div>
-        </div>
-        <div class="prognosis_dash_line"></div>
-        <div class="part_block">
-          <div class="title_block block_absolute">
-            <div class="item icon">{{ icons[23] }}</div>
-            <div class="item title">{{ title[23] }}:</div>
-          </div>
-          <div class="value_block">
-            <div class="box">
-              <div class="btn" @click="setValue('zero', 23)">0</div>
-              <div class="btn" @click="setValue('minus', 23)">-</div>
-              <div class="value">{{ data[23] }}</div>
-              <div class="btn" @click="setValue('plus', 23)">+</div>
-              <div class="btn" @click="setValue('one', 23)">1</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="prognosis_dash_line"></div>
-
-        <div class="play_off_block" v-if="matchR.stage==='Плей-офф'">
+    <div v-else>
+      <div class="match_record_wrapper" v-if="arMatch.active === 'Y'">
+        <div class="prognosis_block">
           <div class="part_block">
-            <div class="title_block block_absolute">
-              <div class="item icon">{{ icons[45] }}</div>
-              <div class="item title">{{ title[45] }}:</div>
+            <div class="title_block">
+              <div class="item icon">{{ icons[1] }}</div>
+              <div class="item title">{{ title[1] }}:</div>
             </div>
             <div class="value_block">
-              <div class="box">
-                <div class="match_result_el play_off_el" :class="{'active' : data[45] === 'Будет'}" @click="setPlayOffResult(45,'Будет')">Будет</div>
-                <div class="match_result_el play_off_el" :class="{'active' : data[45] === 'Не будет'}" @click="setPlayOffResult(45, 'Не будет')">Не будет</div>
+              <div class="goal_block">
+                <div class="zero goal_btn" @click="setGoals('zero', 15)">0</div>
+                <div class="minus goal_btn" @click="setGoals('minus', 15)">-</div>
+                <div class="value">{{ data[15] }}</div>
+                <div class="plus goal_btn" @click="setGoals('plus', 15)">+</div>
+                <div class="two goal_btn" @click="setGoals('two', 15)">2</div>
               </div>
+              <div class="dash">–</div>
+              <div class="goal_block">
+                <div class="zero goal_btn" @click="setGoals('zero', 16)">0</div>
+                <div class="minus goal_btn" @click="setGoals('minus', 16)">-</div>
+                <div class="value">{{ data[16] }}</div>
+                <div class="plus goal_btn" @click="setGoals('plus', 16)">+</div>
+                <div class="two goal_btn" @click="setGoals('two', 16)">2</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="prognosis_dash_line"></div>
+
+          <div class="part_block">
+            <div class="title_block block_absolute">
+              <div class="item icon">{{ icons[18] }}</div>
+              <div class="item title">{{ title[18] }}:</div>
+            </div>
+            <div class="value_block">
+              <div class="value_box">
+                <div class="match_result_el" :class="{'active' : data[18] === 'п1'}" @click="setResult('п1')">п1</div>
+                <div class="match_result_el" :class="{'active' : data[18] === 'н'}" @click="setResult('н')">н</div>
+                <div class="match_result_el" :class="{'active' : data[18] === 'п2'}" @click="setResult('п2')">п2</div>
+              </div>
+            </div>
+          </div>
+          <div class="prognosis_dash_line"></div>
+
+          <div class="part_block">
+            <div class="title_block block_absolute">
+              <div class="item icon">{{ icons[28] }}</div>
+              <div class="item title">{{ title[28] }}:</div>
+            </div>
+            <div class="value_block">
+              <div class="minus math_btn" @click="setMath('minus', 28, 'sum')">-</div>
+              <div class="value">{{ data[28] }}</div>
+              <div class="plus math_btn" @click="setMath('plus', 28, 'sum')">+</div>
             </div>
           </div>
 
@@ -195,139 +107,251 @@
 
           <div class="part_block">
             <div class="title_block block_absolute">
-              <div class="item icon">{{ icons[46] }}</div>
-              <div class="item title">{{ title[46] }}:</div>
+              <div class="item icon">{{ icons[19] }}</div>
+              <div class="item title">{{ title[19] }}:</div>
             </div>
             <div class="value_block">
-              <div class="box">
-                <div class="match_result_el play_off_el" :class="{'active' : data[46] === 'Будет'}" @click="setPlayOffResult(46,'Будет')">Будет</div>
-                <div class="match_result_el play_off_el" :class="{'active' : data[46] === 'Не будет'}" @click="setPlayOffResult(46,'Не будет')">Не будет</div>
+              <div class="minus math_btn" @click="setMath('minus', 19)">-</div>
+              <div class="value">{{ data[19] }}</div>
+              <div class="plus math_btn" @click="setMath('plus', 19)">+</div>
+            </div>
+          </div>
+          <div class="prognosis_dash_line"></div>
+          <div class="part_block">
+            <div class="title_block">
+              <div class="item icon">{{ icons[32] }}</div>
+              <div class="item title">{{ title[32] }}:</div>
+            </div>
+            <div class="value_block">
+              <div class="match_domination_box">
+                <div class="minus math_btn" @click="setRangeBtn('minus')">-</div>
+                <div class="value left">{{ data[32] }}</div>
+                <input class="domination_range" type="range" ref="iRange" :value="data[32]" @change="rangeChange()">
+                <div class="value right">{{ 100 - data[32] }}</div>
+                <div class="plus math_btn" @click="setRangeBtn('plus')">-</div>
+                <div class="plus math_btn" @click="setRangeBtn('half')">50</div>
               </div>
             </div>
           </div>
           <div class="prognosis_dash_line"></div>
-        </div>
-
-
-
-        <div class="btns_block">
-
-          <div class="annotation_btn" @click="annotationVis = !annotationVis">Расшифровка
-            <span class="annotation_arrow" :class="{'up' : annotationVis === true}">v</span>
+          <div class="part_block yellow">
+            <div class="title_block block_absolute">
+              <div class="item icon">{{ icons[21] }}</div>
+              <div class="item title">{{ title[21] }}:</div>
+            </div>
+            <div class="value_block">
+              <div class="box">
+                <div class="btn" @click="setValue('zero', 21)">0</div>
+                <div class="btn" @click="setValue('minus', 21)">-</div>
+                <div class="value">{{ data[21] }}</div>
+                <div class="btn" @click="setValue('plus', 21)">+</div>
+                <div class="btn" @click="setValue('five', 21)">5</div>
+              </div>
+            </div>
           </div>
-          <div class="btn_send" @click="sendPrognosis" v-if="!prognosis.result">Отправить</div>
-          <div class="btn_send rewrite" @click="sendPrognosis" v-else>Изменить</div>
+          <div class="prognosis_dash_line"></div>
+          <div class="part_block red">
+            <div class="title_block block_absolute">
+              <div class="item icon">{{ icons[22] }}</div>
+              <div class="item title">{{ title[22] }}:</div>
+            </div>
+            <div class="value_block">
+              <div class="box">
+                <div class="btn" @click="setValue('zero', 22)">0</div>
+                <div class="btn" @click="setValue('minus', 22)">-</div>
+                <div class="value">{{ data[22] }}</div>
+                <div class="btn" @click="setValue('plus', 22)">+</div>
+                <div class="btn" @click="setValue('one', 22)">1</div>
+              </div>
+            </div>
+          </div>
+          <div class="prognosis_dash_line"></div>
+          <div class="part_block">
+            <div class="title_block block_absolute">
+              <div class="item icon">{{ icons[20] }}</div>
+              <div class="item title">{{ title[20] }}:</div>
+            </div>
+            <div class="value_block">
+              <div class="box">
+                <div class="btn" @click="setValue('zero', 20)">0</div>
+                <div class="btn" @click="setValue('minus', 20)">-</div>
+                <div class="value">{{ data[20] }}</div>
+                <div class="btn" @click="setValue('plus', 20)">+</div>
+                <div class="btn" @click="setValue('six', 20)">6</div>
+              </div>
+            </div>
+          </div>
+          <div class="prognosis_dash_line"></div>
+          <div class="part_block">
+            <div class="title_block block_absolute">
+              <div class="item icon">{{ icons[23] }}</div>
+              <div class="item title">{{ title[23] }}:</div>
+            </div>
+            <div class="value_block">
+              <div class="box">
+                <div class="btn" @click="setValue('zero', 23)">0</div>
+                <div class="btn" @click="setValue('minus', 23)">-</div>
+                <div class="value">{{ data[23] }}</div>
+                <div class="btn" @click="setValue('plus', 23)">+</div>
+                <div class="btn" @click="setValue('one', 23)">1</div>
+              </div>
+            </div>
+          </div>
 
+          <div class="prognosis_dash_line"></div>
+
+          <div class="play_off_block" v-if="matchR.stage==='Плей-офф'">
+            <div class="part_block">
+              <div class="title_block block_absolute">
+                <div class="item icon">{{ icons[45] }}</div>
+                <div class="item title">{{ title[45] }}:</div>
+              </div>
+              <div class="value_block">
+                <div class="box">
+                  <div class="match_result_el play_off_el" :class="{'active' : data[45] === 'Будет'}" @click="setPlayOffResult(45,'Будет')">Будет</div>
+                  <div class="match_result_el play_off_el" :class="{'active' : data[45] === 'Не будет'}" @click="setPlayOffResult(45, 'Не будет')">Не будет</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="prognosis_dash_line"></div>
+
+            <div class="part_block">
+              <div class="title_block block_absolute">
+                <div class="item icon">{{ icons[46] }}</div>
+                <div class="item title">{{ title[46] }}:</div>
+              </div>
+              <div class="value_block">
+                <div class="box">
+                  <div class="match_result_el play_off_el" :class="{'active' : data[46] === 'Будет'}" @click="setPlayOffResult(46,'Будет')">Будет</div>
+                  <div class="match_result_el play_off_el" :class="{'active' : data[46] === 'Не будет'}" @click="setPlayOffResult(46,'Не будет')">Не будет</div>
+                </div>
+              </div>
+            </div>
+            <div class="prognosis_dash_line"></div>
+          </div>
+
+
+          <div class="btns_block">
+
+            <div class="annotation_btn" @click="annotationVis = !annotationVis">Расшифровка
+              <span class="annotation_arrow" :class="{'up' : annotationVis === true}">v</span>
+            </div>
+            <div class="btn_send" @click="sendPrognosis" v-if="!prognosis.result">Отправить</div>
+            <div class="btn_send rewrite" @click="sendPrognosis" v-else>Изменить</div>
+
+          </div>
+        </div>
+
+        <div class="error_message" v-if="error">{{ error }}</div>
+      </div>
+
+      <div class="match_result_wrapper" v-else>
+        <table class="table table-dark table-hover om_table_box" v-if="prognosis">
+          <thead>
+          <tr>
+            <th class="pr_table_col">{{ icons[1] }}</th>
+            <th class="pr_table_col">{{ icons[18] }}</th>
+            <th class="pr_table_col">{{ icons[19] }}</th>
+            <th class="pr_table_col">{{ icons[28] }}</th>
+            <th class="pr_table_col">{{ icons[32] }}</th>
+            <th class="pr_table_col yellow_t">{{ icons[21] }}</th>
+            <th class="pr_table_col red_t">{{ icons[22] }}</th>
+            <th class="pr_table_col">{{ icons[20] }}</th>
+            <th class="pr_table_col">{{ icons[23] }}</th>
+            <th class="pr_table_col">{{ icons[45] }}</th>
+            <th class="pr_table_col">{{ icons[46] }}</th>
+            <th class="pr_table_col">all</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+
+            <td class="pr_table_col">{{ prognosis.goal_home }} - {{ prognosis.goal_guest }}</td>
+            <td class="pr_table_col">{{ prognosis.result }}</td>
+            <td class="pr_table_col">{{ prognosis.sum }}</td>
+            <td class="pr_table_col">{{ prognosis.diff }}</td>
+            <td class="pr_table_col">{{ prognosis.domination }} - {{ 100 - prognosis.domination }}</td>
+            <td class="pr_table_col">{{ prognosis.yellow }}</td>
+            <td class="pr_table_col">{{ prognosis.red }}</td>
+            <td class="pr_table_col">{{ prognosis.corner }}</td>
+            <td class="pr_table_col">{{ prognosis.penalty }}</td>
+            <td class="pr_table_col">{{ prognosis.otime }}</td>
+            <td class="pr_table_col">{{ prognosis.spenalty }}</td>
+            <td class="pr_table_col"></td>
+
+          </tr>
+
+          <tr>
+
+            <td class="pr_table_col result">{{ matchR.goal_home }} - {{ matchR.goal_guest }}</td>
+            <td class="pr_table_col result">{{ matchR.result }}</td>
+            <td class="pr_table_col result">{{ matchR.sum }}</td>
+            <td class="pr_table_col result">{{ matchR.diff }}</td>
+            <td class="pr_table_col result">{{ matchR.domination }} - {{ 100 - matchR.domination }}</td>
+            <td class="pr_table_col result">{{ matchR.yellow }}</td>
+            <td class="pr_table_col result">{{ matchR.red }}</td>
+            <td class="pr_table_col result">{{ matchR.corner }}</td>
+            <td class="pr_table_col result">{{ matchR.penalty }}</td>
+            <td class="pr_table_col result">{{ matchR.otime }}</td>
+            <td class="pr_table_col result">{{ matchR.spenalty }}</td>
+            <td class="pr_table_col result"></td>
+
+          </tr>
+
+          <tr class="prog_r">
+
+            <td class="pr_table_col" :class="{'green' : progR.score >0}">{{ progR.score }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.result >0}">{{ progR.result }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.sum >0}">{{ progR.sum }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.diff >0}">{{ progR.diff }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.domination >0}">{{ progR.domination }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.yellow >0}">{{ progR.yellow }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.red >0}">{{ progR.red }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.corner >0}">{{ progR.corner }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.penalty >0}">{{ progR.penalty }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.otime >0}">{{ progR.otime }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.spenalty >0}">{{ progR.spenalty }}</td>
+            <td class="pr_table_col" :class="{'green' : progR.all >0}">{{ progR.all }}</td>
+
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="annotation_block" v-if="annotationVis">
+        <div class="header">
+          <div class="title">Расшифровка обозначений</div>
+          <div class="close" @click="annotationVis = false">x</div>
+        </div>
+        <div class="annotation_elem" v-for="(icon, index) in icons"
+             :key="index">
+          <div class="annotation_title" :class="{'yellow_t' : index == 21, 'red_t' : index == 22}">{{ icon }}</div>
+          <div class="annotation_description">{{ description[index] }}</div>
         </div>
       </div>
 
-      <div class="error_message" v-if="error">{{ error }}</div>
-    </div>
+      <div class="btn_select_other_wrapper">
+        <div class="other_match_btn" v-if="$route.params.number>1"
+             @click="$router.push(prevLink).then(() => { this.$router.go() })">
+          <img src="@/assets/icon/pagination/left.svg" alt=""><span>Предыдущий</span>
+        </div>
+        <div class="other_match_btn inactive" v-else>
+          <img src="@/assets/icon/pagination/left.svg" alt=""><span>Предыдущий</span>
+        </div>
 
-    <div class="match_result_wrapper" v-else>
-      <table class="table table-dark table-hover om_table_box" v-if="prognosis">
-        <thead>
-        <tr>
-          <th class="pr_table_col">{{ icons[1] }}</th>
-          <th class="pr_table_col">{{ icons[18] }}</th>
-          <th class="pr_table_col">{{ icons[19] }}</th>
-          <th class="pr_table_col">{{ icons[28] }}</th>
-          <th class="pr_table_col">{{ icons[32] }}</th>
-          <th class="pr_table_col yellow_t">{{ icons[21] }}</th>
-          <th class="pr_table_col red_t">{{ icons[22] }}</th>
-          <th class="pr_table_col">{{ icons[20] }}</th>
-          <th class="pr_table_col">{{ icons[23] }}</th>
-          <th class="pr_table_col">{{ icons[45] }}</th>
-          <th class="pr_table_col">{{ icons[46] }}</th>
-          <th class="pr_table_col">all</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-
-          <td class="pr_table_col">{{ prognosis.goal_home }} - {{ prognosis.goal_guest }}</td>
-          <td class="pr_table_col">{{ prognosis.result }}</td>
-          <td class="pr_table_col">{{ prognosis.sum }}</td>
-          <td class="pr_table_col">{{ prognosis.diff }}</td>
-          <td class="pr_table_col">{{ prognosis.domination }} - {{ 100 - prognosis.domination }}</td>
-          <td class="pr_table_col">{{ prognosis.yellow }}</td>
-          <td class="pr_table_col">{{ prognosis.red }}</td>
-          <td class="pr_table_col">{{ prognosis.corner }}</td>
-          <td class="pr_table_col">{{ prognosis.penalty }}</td>
-          <td class="pr_table_col">{{ prognosis.otime }}</td>
-          <td class="pr_table_col">{{ prognosis.spenalty }}</td>
-          <td class="pr_table_col"></td>
-
-        </tr>
-
-        <tr>
-
-          <td class="pr_table_col result">{{ matchR.goal_home }} - {{ matchR.goal_guest }}</td>
-          <td class="pr_table_col result">{{ matchR.result }}</td>
-          <td class="pr_table_col result">{{ matchR.sum }}</td>
-          <td class="pr_table_col result">{{ matchR.diff }}</td>
-          <td class="pr_table_col result">{{ matchR.domination }} - {{ 100 - matchR.domination }}</td>
-          <td class="pr_table_col result">{{ matchR.yellow }}</td>
-          <td class="pr_table_col result">{{ matchR.red }}</td>
-          <td class="pr_table_col result">{{ matchR.corner }}</td>
-          <td class="pr_table_col result">{{ matchR.penalty }}</td>
-          <td class="pr_table_col result">{{ matchR.otime }}</td>
-          <td class="pr_table_col result">{{ matchR.spenalty }}</td>
-          <td class="pr_table_col result"></td>
-
-        </tr>
-
-        <tr class="prog_r">
-
-          <td class="pr_table_col" :class="{'green' : progR.score >0}">{{ progR.score }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.result >0}">{{ progR.result }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.sum >0}">{{ progR.sum }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.diff >0}">{{ progR.diff }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.domination >0}">{{ progR.domination }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.yellow >0}">{{ progR.yellow }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.red >0}">{{ progR.red }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.corner >0}">{{ progR.corner }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.penalty >0}">{{ progR.penalty }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.otime >0}">{{ progR.otime }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.spenalty >0}">{{ progR.spenalty }}</td>
-          <td class="pr_table_col" :class="{'green' : progR.all >0}">{{ progR.all }}</td>
-
-        </tr>
-
-        </tbody>
-      </table>
-    </div>
-
-    <div class="annotation_block" v-if="annotationVis">
-      <div class="header">
-        <div class="title">Расшифровка обозначений</div>
-        <div class="close" @click="annotationVis = false">x</div>
-      </div>
-      <div class="annotation_elem" v-for="(icon, index) in icons"
-           :key="index">
-        <div class="annotation_title" :class="{'yellow_t' : index == 21, 'red_t' : index == 22}">{{ icon }}</div>
-        <div class="annotation_description">{{ description[index] }}</div>
+        <div class="other_match_btn" v-if="$route.params.number<arMatch.max"
+             @click="$router.push(nextLink).then(() => { this.$router.go() })">
+          <span>Следующий</span><img src="@/assets/icon/pagination/right.svg" alt="">
+        </div>
+        <div class="other_match_btn inactive" v-else>
+          <span>Следующий</span><img src="@/assets/icon/pagination/right.svg" alt="">
+        </div>
       </div>
     </div>
 
-    <div class="btn_select_other_wrapper">
-      <div class="other_match_btn" v-if="$route.params.number>1"
-           @click="$router.push(prevLink).then(() => { this.$router.go() })">
-        <img src="@/assets/icon/pagination/left.svg" alt=""><span>Предыдущий</span>
-      </div>
-      <div class="other_match_btn inactive" v-else>
-        <img src="@/assets/icon/pagination/left.svg" alt=""><span>Предыдущий</span>
-      </div>
-
-      <div class="other_match_btn" v-if="$route.params.number<arMatch.max"
-           @click="$router.push(nextLink).then(() => { this.$router.go() })">
-        <span>Следующий</span><img src="@/assets/icon/pagination/right.svg" alt="">
-      </div>
-      <div class="other_match_btn inactive" v-else>
-        <span>Следующий</span><img src="@/assets/icon/pagination/right.svg" alt="">
-      </div>
-    </div>
   </div>
 
 </template>
@@ -338,10 +362,12 @@ import PageHeader from "@/components/main/PageHeader";
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
 import SendSuccess from "@/components/main/SendSuccess";
+import FootballSelectBlock from "@/components/football/FootballSelectBlock";
 
 export default {
-  name: "FBMatch",
+  name: "FootballPage",
   components: {
+    FootballSelectBlock,
     PageHeader,
     PreLoader,
     SendSuccess
@@ -349,6 +375,8 @@ export default {
 
   data() {
     return {
+      admin: false,
+
       prognosisLoader: false,
       moreInfo: false,
       urlImg: 'https://prognos9ys.ru/',
@@ -577,6 +605,8 @@ export default {
       prognosis: state => state.football.match.prognosis,
       matchR: state => state.football.match.match_result,
       progR: state => state.football.match.prog_result,
+
+      role: state => state.auth.userInfo.role,
     })
   },
 }
@@ -1092,5 +1122,32 @@ export default {
 }
 .inactive{
   background: @colorBlur!important;
+}
+
+.btn_admin_block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 4px;
+  background: @red;
+  color: @colorText;
+  padding: 4px;
+  border-radius: 5px;
+
+  .title {
+    .shadow_inset;
+    .flex_center;
+  }
+
+  .btn_block {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    justify-content: flex-end;
+
+    .btn {
+      .shadow_inset;
+    }
+  }
 }
 </style>
