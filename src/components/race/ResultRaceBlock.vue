@@ -109,6 +109,13 @@ export default {
   .td{
     //.flex_center;
   }
+  .sum_cell{
+    text-align: right;
+  }
+
+  .title_wrapper{
+    padding: 2px
+  }
 
 }
 .place_wrapper{
@@ -117,7 +124,6 @@ export default {
   padding: 2px;
 
   background: @hockei;
-  max-width: 30px;
 
   .place{
     .shadow_inset;
@@ -133,17 +139,13 @@ export default {
   padding: 2px;
 
   background: @colorText2;
-  max-width: 32px;
 
   .score{
     .shadow_inset;
     .flex_center;
     font-size: 13px;
-    min-width: 24px;
+    min-width: 45px;
   }
-}
-.sum_cell{
- align-items: flex-end;
 }
 .sum_wrapper{
   display: inline-block;
@@ -156,7 +158,7 @@ export default {
     .shadow_inset;
     .flex_center;
     font-size: 13px;
-    min-width: 24px;
+    min-width: 45px;
 
   }
 }
@@ -166,13 +168,12 @@ export default {
   padding: 2px;
 
   background: @hockei;
-  max-width: 32px;
 
   .racer_score{
     .shadow_inset;
     .flex_center;
     font-size: 13px;
-    min-width: 30px;
+    min-width: 45px;
   }
 }
 

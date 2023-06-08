@@ -81,13 +81,14 @@ export default {
 }
 .qual0-5, .sprint0-5, .race0-5{
   background: @yellowblur;
-  color: @hockei;
+  color: @hockei!important;
 }
 .qual0, .sprint0, .race0{
   filter: grayscale(100%);
 }
 .qual1, .sprint1, .race1{
   background: @greenblur;
+  color: @hockei;
 }
 .qual2, .sprint2, .race3{
   background: @colorText2;
