@@ -66,7 +66,7 @@
 
 
     <div v-else>
-      <div class="block_gap" v-if="!item.result_race">
+      <div class="block_gap" v-if="item.active === 'Y'">
         <RacerSelectBlock
             v-for="(el, index) in progBlocks"
             :key="index"
@@ -76,15 +76,22 @@
         </RacerSelectBlock>
       </div>
       <div class="result_race" v-else>
-        <ResultRaceBlock
-            v-for="(el, index) in progBlocks"
-            :key="index"
-            :dataBlock="el"
-            :prognosis="item.prognosis[index]"
-            :score="item.result_score[index]"
-            :result="item.result_race[index]"
-            :racers="item.racers">
-        </ResultRaceBlock>
+        <div class="cancelled_condition_wrapper" v-if="item.status === 'Отменен'">
+          <div class="btn_admin_block">
+            <div class="title">Гран-при {{ item.status }}</div>
+          </div>
+        </div>
+        <div class="cancelled_condition_wrapper" v-else>
+          <ResultRaceBlock
+              v-for="(el, index) in progBlocks"
+              :key="index"
+              :dataBlock="el"
+              :prognosis="item.prognosis[index]"
+              :score="item.result_score[index]"
+              :result="item.result_race[index]"
+              :racers="item.racers">
+          </ResultRaceBlock>
+        </div>
       </div>
     </div>
 
