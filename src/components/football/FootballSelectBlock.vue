@@ -196,6 +196,8 @@
         <div class="btn_send" @click="sendResult">Заполнить</div>
 
       </div>
+
+      <div class="btn_set_result" @click="calcResult">Рассчитать результаты</div>
     </div>
 
     <div class="error_message" v-if="error">{{ error }}</div>
@@ -291,7 +293,8 @@ export default {
 
   methods: {
     ...mapActions({
-      sendFootballResult: 'admin/setFootballResult'
+      sendFootballResult: 'admin/setFootballResult',
+      calcFootballResult: 'admin/calcFootballResult'
     }),
 
     setGoals(type, id) {
@@ -374,9 +377,19 @@ export default {
       this.queryEvent.matchId = this.id
       this.queryEvent.data = this.data
 
-      console.log('this.queryEvent', this.queryEvent)
-
       await this.sendFootballResult()
+
+      this.loader = false
+    },
+
+    async calcResult(){
+      this.loader = true
+
+      this.queryEvent.userToken = this.token
+      this.queryEvent.role = this.role
+      this.queryEvent.matchId = this.id
+
+      await this.calcFootballResult()
 
       this.loader = false
     }
@@ -695,5 +708,23 @@ export default {
   border: 1px solid @warning;
   color: @warning;
   border-radius: 6px;
+}
+
+.btn_set_result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: @red;
+  color: @colorText;
+  cursor: pointer;
+  .shadow_template;
+  padding: 2px 2px;
+  font-size: 10px;
+  border-radius: 3px;
+  text-align: center;
+  border: 1px solid transparent;
+  text-decoration: none;
+  margin-top: 8px;
+  margin-bottom: 38px;
 }
 </style>

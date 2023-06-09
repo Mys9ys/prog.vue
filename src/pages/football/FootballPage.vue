@@ -43,8 +43,6 @@
         </FootballSelectBlock>
       </div>
 
-<!--      <div class="btn_set_result" @click="calcResult">Рассчитать результаты</div>-->
-
     </div>
 
     <div v-else>
