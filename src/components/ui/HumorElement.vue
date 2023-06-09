@@ -33,7 +33,7 @@
 import {mapActions, mapState} from "vuex";
 
 export default {
-  name: "HumorEl",
+  name: "HumorElement",
   data() {
     return {
      like: false,

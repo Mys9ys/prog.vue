@@ -1,25 +1,35 @@
 <template>
   <div class="news_el">
+    <div class="header">
+      <div class="like_count"><b>Добавил: </b> Mys9ysilii</div>
+      <div class="like_count">{{ news.seen ?? 0}} 👁</div>
+      <div class="like_count">{{ news.likes ?? 0}} ❤</div>
+    </div>
     <div class="news_title">{{news.title}}</div>
     <div class="news_preview" :class="{'small': smallNews}" v-html="news.text"></div>
     <div class="btn_box">
-      <span v-if="smallNews" class="btn_open" @click="smallNews = !smallNews">Подробнее</span>
-      <span v-else class="btn_open" @click="smallNews = !smallNews">Скрыть</span>
+      <div class="like btn" @click="setLikes(prank.ID, 'up')" v-if="!like">Нравится ❤</div>
+      <div class="like btn" @click="setLikes(prank.ID, 'down')" v-else>Не нравится 💔</div>
+      <span v-if="smallNews" class="btn" @click="smallNews = !smallNews">Подробнее</span>
+      <span v-else class="btn" @click="smallNews = !smallNews">Скрыть</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "NewsEl",
+  name: "NewsElement",
   data() {
     return {
+      like: false,
       news: {
         title: 'Обновление 2.33',
         text: 'Добавлена возможность загружать аватарку.<br>' +
             '        Доступные форматы: png, gif, jpeg.<br>' +
             '        Размер картинки: не более 500кб.<br>' +
-            '        Форма картинки: квадрат (обрезки пока нет).        '
+            '        Форма картинки: квадрат (обрезки пока нет).        ',
+        seen: 12,
+        likes: 3
       },
       smallNews: true
     }
@@ -30,6 +40,7 @@ export default {
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
 .news_el{
+  position: relative;
   background: @kerling;
   color: @colorText;
   display: flex;
@@ -57,19 +68,47 @@ export default {
   .btn_box{
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 2px 0;
   }
-  .btn_open{
+  .btn{
+    color: @colorText;
     display: inline;
     padding: 3px 8px;
     border-radius: 5px;
     .shadow_template;
     cursor: pointer;
     font-size: 12px;
+    min-width: 105px;
     &:hover{
       opacity: 0.8;
     }
   }
+}
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 4px;
+  padding-right: 28px;
+
+  .like_count {
+    .shadow_inset;
+    .flex_center;
+    font-size: 12px;
+    gap: 2px;
+    padding: 3px 4px;
+    min-width: 36px;
+  }
+}
+.news_el:after {
+  content: "";
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  top: 0%;
+  right: 0%;
+  border-top: 28px solid @YesWrite;
+  border-left: 28px solid @backGrey;
 }
 </style>

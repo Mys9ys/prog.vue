@@ -1,20 +1,20 @@
 <template>
-  <PageHeader class="header">Юмор</PageHeader>
+  <PageHeader class="header">Новости</PageHeader>
   <div class="title_wrapper news">
     <div class="title">Все новости проекта</div>
   </div>
-  <NewsEl></NewsEl>
+  <NewsElement></NewsElement>
 </template>
 
 <script>
 import PageHeader from "@/components/main/PageHeader";
-import NewsEl from "@/components/ui/NewsEl";
+import NewsElement from "@/components/ui/NewsElement";
 
 export default {
   name: "NewsPage",
   components: {
     PageHeader,
-    NewsEl
+    NewsElement
   }
 }
 </script>
