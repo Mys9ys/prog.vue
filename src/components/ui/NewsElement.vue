@@ -2,14 +2,14 @@
   <div class="news_el">
     <div class="header">
       <div class="like_count"><b>Добавил: </b> Mys9ysilii</div>
-      <div class="like_count">{{ news.seen ?? 0}} 👁</div>
-      <div class="like_count">{{ news.likes ?? 0}} ❤</div>
+      <div class="like_count">{{ item.PROPERTY_SEEN_VALUE ?? 0}} 👁</div>
+      <div class="like_count">{{ item.PROPERTY_LIKES_VALUE ?? 0}} ❤</div>
     </div>
-    <div class="news_title">{{news.title}}</div>
-    <div class="news_preview" :class="{'small': smallNews}" v-html="news.text"></div>
+    <div class="news_title">{{item.NAME}}</div>
+    <div class="news_preview" :class="{'small': smallNews}" v-html="item['~PREVIEW_TEXT']"></div>
     <div class="btn_box">
-      <div class="like btn" @click="setLikes(prank.ID, 'up')" v-if="!like">Нравится ❤</div>
-      <div class="like btn" @click="setLikes(prank.ID, 'down')" v-else>Не нравится 💔</div>
+      <div class="like btn" @click="like = !like" v-if="!like">Нравится ❤</div>
+      <div class="like btn" @click="like = !like" v-else>Не нравится 💔</div>
       <span v-if="smallNews" class="btn" @click="smallNews = !smallNews">Подробнее</span>
       <span v-else class="btn" @click="smallNews = !smallNews">Скрыть</span>
     </div>
@@ -17,23 +17,31 @@
 </template>
 
 <script>
+
 export default {
   name: "NewsElement",
+  props: {
+    item: {
+      type: Object
+    }
+  },
   data() {
     return {
       like: false,
-      news: {
-        title: 'Обновление 2.33',
-        text: 'Добавлена возможность загружать аватарку.<br>' +
-            '        Доступные форматы: png, gif, jpeg.<br>' +
-            '        Размер картинки: не более 500кб.<br>' +
-            '        Форма картинки: квадрат (обрезки пока нет).        ',
-        seen: 12,
-        likes: 3
-      },
+      // news: {
+      //   title: 'Обновление 2.33',
+      //   text: 'Добавлена возможность загружать аватарку.<br>' +
+      //       '        Доступные форматы: png, gif, jpeg.<br>' +
+      //       '        Размер картинки: не более 500кб.<br>' +
+      //       '        Форма картинки: квадрат (обрезки пока нет).        ',
+      //   seen: 12,
+      //   likes: 3
+      // },
       smallNews: true
     }
-  }
+  },
+
+
 }
 </script>
 

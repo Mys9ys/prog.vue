@@ -6,23 +6,20 @@ import {baseConfig} from "@/store/config";
 export const newsModule = {
     state: () => ({
 
-        prank: {},
-
-        setToken: {},
+        last: {},
 
         errors: {},
 
         likeData: {},
-
-        newPrank: {}
+        seenData: {},
 
     }),
 
     getters: {},
     mutations: {
 
-        setPrank(state, data) {
-            state.prank = data
+        setLast(state, data) {
+            state.last = data
         },
 
         setErrors(state, data){
@@ -33,7 +30,7 @@ export const newsModule = {
         async getOneNews({state, commit}) {
 
             try {
-                const response = await axios.post(baseConfig.BASE_URL + 'humor/one/', state.setToken,
+                const response = await axios.post(baseConfig.BASE_URL + 'news/one/', state.setToken,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -42,7 +39,7 @@ export const newsModule = {
                 )
 
                 if (response.data.status == 'ok') {
-                    commit('setPrank', response.data.info)
+                    commit('setLast', response.data.info)
                 } else {
                     commit('setErrors', response.data.mes)
                 }
@@ -96,29 +93,7 @@ export const newsModule = {
             }
         },
 
-        async sendNewPrank({state, commit}) {
 
-            console.log('sendNewPrank')
-
-            try {
-                const response = await axios.post(baseConfig.BASE_URL + 'humor/send/', state.newPrank,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                )
-
-                if (response.data.status == 'ok') {
-
-                } else {
-                    commit('setErrors', response.data.mes)
-                }
-
-            } catch (e) {
-                console.log('error', e)
-            }
-        },
     },
 
 

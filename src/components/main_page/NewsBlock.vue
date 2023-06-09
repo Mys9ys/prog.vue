@@ -14,12 +14,38 @@
 
 <script>
 import NewsElement from "@/components/ui/NewsElement";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "NewsBlock",
   components: {
     NewsElement
-  }
+  },
+
+  mounted() {
+    this.$nextTick(function () {
+      this.getNews()
+    })
+  },
+
+  methods: {
+    ...mapActions({
+      getOneNews: 'news/getOneNews',
+    }),
+
+    async getNews(){
+      await this.getOneNews()
+    },
+  },
+
+
+
+  computed: {
+    ...mapState({
+      last: state => state.news.last,
+    })
+  },
+
 }
 </script>
 
