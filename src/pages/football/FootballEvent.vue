@@ -39,7 +39,7 @@ export default {
 
     async fillMatchesElem() {
       this.loading = true
-      this.queryEvent.eventId = this.$route.params.event
+      this.queryEvent.events = this.$route.params.event
       this.queryEvent.userToken = this.token
       await this.getEventMatches()
 
