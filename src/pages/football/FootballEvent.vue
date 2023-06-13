@@ -1,5 +1,5 @@
 <template>
-  <PreLoader v-if="this.matchLoading"></PreLoader>
+  <PreLoader v-if="loading"></PreLoader>
   <div v-else class="event_wrapper">
     <PageHeader class="header">Соревнование</PageHeader>
     <SectionMatches
@@ -26,10 +26,7 @@ export default {
   },
   data() {
     return {
-      past: false, //прошедшие
-      recent: true, //недавние
-      nearest: true, //ближайшие
-      future: false, //будущие
+      loading: false,
     }
   },
   created() {
@@ -41,9 +38,12 @@ export default {
     }),
 
     async fillMatchesElem() {
+      this.loading = true
       this.queryEvent.eventId = this.$route.params.event
       this.queryEvent.userToken = this.token
       await this.getEventMatches()
+
+      this.loading = false
     }
   },
   computed: {
@@ -51,7 +51,6 @@ export default {
       queryEvent: state => state.football.queryEvent,
       token: state => state.auth.authData.token,
       arMatches: state => state.football.matches,
-      matchLoading: state => state.football.matchLoading,
     })
   },
 }

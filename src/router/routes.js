@@ -4,7 +4,6 @@ import RegisterPage from "@/pages/auth/RegisterPage";
 import {kvnEvent, kvnGame} from "@/pages/kvn/routes";
 import CatalogPage from "@/pages/CatalogPage";
 import FBCatalog from "@/pages/football/FBCatalog";
-import FBEvent from "@/pages/football/FBEvent";
 import RatingPage from "@/pages/RatingPage";
 import MyProfilePage from "@/pages/MyProfilePage";
 import ProfilePage from "@/pages/ProfilePage";
@@ -16,6 +15,7 @@ import NewsPage from "@/pages/NewsPage";
 import RaceEvent from "@/pages/race/RaceEvent";
 import RacePage from "@/pages/race/RacePage";
 import FootballPage from "@/pages/football/FootballPage";
+import FootballEvent from "@/pages/football/FootballEvent";
 
 const routes = [
     {
@@ -92,7 +92,7 @@ const routes = [
 
     {
         path: '/football/:event',
-        component: FBEvent,
+        component: FootballEvent,
         props: true
     },
 

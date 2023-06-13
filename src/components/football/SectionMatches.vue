@@ -2,8 +2,8 @@
   <div v-if="arMatches">
 
     <div class="past_title_wrapper">
-      <div class="past_title">{{arMatches.title}}</div>
-      <div class="title_count">{{arMatches.count}}</div>
+      <div class="past_title">{{arMatches.info.title}}</div>
+      <div class="title_count">{{arMatches.info.count}}</div>
       <div class="more_btn" @click="visible = !visible">
         <span :class="{'close' : !visible, 'open' : visible}"> > </span>
       </div>
@@ -11,7 +11,7 @@
 
     <div class="past_box match_box" v-if="visible">
       <div class="date_match_block"
-           v-for="(matches, index) in arMatches.matches"
+           v-for="(matches, index) in arMatches.items"
            :key="index"
       >
         <div class="date_title_wrapper">
@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      visible: this.arMatches.visible,
+      visible: this.arMatches.info.visible,
     }
   },
 }

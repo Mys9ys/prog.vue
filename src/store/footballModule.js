@@ -29,8 +29,6 @@ export const footballModule = {
 
         prognosisSuccess: false,
 
-        matchLoading: true,
-
     }),
 
     getters: {},
@@ -47,9 +45,6 @@ export const footballModule = {
             state.prognosis = prognosis
         },
 
-        setMatchLoading(state, data){
-            state.matchLoading = data
-        },
         setPrognosisSuccess(state, data){
             state.prognosisSuccess = data
         }
@@ -57,9 +52,8 @@ export const footballModule = {
     actions: {
 
         async getEventMatchesRequest({state, commit}) {
-            commit('setMatchLoading', true)
             try {
-                const response = await axios.post(baseConfig.BASE_URL + 'football/matches/', state.queryEvent,
+                const response = await axios.post(baseConfig.BASE_URL + 'football/many/', state.queryEvent,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -69,9 +63,8 @@ export const footballModule = {
 
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
-                    commit('setMatchesData', response.data.res)
+                    commit('setMatchesData', response.data.info)
                     commit('setPrognosisData', response.data.res.prognosis)
-                    commit('setMatchLoading', false)
                 }
                 if (response.data.status == 'error') {
                     commit('setError', response.data.mes)
@@ -83,10 +76,8 @@ export const footballModule = {
         },
 
         async getMatchRequest({state, commit}) {
-
-            commit('setMatchLoading', true)
             try {
-                const response = await axios.post(baseConfig.BASE_URL + 'football/match/', state.queryMatch,
+                const response = await axios.post(baseConfig.BASE_URL + 'football/one/', state.queryMatch,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -97,7 +88,6 @@ export const footballModule = {
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
                     commit('setMatchData', response.data.match)
-                    commit('setMatchLoading', false)
                 }
                 if (response.data.status == 'error') {
                     commit('setError', response.data.mes)
