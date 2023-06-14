@@ -1,7 +1,14 @@
 <template>
-    <div class="title_block">
-      <img class="event_img" :src="url+info.img" alt="">
-      <div class="title_mini">{{info.PREVIEW_TEXT}}</div>
+    <div class="title_block" :class="{'active' : active}" v-if="count">
+      <div class="count_wrapper">
+        <div class="count">{{count}}</div>
+      </div>
+
+      <div class="event_img">
+        <img class="img" :src="url+info.img" alt="">
+      </div>
+
+      <div class="title_mini" v-if="active">{{info.PREVIEW_TEXT}} </div>
     </div>
 </template>
 
@@ -11,6 +18,12 @@ export default {
   props:{
     info: {
       type: Object
+    },
+    active: {
+      type: Boolean
+    },
+    count: {
+      type: Number
     }
   },
   data() {
@@ -25,6 +38,7 @@ export default {
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
   .title_block{
+    position: relative;
     background: @DarkColorBG;
     padding: 4px;
     border-radius: 5px;
@@ -38,13 +52,39 @@ export default {
 
     .event_img{
       .shadow_inset;
-      width: 25px;
+      width: 35px;
+      height: 35px;
       background: @colorBlur;
-
+      .flex_center;
+      .img{
+        width: 100%;
+      }
     }
     .title_mini{
       .shadow_inset;
     }
 
   }
+
+.active{
+  background: @colorText2;
+}
+.count_wrapper{
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  background: @colorText2;
+  padding: 2px;
+  border-radius: 5px;
+  color: @colorText;
+  margin-top: 5px;
+
+  opacity: 0.85;
+
+}
+.count{
+  padding: 2px;
+  font-size: 11px;
+  .shadow_inset;
+}
 </style>

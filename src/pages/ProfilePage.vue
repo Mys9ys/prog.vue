@@ -24,6 +24,8 @@
        <ProfileTitle v-for="(arr, index) in profileData.football"
                      @click="setActiveEvent(index)"
                      :info="arr.info"
+                     :active="index === activeEvent"
+                     :count="Object.keys(arr.matches).length"
                      :class="{'active': index === activeEvent}"
                      :key="index"></ProfileTitle>
      </div>
@@ -172,7 +174,5 @@ export default {
     gap: 4px;
   }
 }
-.active{
-  background: @colorText2;
-}
+
 </style>
