@@ -1,5 +1,5 @@
 <template>
-    <div class="title_block" :class="{'active' : active}" v-if="count">
+    <div class="title_block" :class="{'active' : active}" >
       <div class="count_wrapper">
         <div class="count">{{count}}</div>
       </div>
@@ -62,6 +62,10 @@ export default {
     }
     .title_mini{
       .shadow_inset;
+      .flex_center;
+      font-size: 12px;
+      word-break: break-all;
+      line-height: 14px;
     }
 
   }
