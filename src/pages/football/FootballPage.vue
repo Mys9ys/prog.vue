@@ -49,6 +49,11 @@
     <div v-else>
       <div class="match_record_wrapper" v-if="arMatch.active === 'Y'">
         <div class="prognosis_block">
+          <div class="time_send" v-if="prognosis.time_send">
+            <div class="title_block">
+              Заполнено: {{prognosis.time_send}}
+            </div>
+          </div>
           <div class="part_block">
             <div class="title_block">
               <div class="item icon">{{ icons[1] }}</div>
@@ -76,46 +81,61 @@
           <div class="prognosis_dash_line"></div>
 
           <div class="part_block">
-            <div class="title_block block_absolute">
-              <div class="item icon">{{ icons[18] }}</div>
-              <div class="item title">{{ title[18] }}:</div>
+            <div class="title_block auto_block_title">
+              <div class="item icon">Заполняется автоматически</div>
+              <div class="more_btn" @click="autoBlock = !autoBlock"><span
+                  :class="{'close' : !autoBlock, 'open' : autoBlock}"> > </span></div>
             </div>
-            <div class="value_block">
-              <div class="value_box">
-                <div class="match_result_el" :class="{'active' : data[18] === 'п1'}" @click="setResult('п1')">п1</div>
-                <div class="match_result_el" :class="{'active' : data[18] === 'н'}" @click="setResult('н')">н</div>
-                <div class="match_result_el" :class="{'active' : data[18] === 'п2'}" @click="setResult('п2')">п2</div>
+          </div>
+
+
+          <div class="auto_block" v-if="autoBlock">
+            <div class="prognosis_dash_line"></div>
+            <div class="part_block">
+              <div class="title_block block_absolute">
+                <div class="item icon">{{ icons[18] }}</div>
+                <div class="item title">{{ title[18] }}:</div>
+              </div>
+              <div class="value_block">
+                <div class="value_box">
+                  <div class="match_result_el" :class="{'active' : data[18] === 'п1'}" @click="setResult('п1')">п1</div>
+                  <div class="match_result_el" :class="{'active' : data[18] === 'н'}" @click="setResult('н')">н</div>
+                  <div class="match_result_el" :class="{'active' : data[18] === 'п2'}" @click="setResult('п2')">п2</div>
+                </div>
               </div>
             </div>
+            <div class="prognosis_dash_line"></div>
+
+            <div class="part_block">
+              <div class="title_block block_absolute">
+                <div class="item icon">{{ icons[28] }}</div>
+                <div class="item title">{{ title[28] }}:</div>
+              </div>
+              <div class="value_block">
+                <div class="minus math_btn" @click="setMath('minus', 28, 'sum')">-</div>
+                <div class="value">{{ data[28] }}</div>
+                <div class="plus math_btn" @click="setMath('plus', 28, 'sum')">+</div>
+              </div>
+            </div>
+
+            <div class="prognosis_dash_line"></div>
+
+            <div class="part_block">
+              <div class="title_block block_absolute">
+                <div class="item icon">{{ icons[19] }}</div>
+                <div class="item title">{{ title[19] }}:</div>
+              </div>
+              <div class="value_block">
+                <div class="minus math_btn" @click="setMath('minus', 19)">-</div>
+                <div class="value">{{ data[19] }}</div>
+                <div class="plus math_btn" @click="setMath('plus', 19)">+</div>
+              </div>
+            </div>
+
           </div>
+
           <div class="prognosis_dash_line"></div>
 
-          <div class="part_block">
-            <div class="title_block block_absolute">
-              <div class="item icon">{{ icons[28] }}</div>
-              <div class="item title">{{ title[28] }}:</div>
-            </div>
-            <div class="value_block">
-              <div class="minus math_btn" @click="setMath('minus', 28, 'sum')">-</div>
-              <div class="value">{{ data[28] }}</div>
-              <div class="plus math_btn" @click="setMath('plus', 28, 'sum')">+</div>
-            </div>
-          </div>
-
-          <div class="prognosis_dash_line"></div>
-
-          <div class="part_block">
-            <div class="title_block block_absolute">
-              <div class="item icon">{{ icons[19] }}</div>
-              <div class="item title">{{ title[19] }}:</div>
-            </div>
-            <div class="value_block">
-              <div class="minus math_btn" @click="setMath('minus', 19)">-</div>
-              <div class="value">{{ data[19] }}</div>
-              <div class="plus math_btn" @click="setMath('plus', 19)">+</div>
-            </div>
-          </div>
-          <div class="prognosis_dash_line"></div>
           <div class="part_block">
             <div class="title_block">
               <div class="item icon">{{ icons[32] }}</div>
@@ -385,6 +405,9 @@ export default {
 
       prognosisLoader: false,
       moreInfo: false,
+
+      autoBlock: false,
+
       urlImg: 'https://prognos9ys.ru/',
       ball: '⚽',
       prevLink: '',
@@ -726,6 +749,7 @@ export default {
 }
 
 .prognosis_block {
+  position: relative;
   background: @DarkColorBG;
   color: @colorText;
   padding: 4px;
@@ -1180,6 +1204,56 @@ export default {
   }
   .ball{
     color: @YesWrite;
+  }
+}
+
+.play_off_block{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.time_send{
+  position: absolute;
+  width: 100%;
+  text-align: right;
+  font-size: 11px;
+  color: @NoWrite;
+  top: 5px;
+  right: 5px;
+}
+
+.auto_block{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.more_btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 24px;
+  height: 24px;
+  width: 24%;
+  background: @valleyball;
+  padding: 2px 2px;
+  border-radius: 3px;
+  cursor: pointer;
+  .shadow_template;
+
+  .close {
+    transform: rotate(90deg);
+  }
+
+  .open {
+    transform: rotate(-90deg);
+  }
+
+  &:hover {
+    background: @colorText;
+    color: @valleyball;
+    border: 1px solid @valleyball;
   }
 }
 </style>
