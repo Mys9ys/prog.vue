@@ -218,6 +218,9 @@ export default {
     },
     stage: {
       type: String
+    },
+    result: {
+      type: Object
     }
   },
   data() {
@@ -227,21 +230,21 @@ export default {
       error: '',
 
       data: {        
-        7: 0, // goals_home
-        8: 0, // goals_guest
-        9: '', // Исход матча
+        7: this.result.goal_home ?? 0, // goals_home
+        8: this.result.goal_guest ?? 0, // goals_guest
+        9: this.result.result ?? '', // Исход матча
 
-        25: '', // Разница мячей
-        26: '', // Сумма голов
-        10: 50, // Владение
-        12: '', // желтых
-        13: '', // красных
+        25: this.result.diff ?? '', // Разница мячей
+        26: this.result.sum ?? '', // Сумма голов
+        10: this.result.domination ?? 50, // Владение
+        12: this.result.yellow ?? '', // желтых
+        13: this.result.red ?? '', // красных
 
-        11: '', // угловых
-        14: '', // пенальти
+        11: this.result.corner ?? '', // угловых
+        14: this.result.penalty ?? '', // пенальти
 
-        47: '', // m_otime
-        48: '', // m_spenalty
+        47: this.result.otime ?? '', // m_otime
+        48: this.result.spenalty ?? '', // m_spenalty
 
         27: '', // m_offside
       },
@@ -313,9 +316,9 @@ export default {
 
       this.data[25] = this.data[7] - this.data[8]
 
-      if (this.data[19] > 0) this.data[9] = 'п1'
-      if (this.data[19] === 0) this.data[9] = 'н'
-      if (this.data[19] < 0) this.data[9] = 'п2'
+      if (this.data[25] > 0) this.data[9] = 'п1'
+      if (this.data[25] === 0) this.data[9] = 'н'
+      if (this.data[25] < 0) this.data[9] = 'п2'
 
     },
 

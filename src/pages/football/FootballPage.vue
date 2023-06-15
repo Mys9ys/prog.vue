@@ -39,6 +39,7 @@
         <FootballSelectBlock
             :id="arMatch.id"
             :stage = "matchR.stage"
+            :result="matchR"
             >
         </FootballSelectBlock>
       </div>
@@ -264,39 +265,41 @@
           </tr>
           </thead>
           <tbody>
+
           <tr>
 
-            <td class="pr_table_col">{{ prognosis.goal_home }} - {{ prognosis.goal_guest }}</td>
-            <td class="pr_table_col">{{ prognosis.result }}</td>
-            <td class="pr_table_col">{{ prognosis.sum }}</td>
-            <td class="pr_table_col">{{ prognosis.diff }}</td>
-            <td class="pr_table_col">{{ prognosis.domination }} - {{ 100 - prognosis.domination }}</td>
-            <td class="pr_table_col">{{ prognosis.yellow }}</td>
-            <td class="pr_table_col">{{ prognosis.red }}</td>
-            <td class="pr_table_col">{{ prognosis.corner }}</td>
-            <td class="pr_table_col">{{ prognosis.penalty }}</td>
-            <td class="pr_table_col">{{ prognosis.otime }}</td>
-            <td class="pr_table_col">{{ prognosis.spenalty }}</td>
-            <td class="pr_table_col"></td>
+            <td class="pr_table_col ">{{ matchR.goal_home }} - {{ matchR.goal_guest }}</td>
+            <td class="pr_table_col ">{{ matchR.result }}</td>
+            <td class="pr_table_col ">{{ matchR.sum }}</td>
+            <td class="pr_table_col ">{{ matchR.diff }}</td>
+            <td class="pr_table_col ">{{ matchR.domination }} - {{ 100 - matchR.domination }}</td>
+            <td class="pr_table_col ">{{ matchR.yellow }}</td>
+            <td class="pr_table_col ">{{ matchR.red }}</td>
+            <td class="pr_table_col ">{{ matchR.corner }}</td>
+            <td class="pr_table_col ">{{ matchR.penalty }}</td>
+            <td class="pr_table_col ">{{ matchR.otime }}</td>
+            <td class="pr_table_col ">{{ matchR.spenalty }}</td>
+            <td class="pr_table_col "></td>
 
           </tr>
-
           <tr>
 
-            <td class="pr_table_col result">{{ matchR.goal_home }} - {{ matchR.goal_guest }}</td>
-            <td class="pr_table_col result">{{ matchR.result }}</td>
-            <td class="pr_table_col result">{{ matchR.sum }}</td>
-            <td class="pr_table_col result">{{ matchR.diff }}</td>
-            <td class="pr_table_col result">{{ matchR.domination }} - {{ 100 - matchR.domination }}</td>
-            <td class="pr_table_col result">{{ matchR.yellow }}</td>
-            <td class="pr_table_col result">{{ matchR.red }}</td>
-            <td class="pr_table_col result">{{ matchR.corner }}</td>
-            <td class="pr_table_col result">{{ matchR.penalty }}</td>
-            <td class="pr_table_col result">{{ matchR.otime }}</td>
-            <td class="pr_table_col result">{{ matchR.spenalty }}</td>
+            <td class="pr_table_col result">{{ prognosis.goal_home }} - {{ prognosis.goal_guest }}</td>
+            <td class="pr_table_col result">{{ prognosis.result }}</td>
+            <td class="pr_table_col result">{{ prognosis.sum }}</td>
+            <td class="pr_table_col result">{{ prognosis.diff }}</td>
+            <td class="pr_table_col result">{{ prognosis.domination }} - {{ 100 - prognosis.domination }}</td>
+            <td class="pr_table_col result">{{ prognosis.yellow }}</td>
+            <td class="pr_table_col result">{{ prognosis.red }}</td>
+            <td class="pr_table_col result">{{ prognosis.corner }}</td>
+            <td class="pr_table_col result">{{ prognosis.penalty }}</td>
+            <td class="pr_table_col result">{{ prognosis.otime }}</td>
+            <td class="pr_table_col result">{{ prognosis.spenalty }}</td>
             <td class="pr_table_col result"></td>
 
           </tr>
+
+
 
           <tr class="prog_r">
 
@@ -317,6 +320,11 @@
 
           </tbody>
         </table>
+        <div class="desc_block">
+          <div class="cell match_res">Результат</div>
+          <div class="cell prognosis">Прогноз</div>
+          <div class="cell "><span class="empty">Мимо/</span><span class="ball">Баллы</span></div>
+        </div>
       </div>
 
       <div class="annotation_block" v-if="annotationVis">
@@ -1088,6 +1096,7 @@ export default {
 }
 
 .om_table_box {
+  margin: 0;
   border-radius: 5px;
 
   th, td {
@@ -1146,6 +1155,31 @@ export default {
     .btn {
       .shadow_inset;
     }
+  }
+}
+
+.desc_block{
+  background: @DarkColorBG;
+  padding: 4px;
+  border-radius:  0 0 5px 5px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  .cell{
+    .shadow_inset;
+  }
+  .match_res{
+    color: @colorText;
+  }
+  .prognosis{
+    color: @NoWrite;
+  }
+  .empty{
+    color: @colorBlur;
+  }
+  .ball{
+    color: @YesWrite;
   }
 }
 </style>
