@@ -69,12 +69,6 @@ export default {
     this.fillProfile()
   },
 
-  watch: {
-
-    profileData(){
-      console.log('dfvdsds')
-    }
-  },
   methods: {
     ...mapActions({
       getProfileInfo: 'profile/getProfileData',
