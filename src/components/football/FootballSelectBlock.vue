@@ -312,9 +312,9 @@ export default {
       if (type === 'two') this.data[id] = 2
       if (type === 'five') this.data[id] = 5
 
-      this.data[26] = this.data[7] + this.data[8]
+      this.data[26] = Number(this.data[7]) + Number(this.data[8])
 
-      this.data[25] = this.data[7] - this.data[8]
+      this.data[25] = Number(this.data[7]) - Number(this.data[8])
 
       if (this.data[25] > 0) this.data[9] = 'п1'
       if (this.data[25] === 0) this.data[9] = 'н'
