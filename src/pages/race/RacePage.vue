@@ -82,15 +82,23 @@
           </div>
         </div>
         <div class="cancelled_condition_wrapper" v-else>
-          <ResultRaceBlock
-              v-for="(el, index) in progBlocks"
-              :key="index"
-              :dataBlock="el"
-              :prognosis="item.prognosis[index]"
-              :score="item.result_score[index]"
-              :result="item.result_race[index]"
-              :racers="item.racers">
-          </ResultRaceBlock>
+          <div v-if="result_race">
+            <ResultRaceBlock
+                v-for="(el, index) in progBlocks"
+                :key="index"
+                :dataBlock="el"
+                :prognosis="item.prognosis[index]"
+                :score="item.result_score[index]"
+                :result="item.result_race[index]"
+                :racers="item.racers">
+            </ResultRaceBlock>
+          </div>
+          <div v-else>
+            <div class="empty_result_wrapper">
+              <div class="empty_result">Результаты заполняются</div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -367,6 +375,16 @@ export default {
     max-width: 40%;
 
     font-size: 12px;
+  }
+}
+
+.empty_result_wrapper{
+  background: @DarkColorBG;
+  color: @colorText;
+  padding: 4px;
+  border-radius: 5px;
+  .empty_result{
+    .shadow_inset;
   }
 }
 </style>
