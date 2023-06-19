@@ -5,7 +5,7 @@
     </div>
 
     <div class="matches_wrapper">
-      <MatchTableResult v-for="(match, index) in matches" :key="index" :info="match"></MatchTableResult>
+      <MatchTableResult v-for="(index) in arr" :key="index" :info="matches[index]"></MatchTableResult>
     </div>
   </div>
 </template>
@@ -25,6 +25,12 @@ export default {
       type: String
     }
   },
+
+  data(){
+    return{
+      arr: Object.keys(this.matches).reverse()
+    }
+  }
 }
 </script>
 
