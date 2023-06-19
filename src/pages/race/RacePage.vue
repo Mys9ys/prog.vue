@@ -82,7 +82,7 @@
           </div>
         </div>
         <div class="cancelled_condition_wrapper" v-else>
-          <div v-if="result_race">
+          <div v-if="item.result_race">
             <ResultRaceBlock
                 v-for="(el, index) in progBlocks"
                 :key="index"
