@@ -75,11 +75,11 @@
         </div>
         <div class="value_block">
           <div class="match_domination_box">
-            <div class="minus math_btn" @click="setRangeBtn('minus')">-</div>
+            <div class="minus math_btn" @click="setRangeBtn('plus')">+</div>
             <div class="value left">{{ data[10] }}</div>
             <input class="domination_range" type="range" ref="iRange" :value="data[10]" @change="rangeChange()">
             <div class="value right">{{ 100 - data[10] }}</div>
-            <div class="plus math_btn" @click="setRangeBtn('plus')">-</div>
+            <div class="plus math_btn" @click="setRangeBtn('minus')">+</div>
             <div class="plus math_btn" @click="setRangeBtn('half')">50</div>
           </div>
         </div>
@@ -129,6 +129,7 @@
             <div class="value">{{ data[11] }}</div>
             <div class="btn" @click="setValue('plus', 11)">+</div>
             <div class="btn" @click="setValue('six', 11)">6</div>
+            <div class="btn" @click="setValue('twelve', 20)">12</div>
           </div>
         </div>
       </div>
@@ -358,6 +359,7 @@ export default {
       if (type === 'one') this.data[id] = 1
       if (type === 'five') this.data[id] = 5
       if (type === 'six') this.data[id] = 6
+      if (type === 'twelve') this.data[id] = 12
 
     },
 
@@ -530,8 +532,8 @@ export default {
     }
 
     .goal_btn {
-      width: 19px;
-      height: 19px;
+      width: 20px;
+      height: 20px;
       background: @YesWrite;
 
       .flex_center;
@@ -553,8 +555,8 @@ export default {
     .shadow_inset;
     cursor: pointer;
     padding: 0;
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     font-size: 12px;
     border: 2px solid @maxdarkgrey;
 
@@ -568,8 +570,8 @@ export default {
   }
 
   .math_btn {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     background: @YesWrite;
 
     .flex_center;
@@ -588,8 +590,8 @@ export default {
   .value {
     .flex_center;
     .shadow_inset;
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     border: 2px solid @YesWrite;
     padding: 2px 2px;
     font-size: 14px;
@@ -607,14 +609,14 @@ export default {
     }
 
     .value {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
     }
 
     .math_btn {
       .prognosis_btn;
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
     }
   }
   .box {
@@ -624,8 +626,8 @@ export default {
   }
   .btn {
     .prognosis_btn;
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
   }
 
 
