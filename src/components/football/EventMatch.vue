@@ -136,6 +136,10 @@ export default {
         .shadow_inset;
         width: 80%;
         max-width: 194px;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 0px 2px;
+        text-overflow: ellipsis;
       }
 
       .score {

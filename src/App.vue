@@ -1,8 +1,6 @@
 <template>
     <HeaderBlock v-if="token"></HeaderBlock>
-  <keep-alive>
     <router-view></router-view>
-  </keep-alive>
 </template>
 
 <script>
@@ -27,9 +25,6 @@ export default {
       token: state => state.auth.authData.token,
     })
   },
-
-
-
 }
 </script>
 
