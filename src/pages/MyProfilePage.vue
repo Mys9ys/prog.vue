@@ -11,7 +11,32 @@
   </div>
 
   <div class="body_block">
-    <div class="body_item" v-if="active === 'prognosis'">prognosis</div>
+    <div class="body_item" v-if="active === 'prognosis'">
+
+      <div class="title_wrapper">
+        <div class="title">
+          Ваши прогнозы
+        </div>
+      </div>
+      <div class="football_block" v-if="profileData.football">
+        <div class="football_title_block">
+          <ProfileTitle v-for="(arr, index) in profileData.football"
+                        @click="setActiveEvent(index)"
+                        :info="arr.info"
+                        :active="index === activeEvent"
+                        :count="Object.keys(arr.matches).length"
+                        :class="{'active': index === activeEvent}"
+                        :key="index"></ProfileTitle>
+        </div>
+        <div class="football_body_block" v-for="(arr, index) in profileData.football"
+             :key="index">
+          <ProfileEventBody v-if="index == activeEvent"
+                            :matches="arr.matches"
+                            :title="arr.info.NAME"
+          ></ProfileEventBody>
+        </div>
+      </div>
+    </div>
     <div class="body_item" v-if="active === 'achievement'">
       <ProfileAchievementBlock></ProfileAchievementBlock>
     </div>
@@ -23,15 +48,24 @@
 <script>
 import PageHeader from "@/components/main/PageHeader";
 import ProfileAchievementBlock from "@/components/achievement/ProfileAchievementBlock";
+import {mapActions, mapState} from "vuex";
+import ProfileTitle from "@/components/football/ProfileTitle";
+import ProfileEventBody from "@/components/football/ProfileEventBody";
 
 export default {
   name: "MyProfilePage",
   components: {
     PageHeader,
-    ProfileAchievementBlock
+    ProfileAchievementBlock,
+    ProfileTitle,
+    ProfileEventBody
   },
   data() {
     return {
+      url:  'https://prognos9ys.ru',
+      profileLoader: false,
+      activeEvent: '',
+
       active: 'prognosis',
       profileMenu: {
         'prognosis': {'title': 'Прогнозы', 'icon': 'Pr'},
@@ -39,7 +73,41 @@ export default {
         'settings': {'title': 'Настройки', 'icon': 'Se'},
       }
     }
-  }
+  },
+
+  created() {
+    this.profileLoader = true
+
+    this.fillProfile()
+  },
+
+  methods: {
+    ...mapActions({
+      getProfileInfo: 'profile/getProfileData',
+    }),
+
+    setActiveEvent(id){
+      this.activeEvent = id
+    },
+
+    async fillProfile() {
+      this.profileRequest['userToken'] = this.token
+
+      await this.getProfileInfo()
+      this.profileLoader = false
+
+    }
+  },
+
+  computed: {
+    ...mapState({
+      profileData: state => state.profile.profileData,
+      profileRequest: state => state.profile.profileRequest,
+
+      token: state => state.auth.authData.token,
+    })
+  },
+
 }
 </script>
 
@@ -57,9 +125,9 @@ export default {
   padding: 4px;
   border-radius: 5px;
   color: @colorText;
-  margin-top: 25px;
+  margin-top: 8px;
   text-align: left;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 
   .title {
     display: flex;
@@ -71,4 +139,73 @@ export default {
     background: @YesWrite;
   }
 }
+.user_block{
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+  gap: 4px;
+
+  .ava_block{
+    width: 45%;
+    background: @DarkColorBG;
+    padding: 4px;
+    border-radius: 5px;
+    .flex_center;
+    img{
+      border-radius: 50%;
+      max-width: 135px;
+      width: 100%;
+      border: 2px solid @darkbg;
+    }
+  }
+
+  .right_block{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background: @DarkColorBG;
+    padding: 4px;
+    border-radius: 5px;
+
+    .right_el{
+      display: flex;
+      flex-direction: row;
+      .shadow_inset;
+      color: @colorText;
+      justify-content: space-between;
+      text-align: left;
+
+      .title{
+        display: inline-block;
+        color: @colorBlur;
+      }
+    }
+  }
+}
+
+.prognosis_block{
+  .title_wrapper{
+    background: @DarkColorBG;
+    padding: 4px;
+    border-radius: 5px;
+    color: @colorText;
+    margin-top: 25px;
+    .title{
+      .shadow_inset;
+    }
+  }
+  margin-bottom: 20px;
+}
+.football_block{
+  .football_title_block{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+}
+
 </style>

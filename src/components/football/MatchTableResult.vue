@@ -2,7 +2,7 @@
   <div class="match_wrapper">
     <div class="match_header">
       <div class="number cell"># {{info.matches.number}}</div>
-      <div class="cell teams">{{info.matches.home.NAME}} - {{info.matches.guest.NAME}}</div>
+      <div class="cell teams"> <span class="tname">{{info.matches.home.NAME}} </span> <span>-</span> <span class="tname">{{info.matches.guest.NAME}}</span></div>
       <div class="cell number score">{{info.result.all}}</div>
       <div class="more_btn" @click="visible = !visible">
         <span :class="{'close' : !visible, 'open' : visible}"> > </span>
@@ -59,8 +59,19 @@ export default {
       }
 
       .teams{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 3px;
         min-width: 220px;
         text-align: left;
+        .tname{
+          max-width: 107px;
+          white-space: nowrap;
+          overflow: hidden;
+          padding: 0px 2px;
+          text-overflow: ellipsis;
+        }
       }
       .score{
         color: @YesWrite;
