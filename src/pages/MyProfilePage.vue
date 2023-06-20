@@ -30,6 +30,7 @@
         </div>
         <div class="football_body_block" v-for="(arr, index) in profileData.football"
              :key="index">
+
           <ProfileEventBody v-if="index == activeEvent"
                             :matches="arr.items"
                             :title="arr.info.NAME"
@@ -37,7 +38,10 @@
         </div>
       </div>
       <div class="race_block" v-if="profileData.race">
-        <ProfileRaceBlock :events="profileData.race"></ProfileRaceBlock>
+        <ProfileRaceBlock
+            :events="profileData.race"
+            :racers="profileData.racers"
+        ></ProfileRaceBlock>
       </div>
     </div>
     <div class="body_item" v-if="active === 'achievement'">

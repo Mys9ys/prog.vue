@@ -8,24 +8,34 @@
                   :class="{'active': index === activeEvent}"
                   :key="index"></ProfileTitle>
   </div>
-  <div class="body_block"  v-for="(arr, index) in events"
+  <div class="body_block" v-for="(arr, index) in events"
        :key="index">
-
+      <ProfileRaceBody
+          v-if="index == activeEvent"
+          :title="arr.info.NAME"
+          :racers="racers"
+          :items="arr.items"
+      ></ProfileRaceBody>
   </div>
 </template>
 
 <script>
 import ProfileTitle from "@/components/football/ProfileTitle";
+import ProfileRaceBody from "@/components/profile/ProfileRaceBody";
 
 export default {
   name: "ProfileRaceBlock",
   components: {
-    ProfileTitle
+    ProfileTitle,
+    ProfileRaceBody
   },
   props: {
     events: {
       type: Object
-    }
+    },
+    racers: {
+      type: Object
+    },
   },
   data(){
     return{
