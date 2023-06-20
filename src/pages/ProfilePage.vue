@@ -25,14 +25,14 @@
                      @click="setActiveEvent(index)"
                      :info="arr.info"
                      :active="index === activeEvent"
-                     :count="Object.keys(arr.matches).length"
+                     :count="Object.keys(arr.items).length"
                      :class="{'active': index === activeEvent}"
                      :key="index"></ProfileTitle>
      </div>
       <div class="football_body_block" v-for="(arr, index) in profileData.football"
            :key="index">
         <ProfileEventBody v-if="index == activeEvent"
-                          :matches="arr.matches"
+                          :matches="arr.items"
                           :title="arr.info.NAME"
                           ></ProfileEventBody>
       </div>
