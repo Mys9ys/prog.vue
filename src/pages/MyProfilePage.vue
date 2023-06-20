@@ -24,17 +24,20 @@
                         @click="setActiveEvent(index)"
                         :info="arr.info"
                         :active="index === activeEvent"
-                        :count="Object.keys(arr.matches).length"
+                        :count="Object.keys(arr.items).length"
                         :class="{'active': index === activeEvent}"
                         :key="index"></ProfileTitle>
         </div>
         <div class="football_body_block" v-for="(arr, index) in profileData.football"
              :key="index">
           <ProfileEventBody v-if="index == activeEvent"
-                            :matches="arr.matches"
+                            :matches="arr.items"
                             :title="arr.info.NAME"
           ></ProfileEventBody>
         </div>
+      </div>
+      <div class="race_block" v-if="profileData.race">
+        <ProfileRaceBlock :events="profileData.race"></ProfileRaceBlock>
       </div>
     </div>
     <div class="body_item" v-if="active === 'achievement'">
@@ -51,10 +54,12 @@ import ProfileAchievementBlock from "@/components/achievement/ProfileAchievement
 import {mapActions, mapState} from "vuex";
 import ProfileTitle from "@/components/football/ProfileTitle";
 import ProfileEventBody from "@/components/football/ProfileEventBody";
+import ProfileRaceBlock from "@/components/profile/ProfileRaceBlock";
 
 export default {
   name: "MyProfilePage",
   components: {
+    ProfileRaceBlock,
     PageHeader,
     ProfileAchievementBlock,
     ProfileTitle,

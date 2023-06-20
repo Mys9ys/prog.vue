@@ -49,6 +49,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     gap: 4px;
+    flex-wrap: nowrap;
 
     .event_img{
       .shadow_inset;
