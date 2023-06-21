@@ -129,7 +129,7 @@
             <div class="value">{{ data[11] }}</div>
             <div class="btn" @click="setValue('plus', 11)">+</div>
             <div class="btn" @click="setValue('six', 11)">6</div>
-            <div class="btn" @click="setValue('twelve', 20)">12</div>
+            <div class="btn" @click="setValue('twelve', 11)">12</div>
           </div>
         </div>
       </div>
@@ -209,7 +209,7 @@ import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
 
 export default {
-  name: "FootballSelectBlock",
+  name: "FootballAdminSetResult",
   components: {
     PreLoader
   },

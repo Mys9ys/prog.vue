@@ -36,12 +36,12 @@
 
     <div v-if="admin">
       <div class="block_gap">
-        <FootballSelectBlock
+        <FootballAdminSetResult
             :id="arMatch.id"
             :stage = "matchR.stage"
             :result="matchR"
             >
-        </FootballSelectBlock>
+        </FootballAdminSetResult>
       </div>
 
     </div>
@@ -389,12 +389,13 @@ import PageHeader from "@/components/main/PageHeader";
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
 import SendSuccess from "@/components/main/SendSuccess";
-import FootballSelectBlock from "@/components/football/FootballSelectBlock";
+import FootballAdminSetResult from "@/components/football/FootballAdminSetResult";
+
 
 export default {
   name: "FootballPage",
   components: {
-    FootballSelectBlock,
+    FootballAdminSetResult,
     PageHeader,
     PreLoader,
     SendSuccess
