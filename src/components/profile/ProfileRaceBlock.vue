@@ -10,12 +10,16 @@
   </div>
   <div class="body_block" v-for="(arr, index) in events"
        :key="index">
-      <ProfileRaceBody
-          v-if="index == activeEvent"
-          :title="arr.info.NAME"
-          :racers="racers"
-          :items="arr.items"
+    <div class="body_item" v-if="index == activeEvent">
+      <div class="title_wrapper">
+        <div class="title">{{ arr.info.NAME }}</div>
+      </div>
+      <ProfileRaceBody v-for="(item, index) in arr.items"
+                       :key="index"
+                       :racers="racers"
+                       :item="item"
       ></ProfileRaceBody>
+    </div>
   </div>
 </template>
 
@@ -37,8 +41,8 @@ export default {
       type: Object
     },
   },
-  data(){
-    return{
+  data() {
+    return {
       activeEvent: ''
     }
   },
@@ -55,21 +59,27 @@ export default {
 <style lang="less" scoped>
 @import "src/assets/css/variables.less";
 
-.title_wrapper{
+.title_wrapper {
   background: @DarkColorBG;
   padding: 4px;
   border-radius: 5px;
   color: @colorText;
-  margin-top: 25px;
-  .title{
+  margin-top: 8px;
+
+  .title {
     .shadow_inset;
   }
 }
 
-.title_box{
+.title_box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 4px;
+}
+.body_item{
+  display: flex;
+  flex-direction: column;
   gap: 4px;
 }
 </style>
