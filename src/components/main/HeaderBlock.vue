@@ -4,8 +4,11 @@
     <div class="h_main_block">
       <div class="hm_left_block">
         <div class="hm_achieve_block">
-          <div class="hm_achieve_box hm_box">
-            Новичок
+          <div class="hm_achieve_box hm_box rank" v-if="userInfo.rank_info" :class="{'rank15' : userInfo.rank_info.rank.name.length >14, 'rank20' : userInfo.rank_info.rank.name.length >19}">
+            {{userInfo.rank_info.rank.name}}
+          </div>
+          <div class="hm_achieve_box hm_box rank" v-else>
+            Некто
           </div>
         </div>
         <div class="hm_btn_block">
@@ -26,7 +29,7 @@
 
       <div class="hm_right_block">
         <div class="hm_nick_box hm_box">
-          <span v-if="$store.state.auth.userInfo.NAME">{{ $store.state.auth.userInfo.NAME }}</span>
+          <span v-if="userInfo.NAME">{{ userInfo.NAME }}</span>
           <span v-else>Гость</span>
         </div>
 
@@ -70,7 +73,6 @@ export default {
 
   watch: {
     token(){
-      console.log('watch token yes')
       this.checkAuth()
     }
   },
@@ -80,17 +82,14 @@ export default {
     this.$nextTick(function () {
       if (this.token) {
         // проверка токена на актуальность
-        console.log('mounted token yes')
         this.checkAuth()
-      } else {
-        console.log('token no')
-        this.$router.push('/')
       }
     })
   },
   computed: {
     ...mapState({
       token: state => state.auth.authData.token,
+      userInfo: state => state.auth.userInfo,
     })
   },
 
@@ -221,10 +220,21 @@ export default {
     }
 
     .hm_box {
+      width: 130px;
+      height: 28px;
       margin-bottom: 5px;
-      padding: 2px 10px;
+      padding: 2px 4px;
       box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
       //background: linear-gradient(rgb(70,70,70), rgb(120,120,120));
+    }
+    .rank10{
+      font-size: 15px;
+    }
+    .rank15{
+      font-size: 13px;
+    }
+    .rank20{
+      font-size: 12px;
     }
     .hm_achieve_box{
       text-align: left;

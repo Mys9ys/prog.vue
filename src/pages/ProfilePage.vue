@@ -9,8 +9,8 @@
     <div class="right_block">
       <div class="right_el"><div class="title">Ник:</div> <span> {{profileData.info.NAME}}</span></div>
       <div class="right_el"><div class="title">Рег. дата:</div> <span>{{profileData.info.reg}}</span></div>
-      <div class="right_el"><div class="title">Звание:</div> <span>Новичок</span></div>
-      <div class="right_el"><div class="title">Прогнозов:</div> <span>{{profileData.info.count}}</span></div>
+      <div class="right_el"><div class="title">Звание:</div> <span>{{profileData.rank_info.rank.name}}</span></div>
+      <div class="right_el"><div class="title">Прогнозов:</div> <span>{{profileData.rank_info.count}}</span></div>
     </div>
   </div>
   <div class="prognosis_block">
