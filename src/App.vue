@@ -7,19 +7,26 @@
 
 import HeaderBlock from "@/components/main/HeaderBlock";
 import {mapState} from "vuex";
-// import PreLoader from "@/components/main/PreLoader";
 
 
 export default {
   name: 'App',
   components: {
     HeaderBlock,
-    // PreLoader
+  },
+  // data(){
+  //   return{
+  //
+  //   }
+  // },
+  created() {
+    if(!this.token) this.$router.push('/')
   },
   metaInfo: {
     title: 'Прогносяус - сайт прогнозов на интерес',
     titleTemplate: '%s | vue-meta Example App'
   },
+
   computed: {
     ...mapState({
       token: state => state.auth.authData.token,
