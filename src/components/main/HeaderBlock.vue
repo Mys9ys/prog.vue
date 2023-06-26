@@ -227,6 +227,10 @@ export default {
       box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
       //background: linear-gradient(rgb(70,70,70), rgb(120,120,120));
     }
+    .rank{
+    .flex_center;
+      justify-content: flex-start;
+    }
     .rank10{
       font-size: 15px;
     }
