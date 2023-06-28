@@ -1,11 +1,9 @@
 <template>
   <div class="wrapper_success">
     <div class="logo_block">
-      <div class="logo">
-        <img class="logo_img" src="@/assets/icon/football/ballf.svg">
-      </div>
       <div class="loader_line">
-        <p>Прогноз успешно отправлен</p>
+        <p>Ошибка</p>
+        <p><slot></slot></p>
       </div>
     </div>
 
@@ -18,7 +16,7 @@
 import FillBtn from "@/components/ui/btn/FillBtn";
 
 export default {
-  name: "SendSuccess",
+  name: "ActionFailure",
   components: {FillBtn},
   props: {
     closeSuccess: {
@@ -46,7 +44,7 @@ export default {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  background: @YesWrite;
+  background: @colorBlur;
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
@@ -60,6 +58,9 @@ export default {
     margin-top: 46%;
   }
 
+  .loader_line{
+    color: @red;
+  }
   .logo {
     .logo_img {
       width: 100px;

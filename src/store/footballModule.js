@@ -16,6 +16,8 @@ export const footballModule = {
             userToken: ''
         },
 
+        errors: {},
+
         queryMatch: {
             eventId:'',
             userToken: '',
@@ -26,8 +28,6 @@ export const footballModule = {
             userToken: '',
             fields: []
         },
-
-        prognosisSuccess: false,
 
     }),
 
@@ -45,13 +45,15 @@ export const footballModule = {
             state.prognosis = prognosis
         },
 
-        setPrognosisSuccess(state, data){
-            state.prognosisSuccess = data
+        setError(state, data){
+            state.errors = data
         }
+
     },
     actions: {
 
         async getEventMatchesRequest({state, commit}) {
+
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'football/many/', state.queryEvent,
                     {
@@ -65,9 +67,12 @@ export const footballModule = {
                     console.log('axios data', response.data)
                     commit('setMatchesData', response.data.info)
                     commit('setPrognosisData', response.data.res.prognosis)
-                }
-                if (response.data.status == 'error') {
-                    commit('setError', response.data.mes)
+                } else {
+                    if(response.data.mes) {
+                        commit('setError', response.data.mes)
+                    } else {
+                        commit('setError', 'что то не так')
+                    }
                 }
 
             } catch (e) {
@@ -76,6 +81,7 @@ export const footballModule = {
         },
 
         async getMatchRequest({state, commit}) {
+
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'football/one/', state.queryMatch,
                     {
@@ -88,9 +94,12 @@ export const footballModule = {
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
                     commit('setMatchData', response.data.match)
-                }
-                if (response.data.status == 'error') {
-                    commit('setError', response.data.mes)
+                } else {
+                    if(response.data.mes) {
+                        commit('setError', response.data.mes)
+                    } else {
+                        commit('setError', 'что то не так')
+                    }
                 }
 
             } catch (e) {
@@ -100,7 +109,6 @@ export const footballModule = {
 
         async sendUserPrognosis({state, commit}) {
 
-            commit('setMatchLoading', true)
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'football/send/', state.queryPrognosis,
                     {
@@ -112,11 +120,12 @@ export const footballModule = {
 
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
-                    commit('setMatchLoading', false)
-                    commit('setPrognosisSuccess', true)
-                }
-                if (response.data.status == 'error') {
-                    commit('setError', response.data.mes)
+                } else {
+                    if(response.data.mes) {
+                        commit('setError', response.data.mes)
+                    } else {
+                        commit('setError', 'что то не так')
+                    }
                 }
 
             } catch (e) {

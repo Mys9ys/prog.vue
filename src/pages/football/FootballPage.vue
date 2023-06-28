@@ -1,6 +1,8 @@
 <template>
   <PreLoader v-if="prognosisLoader"></PreLoader>
   <SendSuccess v-if="prognosisSuccess" :closeSuccess="closeSuccess"></SendSuccess>
+  <ActionFailure v-if="actionFailure" :closeSuccess="closeSuccess">{{errors.mes}}</ActionFailure>
+
   <div v-else class="match_wrapper">
     <PageHeader class="header" :path="'/football/' + $route.params.event">Матч № {{ $route.params.number }}</PageHeader>
     <div class="match_title">
@@ -390,11 +392,13 @@ import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
 import SendSuccess from "@/components/main/SendSuccess";
 import FootballAdminSetResult from "@/components/football/FootballAdminSetResult";
+import ActionFailure from "@/components/main/ActionFailure";
 
 
 export default {
   name: "FootballPage",
   components: {
+    ActionFailure,
     FootballAdminSetResult,
     PageHeader,
     PreLoader,
@@ -406,6 +410,8 @@ export default {
       admin: false,
 
       prognosisLoader: false,
+      prognosisSuccess: false,
+      actionFailure: false,
       moreInfo: false,
 
       autoBlock: false,
@@ -488,12 +494,6 @@ export default {
     this.setOtherLink()
   },
 
-  watch: {
-    prognosis() {
-      this.prognosisLoader = false
-      console.log('prognosis load')
-    }
-  },
   methods: {
     ...mapActions({
       getMatchRequest: 'football/getMatchRequest',
@@ -506,6 +506,8 @@ export default {
     },
 
     async sendPrognosis() {
+      this.prognosisLoader = true
+
       this.error = ''
 
       if (!this.data[18]) this.error = 'Вы ничего не заполнили'
@@ -517,11 +519,27 @@ export default {
         this.data[17] = this.arMatch.id
 
         await this.sendUserPrognosis()
+
+
+        if(!this.errors.mes) {
+          this.prognosisSuccess = true
+          console.log('this.errors.mes', this.errors.mes)
+        } else {
+          this.actionFailure = true
+          console.log('this.errors.mes', this.errors.mes)
+        }
+        this.prognosisLoader = false
+
+        if(!this.prognosis.result) {
+          this.prognosis.result = true
+          this.prognosis.time_send = true
+        }
       }
     },
 
     closeSuccess() {
-      this.success = false
+      this.prognosisSuccess = false
+      this.actionFailure = false
     },
 
     setGoals(type, id) {
@@ -623,6 +641,8 @@ export default {
 
       this.data[45] = this.prognosis.otime ?? ''
       this.data[46] = this.prognosis.spenalty ?? ''
+
+      this.prognosisLoader = false
     }
   },
   computed: {
@@ -639,6 +659,7 @@ export default {
       progR: state => state.football.match.prog_result,
 
       role: state => state.auth.userInfo.role,
+      errors: state => state.football.errors
     })
   },
 }
