@@ -3,24 +3,42 @@
   <div class="catalog_wrapper">
     <PageHeader class="header">Каталог событий</PageHeader>
 
-    <div class="event_wrapper" v-if="catalog">
+    <div class="event_wrapper" v-if="eventsData">
       <div class="events_block"
-           v-for="(event, index) in catalog" :key="index">
+           v-for="(event, index) in eventsData" :key="index">
         <div class="event_title_wrapper">
-          <div class="title" :class="[event.info.CODE]" v-if="event.info['CODE']">{{ event.info.NAME }}</div>
-        </div>
-
-        <div class="event_box">
-          <div class="el_event" v-for="(el, id) in event.events" :key="id">
-            <div class="img_box">
-              <div class="lamp" :class=[el.status]></div>
-              <img :src="url+el.img" alt="">
+          <div class="title" :class="[event.info['CODE']]" v-if="event.info['CODE']">{{ event.info.NAME }}</div>
+          <div class="btn_block">
+            <div class="btn_wrapper">
+              <div class="btn_act"
+                   :class="{[event.info['CODE']] : [event.info['CODE']], 'inactive' : arActive[index] === false}"
+                   v-if="event.events['now']"
+                   @click="arActive[index] = true"
+              >Активные</div>
             </div>
-            <div class="name">{{el.NAME}}</div>
-            <div class="btn" @click="$router.push('/'+event.info.CODE+ '/' +id)">
-              <img src="@/assets/icon/btn/arrow.svg" alt="">
+            <div class="btn_wrapper">
+              <div class="btn_act last"
+                   :class="{[event.info['CODE']] : [event.info['CODE']], 'inactive' : arActive[index] === true}"
+                   v-if="event.events['old']"
+                   @click="arActive[index] = false"
+              >Прошедшие</div>
+
             </div>
           </div>
+        </div>
+
+        <div class="event_box" v-if="arActive[index]">
+          <CatalogElement v-for="(el, id) in event.events['now']" :key="id"
+                          :element="el"
+                          :code="event.info['CODE']"
+          ></CatalogElement>
+        </div>
+
+        <div class="event_box" v-else>
+          <CatalogElement v-for="(el, id) in event.events['old']" :key="id"
+                          :element="el"
+                          :code="event.info['CODE']"
+          ></CatalogElement>
         </div>
 
       </div>
@@ -32,31 +50,26 @@
 import {mapActions, mapState} from "vuex";
 import PageHeader from "@/components/main/PageHeader";
 import PreLoader from "@/components/main/PreLoader";
+import CatalogElement from "@/components/catalog/CatalogElement";
 
 export default {
   name: "CatalogPage",
   components: {
+    CatalogElement,
     PageHeader,
     PreLoader
 
   },
   data() {
     return {
-      url:  'https://prognos9ys.ru/',
-      catalog: {},
-      catLoader: false
+      url: 'https://prognos9ys.ru/',
+      catLoader: false,
+      arActive: {}
     }
   },
 
   mounted() {
     this.fillCatalogElem()
-  },
-
-  watch:{
-    eventsData(){
-      this.catalog = this.eventsData
-      this.catLoader = false
-    }
   },
 
   methods: {
@@ -69,8 +82,24 @@ export default {
       this.catalogData['type'] = 'catalog'
       await this.getEventsInfo()
       this.catLoader = false
-    }
+
+      this.fillActionArray()
+    },
+
+    fillActionArray(){
+      Object.keys(this.eventsData).forEach((id)=>
+      {
+        // this.eventsData[id].events
+        Object.keys(this.eventsData[id].events).forEach((status)=>{
+            if(status === 'old') this.arActive[id] = false
+            if(status === 'now') this.arActive[id] = true
+        })
+      })
+    },
+
   },
+
+
 
   computed: {
     ...mapState({
@@ -87,6 +116,9 @@ export default {
 
 .catalog_wrapper {
   .event_title_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 4px;
     background: @DarkColorBG;
     border-radius: 5px;
@@ -99,6 +131,23 @@ export default {
       padding: 0px 12px;
     }
 
+    .btn_block {
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+      .btn_wrapper{
+        border-radius: 5px;
+        text-align: left;
+        .btn_act{
+          .shadow_inset;
+          display: inline-block;
+          color: @colorText;
+          font-size: 12px;
+          padding: 2px;
+        }
+      }
+    }
+
     .football {
       background: @YesWrite;
     }
@@ -107,12 +156,15 @@ export default {
       background: @kvn;
     }
 
-    .f1race {
+    .race {
       background: @red;
+    }
+    .inactive{
+      background: @DarkColorBG;
     }
   }
 
-  .event_box{
+  .event_box {
     display: flex;
     flex-direction: column;
     gap: 3px;
@@ -121,63 +173,5 @@ export default {
     margin-bottom: 12px;
   }
 
-  .el_event {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    padding: 4px;
-    color: @darkbg;
-    border-radius: 5px;
-    text-align: left;
-    gap: 6px;
-
-    .img_box{
-      position: relative;
-      .shadow_inset;
-      .flex_center;
-      max-width: 55px;
-      height: 55px;
-      background: @colorText;
-      img{
-        width: 100%;
-      }
-      padding: 5px;
-    }
-    .name{
-      background: @colorText;
-      .shadow_inset;
-      .flex_center;
-      width: 88%;
-      justify-content: left;
-    }
-
-    .btn{
-      background: @DarkColorBG;
-      .shadow_inset;
-      .flex_center;
-      width: 7%;
-      padding: 4px;
-      img{
-        width: 100%;
-      }
-    }
-  }
 }
-
-.lamp{
-  position: absolute;
-  left: 3px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 5px;
-  height: 5px;
-  box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
-  background: @green;
-  border-radius: 50%;
-
-  &.old{
-    background: @red;
-  }
-}
-
 </style>

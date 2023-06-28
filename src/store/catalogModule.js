@@ -34,7 +34,7 @@ export const catalogModule = {
 
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
-                    commit('setEventsData', response.data.info)
+                    commit('setEventsData', response.data.result)
                 } else {
                     commit('setError', response.data.mes)
                 }
