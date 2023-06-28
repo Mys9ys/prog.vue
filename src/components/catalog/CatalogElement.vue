@@ -5,7 +5,7 @@
       <img :src="url+element.img" alt="">
     </div>
     <div class="name">{{element.NAME}}</div>
-    <div class="btn" @click="$router.push('/'+code+ '/' +id)">
+    <div class="btn" @click="$router.push('/'+code+ '/' +element.ID)">
       <img src="@/assets/icon/btn/arrow.svg" alt="">
     </div>
   </div>
