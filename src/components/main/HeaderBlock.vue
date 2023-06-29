@@ -4,7 +4,9 @@
     <div class="h_main_block">
       <div class="hm_left_block">
         <div class="hm_achieve_block">
-          <div class="hm_achieve_box hm_box rank" v-if="userInfo.rank_info" :class="{'rank15' : userInfo.rank_info.rank.name.length >14, 'rank20' : userInfo.rank_info.rank.name.length >19}">
+          <div class="hm_achieve_box hm_box rank" v-if="userInfo.rank_info"
+               :class="{'rank15' : userInfo.rank_info.rank.name.length >14, 'rank20' : userInfo.rank_info.rank.name.length >19}"
+          >
             {{userInfo.rank_info.rank.name}}
           </div>
           <div class="hm_achieve_box hm_box rank" v-else>
@@ -29,7 +31,9 @@
 
       <div class="hm_right_block">
         <div class="hm_nick_box hm_box">
-          <span v-if="userInfo.NAME">{{ userInfo.NAME }}</span>
+          <span v-if="userInfo.NAME"
+                :class="{'rank15' : userInfo.NAME >14, 'rank20' : userInfo.NAME >19}"
+          >{{ userInfo.NAME }}</span>
           <span v-else>Гость</span>
         </div>
 
