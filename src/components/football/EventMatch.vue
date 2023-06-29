@@ -12,7 +12,7 @@
           <img :src="urlImg + team.flag" alt="">
         </div>
         <div class="name">{{ team.name }}</div>
-        <div class="score" :class="{'score_blur' : match.active === 'Y'}">{{ team.goals }}</div>
+        <div class="score" :class="{'score_blur' : match.active === 'Y'}">{{ team.goals ?? 0 }}</div>
       </div>
     </div>
 

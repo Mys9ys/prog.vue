@@ -30,18 +30,15 @@
             </div>
 
             <div class="football" v-if="event === 'football'">
-
+              <EventMatch
+                  v-for="(el, index) in items"
+                  :key="index"
+                  :match="el"
+              ></EventMatch>
             </div>
           </div>
         </div>
-
-
-
-
       </div>
-      <!--      <SectionMatches-->
-      <!--          :arMatches="footballNearest"-->
-      <!--      ></SectionMatches>-->
 
     </div>
     <div class="btn_box">
@@ -56,12 +53,13 @@
 // import SectionMatches from "@/components/football/SectionMatches";
 import {mapActions, mapState} from "vuex";
 import EventRace from "@/components/race/EventRace";
+import EventMatch from "@/components/football/EventMatch";
 
 export default {
   name: "NearestEvent",
   components: {
-    EventRace
-    // SectionMatches,
+    EventRace,
+    EventMatch
   },
   data() {
     return {
@@ -209,6 +207,12 @@ export default {
 }
 .empty{
   font-size: 12px;
+}
+.events_for{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 5px;
 }
 
 </style>
