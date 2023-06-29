@@ -6,7 +6,7 @@ import {baseConfig} from "@/store/config";
 export const mainPageModule = {
     state: () => ({
 
-        footballNearest: {},
+        arrNearest: {},
 
         setToken: {},
 
@@ -17,8 +17,8 @@ export const mainPageModule = {
     getters: {},
     mutations: {
 
-        setFootballNearest(state, data) {
-            state.footballNearest = data
+        setNearest(state, data) {
+            state.arrNearest = data
         },
 
         setErrors(state, data){
@@ -26,9 +26,7 @@ export const mainPageModule = {
         }
     },
     actions: {
-        async getFootballNearest({state, commit}) {
-
-            console.log('set token', state.setToken)
+        async getNearest({state, commit}) {
 
             try {
                 const response = await axios.post(baseConfig.BASE_URL + 'main_page/', state.setToken,
@@ -40,8 +38,7 @@ export const mainPageModule = {
                 )
 
                 if (response.data.status == 'ok') {
-                    console.log('axios response Nearest', response.data)
-                    commit('setFootballNearest', response.data.nearest)
+                    commit('setNearest', response.data.result)
                 } else {
                     commit('setErrors', response.data.mes)
                 }

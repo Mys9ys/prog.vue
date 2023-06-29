@@ -3,8 +3,8 @@
   <div class="ratings_wrapper">
     <PageHeader class="header">Рейтинги</PageHeader>
 
-    <div class="event_block" :class="{'small_category' : category}">
-      <div class="el_event" v-for="(el, index) in eventsData" :key="index">
+    <div class="event_block" :class="{'small_category' : category}" v-if="mergePeriodEvent">
+      <div class="el_event" v-for="(el, index) in mergePeriodEvent" :key="index">
         <div class="img_box" @click="selectRating(el.ID, el.code)">
           <img :src="url+el.img" alt="">
         </div>
@@ -13,7 +13,7 @@
 
     <div class="rating_block" v-if="eventId">
       <div class="rating_title_wrapper">
-        <div class="rating_title">{{eventsData[eventId]["NAME"]}}</div>
+        <div class="rating_title">{{mergePeriodEvent[eventId]["NAME"]}}</div>
       </div>
       <FootballRatingBlock v-if="category === 'football'" :eventId="eventId"></FootballRatingBlock>
       <RaceRatingBlock v-if="category === 'race'" :eventId="eventId"></RaceRatingBlock>
@@ -41,7 +41,8 @@ export default {
       url:  'https://prognos9ys.ru/',
       category: '',
       eventId: '',
-      catLoader: false
+      catLoader: false,
+      mergePeriodEvent: {}
     }
   },
 
@@ -60,6 +61,11 @@ export default {
 
       await this.getEventsInfo()
       this.catLoader = false
+
+      Object.keys(this.eventsData).forEach((index)=>{// костыль после изменения выборки собитий с периодом old|now
+        this.mergePeriodEvent = Object.assign(this.mergePeriodEvent,this.eventsData[index])
+      })
+
     },
 
     async selectRating(id, code){
