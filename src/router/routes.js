@@ -16,6 +16,7 @@ import RaceEvent from "@/pages/race/RaceEvent";
 import RacePage from "@/pages/race/RacePage";
 import FootballPage from "@/pages/football/FootballPage";
 import FootballEvent from "@/pages/football/FootballEvent";
+import ChampionshipTable from "@/pages/football/ChampionshipTable";
 
 const routes = [
     {
@@ -79,6 +80,11 @@ const routes = [
     {
         path: '/profile/:id',
         component: ProfilePage,
+    },
+
+    {
+        path: '/championship/:event',
+        component: ChampionshipTable,
     },
 
     {

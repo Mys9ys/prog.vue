@@ -123,6 +123,7 @@ export default {
     background: @DarkColorBG;
     border-radius: 5px;
     text-align: left;
+    margin-bottom: 4px;
 
     .title {
       .shadow_inset;
@@ -149,7 +150,7 @@ export default {
     }
 
     .football {
-      background: @YesWrite;
+      background: @YesWrite2;
     }
 
     .kvn {
@@ -157,7 +158,7 @@ export default {
     }
 
     .race {
-      background: @red;
+      background: @cubersport;
     }
     .inactive{
       background: @DarkColorBG;

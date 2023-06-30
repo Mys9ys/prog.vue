@@ -1,12 +1,22 @@
 <template>
-  <div class="el_event">
+  <div class="el_event" :class="[code]">
     <div class="img_box">
       <div class="lamp" :class=[element.status]></div>
       <img :src="url+element.img" alt="">
     </div>
-    <div class="name">{{element.NAME}}</div>
-    <div class="btn" @click="$router.push('/'+code+ '/' +element.ID)">
-      <img src="@/assets/icon/btn/arrow.svg" alt="">
+
+    <div class="body_block">
+      <div class="name">{{element.NAME}}</div>
+      <div class="btn_block">
+        <div class="btn" @click="$router.push('/'+code+ '/' +element.ID)">
+          <span class="text">Список</span>
+          <img class="arrow" src="@/assets/icon/pagination/right.svg" alt="">
+        </div>
+<!--        <div v-if="element.table" class="btn" @click="$router.push('/championship/' +element.ID)">-->
+<!--          <span class="text">Таблица</span>-->
+<!--          <img class="arrow" src="@/assets/icon/pagination/right.svg" alt="">-->
+<!--        </div>-->
+      </div>
     </div>
   </div>
 </template>
@@ -38,41 +48,63 @@ export default {
   display: flex;
   flex-direction: row;
   padding: 4px;
-  color: @darkbg;
+  color: @color;
   border-radius: 5px;
   text-align: left;
-  gap: 2px;
+  gap: 4px;
 
   .img_box{
     position: relative;
     .shadow_inset;
     .flex_center;
-    max-width: 55px;
-    height: 55px;
+    max-width: 72px;
+    height: 72px;
     background: @colorText;
+    opacity: 0.8;
     img{
       width: 100%;
     }
-    padding: 5px;
+    padding: 4px;
+  }
+  .body_block{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: space-between;
   }
   .name{
-    background: @colorText;
+    font-size: 14px;
+    height: 45px;
     .shadow_inset;
     .flex_center;
-    width: 88%;
+    width: 100%;
     justify-content: left;
   }
-
-  .btn{
-    background: @DarkColorBG;
-    .shadow_inset;
-    .flex_center;
-    width: 7%;
-    padding: 4px;
-    img{
-      width: 100%;
+  .btn_block{
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    justify-content: flex-end;
+    .btn{
+      min-width: 70px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 3px;
+      font-size: 12px;
+      color: @colorText;
+      .shadow_template;
+      padding: 2px;
+      .text{
+        width: 80%;
+      }
+      .arrow{
+        width: 10px;
+      }
     }
   }
+
 }
 .lamp{
   position: absolute;
@@ -88,5 +120,16 @@ export default {
   &.old{
     background: @red;
   }
+}
+.football {
+  background: @YesWrite2;
+}
+
+.kvn {
+  background: @kvn;
+}
+
+.race {
+  background: @cubersport;
 }
 </style>
