@@ -30,12 +30,12 @@
       ></AvaComponent>
 
       <div class="hm_right_block">
-        <div class="hm_nick_box hm_box">
-          <span v-if="userInfo.NAME"
-                :class="{'rank15' : userInfo.NAME >14, 'rank20' : userInfo.NAME >19}"
-          >{{ userInfo.NAME }}</span>
-          <span v-else>Гость</span>
+        <div class="hm_nick_box hm_box nickname" v-if="userInfo.NAME"
+             :class="{'rank15' : userInfo.NAME.length >14, 'rank20' : userInfo.NAME.length >19}">
+          {{ userInfo.NAME }}
         </div>
+        <div class="hm_nick_box hm_box nickname" v-else>Гость</div>
+
 
         <div class="hm_btn_block hm_right">
           <BtnMini v-for="(btn, index) in r_btns"
@@ -184,7 +184,7 @@ export default {
       .hm_nick_box {
         width: 130px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         text-align: right;
       }
     }
@@ -226,7 +226,6 @@ export default {
     .hm_box {
       width: 130px;
       height: 28px;
-      margin-bottom: 5px;
       padding: 2px 4px;
       box-shadow: inset 0 2px 10px 1px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(0, 0, 0, .3), 0 1px rgba(255, 255, 255, .08);
       //background: linear-gradient(rgb(70,70,70), rgb(120,120,120));
@@ -234,6 +233,10 @@ export default {
     .rank{
     .flex_center;
       justify-content: flex-start;
+    }
+    .nickname{
+      .flex_center;
+      justify-content: flex-end;
     }
     .rank10{
       font-size: 15px;
