@@ -92,13 +92,14 @@ export default {
 
       await this.authRequest()
 
-      Object.keys(this.arrNearest).forEach((index)=>{
-        if(this.arrNearest[index]) {
-          this.arr[index] = this.arrNearest[index]['info']
-          if(this.arrNearest[index]['info']['visible'] === true) this.active = index
-        }
-      })
-
+      if(this.arrNearest){
+        Object.keys(this.arrNearest).forEach((index)=>{
+          if(this.arrNearest[index]) {
+            this.arr[index] = this.arrNearest[index]['info']
+            if(this.arrNearest[index]['info']['visible'] === true) this.active = index
+          }
+        })
+      }
     }
 
   },

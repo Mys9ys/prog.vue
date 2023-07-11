@@ -3,29 +3,25 @@ import axios from "axios";
 
 import {baseConfig} from "@/store/config";
 
-export const subscribeModule = {
+export const championshipModule = {
     state: () => ({
 
-        subscribeToken: localStorage.getItem('sentFirebaseMessagingToken') || '',
-        subscribeData: {},
+        queryData: {},
+        requestData: {},
         errors: {},
-
-
     }),
 
     getters: {},
     mutations: {
-
-        setToken(state, data) {
-            state.subscribeToken = data
-        },
-
+        setRequestData(state, data){
+            state.requestData = data
+        }
     },
     actions: {
-        async setSubscribeRule({state, commit}) {
+        async getRaceTable({state, commit}) {
 
             try {
-                const response = await axios.post(baseConfig.BASE_URL + 'subscribe/', state.subscribeData,
+                const response = await axios.post(baseConfig.BASE_URL + '/championship/race/', state.subscribeData,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -34,7 +30,7 @@ export const subscribeModule = {
                 )
 
                 if (response.data.status == 'ok') {
-                    commit('setPrank', response.data.info)
+                    commit('setRequestData', response.data.result)
                 } else {
                     commit('setErrors', response.data.mes)
                 }

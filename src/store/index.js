@@ -10,10 +10,10 @@ import {profileModule} from "@/store/profileModule";
 import {iconModule} from "@/store/iconModule";
 import {mainPageModule} from "@/store/mainPageModule";
 import {humorModule} from "@/store/humorModule";
-import {subscribeModule} from "@/store/subscribeModule";
 import {raceModule} from "@/store/raceModule";
 import {adminModule} from "@/store/adminModule";
 import {newsModule} from "@/store/newsModule";
+import {championshipModule} from "@/store/championshipModule";
 
 export default createStore({
     state: {
@@ -27,21 +27,26 @@ export default createStore({
         }
     },
     modules: {
-        kvn: kvnModule,
+
         auth: authModule,
         reg: regModule,
-        football: footballModule,
-        catalog: catalogModule,
-        rating: ratingModule,
+        admin: adminModule,
         recover: recoverModule,
         profile: profileModule,
-        icons: iconModule,
-        mainPage: mainPageModule,
-        humor: humorModule,
-        subscribe: subscribeModule,
+
+        football: footballModule,
         race: raceModule,
-        admin: adminModule,
-        news: newsModule
+        kvn: kvnModule,
+        humor: humorModule,
+        news: newsModule,
+
+        catalog: catalogModule,
+        rating: ratingModule,
+        mainPage: mainPageModule,
+
+        icons: iconModule,
+
+        championship: championshipModule
     },
     root: true
 })

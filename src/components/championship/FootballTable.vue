@@ -1,10 +1,10 @@
 <template>
-  <p>{{$route}}</p>
+
 </template>
 
 <script>
 export default {
-  name: "ChampionshipTable"
+  name: "FootballTable"
 }
 </script>
 
