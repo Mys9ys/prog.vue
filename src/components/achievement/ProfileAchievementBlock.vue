@@ -1,5 +1,5 @@
 <template>
-  <h1>Ачивки</h1>
+  <h3>Скоро будут</h3>
 </template>
 
 <script>

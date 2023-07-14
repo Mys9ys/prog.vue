@@ -4,7 +4,9 @@
   <div class="title_block">
     <div class="title_wrapper" v-for="(el, index) in profileMenu" :key="index" @click="active = index" :class="{'active':active === index}">
       <div class="title">
-        <div class="icon">{{ el.icon }}</div>
+        <div class="icon">
+          <img class="icon_img" :src="el.img" alt="">
+        </div>
         <div class="name" v-if="index === active">{{ el.title }}</div>
       </div>
     </div>
@@ -45,9 +47,28 @@
       </div>
     </div>
     <div class="body_item" v-if="active === 'achievement'">
+      <div class="title_wrapper">
+        <div class="title">
+          Ачивки
+        </div>
+      </div>
       <ProfileAchievementBlock></ProfileAchievementBlock>
     </div>
-    <div class="body_item" v-if="active === 'settings'">settings</div>
+    <div class="body_item" v-if="active === 'settings'">
+
+      <div class="title_wrapper">
+        <div class="title">
+          Настройки
+        </div>
+      </div>
+
+      <div class="settings_item" @click="logoutProfile">
+        <div class="icon">
+          <img :src="require('@/assets/icon/header/exit.svg')" alt="">
+        </div>
+        <div class="title">Выйти из приложения</div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -56,9 +77,10 @@
 import PageHeader from "@/components/main/PageHeader";
 import ProfileAchievementBlock from "@/components/achievement/ProfileAchievementBlock";
 import {mapActions, mapState} from "vuex";
-import ProfileTitle from "@/components/football/ProfileTitle";
+
 import ProfileEventBody from "@/components/football/ProfileEventBody";
 import ProfileRaceBlock from "@/components/profile/ProfileRaceBlock";
+import ProfileTitle from "@/components/profile/ProfileTitle";
 
 export default {
   name: "MyProfilePage",
@@ -77,9 +99,9 @@ export default {
 
       active: 'prognosis',
       profileMenu: {
-        'prognosis': {'title': 'Прогнозы', 'icon': 'Pr'},
-        'achievement': {'title': 'Награды', 'icon': 'Ac'},
-        'settings': {'title': 'Настройки', 'icon': 'Se'},
+        prognosis: {title: 'Прогнозы', img: require('@/assets/icon/profile/prognosis.svg')},
+        achievement: {title: 'Награды', img: require('@/assets/icon/profile/achievement.svg')},
+        settings : {title: 'Настройки', img: require('@/assets/icon/profile/settings.svg')},
       }
     }
   },
@@ -93,10 +115,16 @@ export default {
   methods: {
     ...mapActions({
       getProfileInfo: 'profile/getProfileData',
+      logoutVue: 'auth/logoutVue'
     }),
 
     setActiveEvent(id){
       this.activeEvent = id
+    },
+
+    logoutProfile() {
+      this.logoutVue()
+      this.$router.push('/').then(() => { this.$router.go() })
     },
 
     async fillProfile() {
@@ -141,8 +169,18 @@ export default {
   .title {
     display: flex;
     flex-direction: row;
-    gap: 2px;
+    gap: 4px;
     .shadow_inset;
+    .icon{display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2px;
+      .icon_img{
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
   &.active{
     background: @YesWrite;
@@ -209,12 +247,24 @@ export default {
   margin-bottom: 20px;
 }
 .football_block{
+  padding: 4px;
   .football_title_block{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 4px;
   }
+}
+.race_block{
+  padding: 4px;
+}
+
+.settings_item{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 4px;
+  color: @colorText;
 }
 
 </style>

@@ -24,8 +24,9 @@
 </template>
 
 <script>
-import ProfileTitle from "@/components/football/ProfileTitle";
+
 import ProfileRaceBody from "@/components/profile/ProfileRaceBody";
+import ProfileTitle from "@/components/profile/ProfileTitle";
 
 export default {
   name: "ProfileRaceBlock",

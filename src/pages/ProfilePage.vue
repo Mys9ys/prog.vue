@@ -44,8 +44,8 @@
 import {mapActions, mapState} from "vuex";
 import PreLoader from "@/components/main/PreLoader";
 import PageHeader from "@/components/main/PageHeader";
-import ProfileTitle from "@/components/football/ProfileTitle";
 import ProfileEventBody from "@/components/football/ProfileEventBody";
+import ProfileTitle from "@/components/profile/ProfileTitle";
 
 export default {
   name: "ProfilePage",

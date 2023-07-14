@@ -1,8 +1,7 @@
 <template>
   <div class="wrapper">
     <PageHeader class="header">Регистрация</PageHeader>
-
-    <form action="" class="form">
+    <form action="" class="form" v-if="nostrCount">
       <AuthInput
           v-for="(el, index) in inputs"
           :key="index"
@@ -54,19 +53,36 @@ export default {
 
   data() {
     return {
+      defaultName: 'Нострадамус № ',
       errors: [],
       inputs: [
-        { f_icon: require('@/assets/icon/form/fio.svg'), title: 'NickName', l_icon: '', vmod: 'nick', value: 'Нострадамус №'},
+        { f_icon: require('@/assets/icon/form/fio.svg'), title: 'NickName', l_icon: '', vmod: 'nick', value: ''},
         { f_icon: require('@/assets/icon/form/mail.svg'), title: 'E-mail', l_icon: '', vmod: 'mail', value: ''},
         { f_icon: require('@/assets/icon/form/pass.svg'), title: 'Пароль', l_icon: require('@/assets/icon/form/eye.svg'), vmod: 'pass', value: ''},
         { f_icon: require('@/assets/icon/form/pass.svg'), title: 'Повторите пароль', l_icon: require('@/assets/icon/form/eye.svg'), vmod: 'pass2', value: ''},
       ],
     }
   },
+
+  created() {
+    this.fillNostrCount()
+  },
+
+  watch: {
+    nostrCount(){
+      this.inputs[0].value = this.defaultName + this.nostrCount
+    }
+  },
+
   methods: {
     ...mapActions({
       registrationRequest: 'reg/registrationRequest',
+      getNostrCount: 'reg/getNostrCount'
     }),
+
+    async fillNostrCount(){
+       await this.getNostrCount()
+    },
 
     async enterClick() {
 
@@ -124,6 +140,7 @@ export default {
 
   computed: {
     ...mapState({
+      nostrCount: state => state.reg.nostrCount,
       avaLink: state => state.reg.avaLink,
       regData: state => state.reg.regData,
       registerError: state => state.reg.registerError,

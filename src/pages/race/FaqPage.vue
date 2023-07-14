@@ -18,6 +18,18 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+@import "src/assets/css/variables.less";
+.faq_wrapper{
+  .title_wrapper{
+    background: @DarkColorBG;
+    padding: 4px;
+    border-radius: 5px;
+    color: @colorText;
+    margin-top: 5px;
+    .title{
+      .shadow_inset;
+    }
+  }
+}
 </style>

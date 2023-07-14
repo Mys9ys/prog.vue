@@ -13,6 +13,8 @@ export const regModule = {
             file: ''
         },
 
+        nostrCount: '',
+
         regData: {
             type: 'reg',
 
@@ -54,6 +56,10 @@ export const regModule = {
             state.registerError = mes
         },
 
+        setNostrCount(state, count){
+            state.nostrCount = count
+        },
+
         setPhoneError(state, mes){
             state.checkError.phone = mes
         },
@@ -62,6 +68,26 @@ export const regModule = {
         }
     },
     actions: {
+
+        async getNostrCount({state, commit}) {
+            try {
+
+                const response = await axios.post(baseConfig.BASE_URL + 'register/nostr_count.php', '',
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+
+                if (response.data.status == 'ok') {
+                    console.log('setNostrCount', response.data)
+                    commit('setNostrCount', response.data.count)
+                }
+
+            } catch (e) {
+                console.log('error', e)
+            }
+        },
 
         async avaLoadRequest({state, commit}) {
             try {
