@@ -56,7 +56,7 @@ export default {
       defaultName: 'Нострадамус № ',
       errors: [],
       inputs: [
-        { f_icon: require('@/assets/icon/form/fio.svg'), title: 'NickName', l_icon: '', vmod: 'nick', value: ''},
+        { f_icon: require('@/assets/icon/form/fio.svg'), title: 'Nick (можно сменить)', l_icon: '', vmod: 'nick', value: ''},
         { f_icon: require('@/assets/icon/form/mail.svg'), title: 'E-mail', l_icon: '', vmod: 'mail', value: ''},
         { f_icon: require('@/assets/icon/form/pass.svg'), title: 'Пароль', l_icon: require('@/assets/icon/form/eye.svg'), vmod: 'pass', value: ''},
         { f_icon: require('@/assets/icon/form/pass.svg'), title: 'Повторите пароль', l_icon: require('@/assets/icon/form/eye.svg'), vmod: 'pass2', value: ''},
