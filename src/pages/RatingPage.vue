@@ -57,13 +57,13 @@ export default {
 
     async fillCatalogElem() {
       this.catLoader = true
-      this.catalogData['type'] = 'all'
+      this.queryData['type'] = 'all'
 
       await this.getEventsInfo()
       this.catLoader = false
 
-      Object.keys(this.eventsData).forEach((index)=>{// костыль после изменения выборки собитий с периодом old|now
-        this.mergePeriodEvent = Object.assign(this.mergePeriodEvent,this.eventsData[index])
+      Object.keys(this.ratingEvents).forEach((index)=>{// костыль после изменения выборки собитий с периодом old|now
+        this.mergePeriodEvent = Object.assign(this.mergePeriodEvent,this.ratingEvents[index])
       })
 
     },
@@ -77,10 +77,9 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      matchLoading: state => state.football.matchLoading,
-      eventsData: state => state.catalog.eventsData,
-      catalogData: state => state.catalog.catalogData,
+    ...mapState({      
+      ratingEvents: state => state.catalog.ratingEvents,
+      queryData: state => state.catalog.queryData,
       ratingData: state => state.rating.ratingData,
       footballRating: state => state.rating.footballRating,
     })

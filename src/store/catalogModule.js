@@ -5,9 +5,10 @@ import {baseConfig} from "@/store/config";
 
 export const catalogModule = {
     state: () => ({
-        eventsData: [],
+        catalogData: {},
+        ratingEvents: {},
 
-        catalogData: {
+        queryData: {
             type: ''
         },
 
@@ -15,8 +16,11 @@ export const catalogModule = {
 
     getters: {},
     mutations: {
-        setEventsData(state, eventsData) {
-            state.eventsData = eventsData
+        setCatalogData(state, data) {
+            state.catalogData = data
+        },
+        setRatingEvents(state, data) {
+            state.ratingEvents = data
         },
     },
     actions: {
@@ -34,7 +38,12 @@ export const catalogModule = {
 
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
-                    commit('setEventsData', response.data.result)
+                    if(state.queryData.type === 'catalog') {
+                        commit('setCatalogData', response.data.result)
+                    } else {
+                        commit('setRatingEvents', response.data.result)
+                    }
+
                 } else {
                     commit('setError', response.data.mes)
                 }

@@ -3,9 +3,9 @@
   <div class="catalog_wrapper">
     <PageHeader class="header">Каталог событий</PageHeader>
 
-    <div class="event_wrapper" v-if="eventsData">
+    <div class="event_wrapper" v-if="catalogData">
       <div class="events_block"
-           v-for="(event, index) in eventsData" :key="index">
+           v-for="(event, index) in catalogData" :key="index">
         <div class="event_title_wrapper" >
           <div class="title" :class="[event.info['CODE']]" >{{ event.info.NAME }}</div>
           <div class="btn_block">
@@ -79,7 +79,7 @@ export default {
 
     async fillCatalogElem() {
       this.catLoader = true
-      this.catalogData['type'] = 'catalog'
+      this.queryData['type'] = 'catalog'
       await this.getEventsInfo()
       this.catLoader = false
 
@@ -87,10 +87,10 @@ export default {
     },
 
     fillActionArray(){
-      Object.keys(this.eventsData).forEach((id)=>
+      Object.keys(this.catalogData).forEach((id)=>
       {
-        // this.eventsData[id].events
-        Object.keys(this.eventsData[id].events).forEach((status)=>{
+        // this.catalogData[id].events
+        Object.keys(this.catalogData[id].events).forEach((status)=>{
             if(status === 'old') this.arActive[id] = false
             if(status === 'now') this.arActive[id] = true
         })
@@ -103,8 +103,7 @@ export default {
 
   computed: {
     ...mapState({
-      matchLoading: state => state.football.matchLoading,
-      eventsData: state => state.catalog.eventsData,
+      queryData: state => state.catalog.queryData,
       catalogData: state => state.catalog.catalogData,
     })
   },
