@@ -17,6 +17,7 @@ import RacePage from "@/pages/race/RacePage";
 import FootballPage from "@/pages/football/FootballPage";
 import FootballEvent from "@/pages/football/FootballEvent";
 import ChampionshipPage from "@/pages/ChampionshipPage";
+import FaqPage from "@/pages/race/FaqPage";
 
 const routes = [
     {
@@ -106,6 +107,11 @@ const routes = [
         path: '/football/:event/:number',
         component: FootballPage,
         props: true
+    },
+
+    {
+        path: '/faq',
+        component: FaqPage,
     },
     // квновские роуты -->
     kvnEvent,
