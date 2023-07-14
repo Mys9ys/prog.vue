@@ -1,7 +1,7 @@
 <template>
   <div class="menu_wrapper">
     <div class="menu_item_wrapper" v-for="(btn, index) in menu" :key="index">
-      <div class="menu_item" @click="$router.push(index)" :class="{'active': active === index}">
+      <div class="menu_item" @click="$router.push('/'+index)" :class="{'active': active === index}">
         <div class="icon">
           <img class="icon_img" :src="btn.img_a" alt="" v-if="active === index">
           <img class="icon_img" :src="btn.img" alt="" v-else>
