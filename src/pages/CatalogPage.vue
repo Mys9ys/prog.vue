@@ -6,8 +6,8 @@
     <div class="event_wrapper" v-if="eventsData">
       <div class="events_block"
            v-for="(event, index) in eventsData" :key="index">
-        <div class="event_title_wrapper">
-          <div class="title" :class="[event.info['CODE']]" v-if="event.info['CODE']">{{ event.info.NAME }}</div>
+        <div class="event_title_wrapper" >
+          <div class="title" :class="[event.info['CODE']]" >{{ event.info.NAME }}</div>
           <div class="btn_block">
             <div class="btn_wrapper">
               <div class="btn_act"
@@ -63,12 +63,12 @@ export default {
   data() {
     return {
       url: 'https://prognos9ys.ru/',
-      catLoader: false,
+      catLoader: true,
       arActive: {}
     }
   },
 
-  mounted() {
+  created() {
     this.fillCatalogElem()
   },
 

@@ -1,18 +1,23 @@
 <template>
     <HeaderBlock v-if="token"></HeaderBlock>
     <router-view></router-view>
+    <div class="navbar_wrapper">
+      <NavbarMenu v-if="token" class="menu_fixed"></NavbarMenu>
+    </div>
 </template>
 
 <script>
 
 import HeaderBlock from "@/components/main/HeaderBlock";
 import {mapState} from "vuex";
+import NavbarMenu from "@/components/main/NavbarMenu";
 
 
 export default {
   name: 'App',
   components: {
     HeaderBlock,
+    NavbarMenu
   },
   // data(){
   //   return{
@@ -40,6 +45,8 @@ export default {
 body{
   background: @BackGreenColor;
 }
+
+
 
 
 @font-face {
@@ -77,6 +84,7 @@ body{
 }
 
 #app {
+  position: relative;
   font-family: Roboto, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -89,5 +97,18 @@ body{
   padding: 0 5px;
   background: @BackGreenColor;
   overflow-y: scroll;
+  padding-bottom: 65px;
+  .navbar_wrapper{
+    width: 100%;
+    //position: fixed;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .menu_fixed{
+    position: fixed;
+    bottom: 5px;
+  }
 }
 </style>
