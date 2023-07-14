@@ -14,10 +14,10 @@
           </div>
         </div>
         <div class="hm_btn_block">
-          <BtnMini v-for="(btn, index) in l_btns"
-                   :key="index"
-                   @click="$router.push('/' + btn.link)"
-                   :img="btn.img"></BtnMini>
+<!--          <BtnMini v-for="(btn, index) in l_btns"-->
+<!--                   :key="index"-->
+<!--                   @click="$router.push('/' + btn.link)"-->
+<!--                   :img="btn.img"></BtnMini>-->
         </div>
       </div>
       <AvaComponent v-if="$router.currentRoute.value.path === '/register'" class="hm_ava_block"
@@ -38,12 +38,15 @@
 
 
         <div class="hm_btn_block hm_right">
-          <BtnMini v-for="(btn, index) in r_btns"
-                   :key="index"
-                   @click="$router.push('/' + btn.link)"
-                   :img="btn.img"></BtnMini>
-          <BtnMini @click="logoutProfile"
-                   :img="require('@/assets/icon/header/exit.svg')"></BtnMini>
+
+
+<!--          <BtnMini v-for="(btn, index) in r_btns"-->
+<!--                   :key="index"-->
+<!--                   @click="$router.push('/' + btn.link)"-->
+<!--                   :img="btn.img"></BtnMini>-->
+<!--          <BtnMini @click="logoutProfile"-->
+<!--                   :img="require('@/assets/icon/header/exit.svg')"></BtnMini>  -->
+<!--          <BtnMini :img="require('@/assets/icon/header/envelope.svg')"></BtnMini>-->
         </div>
       </div>
     </div>
@@ -51,13 +54,16 @@
 
 </template>
 <script>
-import BtnMini from "@/components/ui/btn/BtnMini";
 import {mapActions, mapState} from "vuex";
 import AvaComponent from "@/components/main/AvaComponent";
+// import BtnMini from "@/components/ui/btn/BtnMini";
 
 export default {
   name: "HeaderBlock",
-  components: {BtnMini, AvaComponent},
+  components: {
+    AvaComponent,
+    // BtnMini
+  },
   data() {
     return {
       l_btns: [
@@ -195,6 +201,7 @@ export default {
       flex-direction: row;
       gap: 4px;
       width: 128px;
+      //height: 45px;
       z-index: 15;
 
       &.hm_right{
@@ -218,7 +225,7 @@ export default {
       width: 120px;
       position: absolute;
       left: 50%;
-      bottom: -55px;
+      top: 0px;
       transform: translateX(-50%);
       z-index: 5;
     }

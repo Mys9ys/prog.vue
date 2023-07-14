@@ -103,7 +103,6 @@ export default {
   position: relative;
   display: inline-block;
   margin: 0 auto;
-  margin-top: 24px;
   z-index: 25;
 
   .myModal{
