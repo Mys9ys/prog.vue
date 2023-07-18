@@ -1,17 +1,16 @@
 <template>
-  <PageHeader class="header">Данные</PageHeader>
-  <p>{{$route.params.type}}</p>
   <RaceTable v-if="$route.params.type === 'race'"></RaceTable>
+  <FootballTable v-if="$route.params.type === 'football'"></FootballTable>
 </template>
 
 <script>
-import PageHeader from "@/components/main/PageHeader";
 import RaceTable from "@/components/championship/RaceTable";
+import FootballTable from "@/components/championship/FootballTable";
 
 export default {
   name: "ChampionshipPage",
   components: {
-    PageHeader,
+    FootballTable,
     RaceTable
   }
 }

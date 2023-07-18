@@ -8,14 +8,14 @@
     <div class="body_block">
       <div class="name">{{element.NAME}}</div>
       <div class="btn_block">
+        <div v-if="element.table === true" class="btn" @click="$router.push('/championship/'+code +'/' +element.ID)">
+          <span class="text">Таблица</span>
+          <img class="arrow" src="@/assets/icon/pagination/right.svg" alt="">
+        </div>
         <div class="btn" @click="$router.push('/'+code+ '/' +element.ID)">
           <span class="text">Список</span>
           <img class="arrow" src="@/assets/icon/pagination/right.svg" alt="">
         </div>
-<!--        <div v-if="element.table" class="btn" @click="$router.push('/championship/' +element.ID)">-->
-<!--          <span class="text">Таблица</span>-->
-<!--          <img class="arrow" src="@/assets/icon/pagination/right.svg" alt="">-->
-<!--        </div>-->
       </div>
     </div>
   </div>

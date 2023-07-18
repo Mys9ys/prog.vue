@@ -6,22 +6,26 @@ import {baseConfig} from "@/store/config";
 export const championshipModule = {
     state: () => ({
 
+        raceData: {},
+        footballData: {},
         queryData: {},
-        requestData: {},
         errors: {},
     }),
 
     getters: {},
     mutations: {
-        setRequestData(state, data){
-            state.requestData = data
+        setRaceData(state, data){
+            state.raceData = data
+        },
+        setFootballData(state, data){
+            state.footballData = data
         }
     },
     actions: {
         async getRaceTable({state, commit}) {
 
             try {
-                const response = await axios.post(baseConfig.BASE_URL + '/championship/race/', state.subscribeData,
+                const response = await axios.post(baseConfig.BASE_URL + '/championship/race/', state.queryData,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -30,7 +34,7 @@ export const championshipModule = {
                 )
 
                 if (response.data.status == 'ok') {
-                    commit('setRequestData', response.data.result)
+                    commit('setRaceData', response.data.result)
                 } else {
                     commit('setErrors', response.data.mes)
                 }
@@ -39,6 +43,29 @@ export const championshipModule = {
                 console.log('error', e)
             }
         },
+
+        async getFootballTable({state, commit}) {
+
+            try {
+                const response = await axios.post(baseConfig.BASE_URL + '/championship/football/', state.queryData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                )
+
+                if (response.data.status == 'ok') {
+                    commit('setFootballData', response.data.result)
+                } else {
+                    commit('setErrors', response.data.mes)
+                }
+
+            } catch (e) {
+                console.log('error', e)
+            }
+        },
+
 
     },
 
