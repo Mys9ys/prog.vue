@@ -3,7 +3,7 @@
     <div class="title_wrapper">
       <div class="title_block">
         <h2>Прогносяус</h2>
-        <div>Сайт прогнозов на спортивные и не очень события</div>
+        <div>Сайт прогнозов на спортивные и командные игровые события</div>
       </div>
     </div>
     <div class="btn_block">
