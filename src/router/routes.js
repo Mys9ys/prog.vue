@@ -17,7 +17,8 @@ import RacePage from "@/pages/race/RacePage";
 import FootballPage from "@/pages/football/FootballPage";
 import FootballEvent from "@/pages/football/FootballEvent";
 import ChampionshipPage from "@/pages/ChampionshipPage";
-import FaqPage from "@/pages/race/FaqPage";
+import FaqPage from "@/pages/FaqPage";
+
 
 const routes = [
     {

@@ -2,7 +2,7 @@
   <PreLoader v-if="elLoader"></PreLoader>
   <PageHeader class="header">Таблица</PageHeader>
   <div class="title_wrapper">
-    <div class="logo">
+    <div class="logo" v-if="tableData.info.img">
       <img :src="url + tableData.info.img" alt="">
     </div>
     <div class="title">
