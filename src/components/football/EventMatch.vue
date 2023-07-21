@@ -17,7 +17,7 @@
     </div>
 
     <div class="right_block">
-      <div class="send_info_block" v-if="match.send_info.send_time === ''">
+      <div class="send_info_block" v-if="!match.send_info.send_time">
         <div class="send_info">не заполнено</div>
       </div>
       <div class="send_info_block" v-else>
@@ -28,7 +28,7 @@
       <div class="btn_box">
         <div class="more_btn" @click="moreInfo = !moreInfo"><span
             :class="{'close' : !moreInfo, 'open' : moreInfo}"> > </span></div>
-        <div class="match_btn" v-if="match.send_info.send_time === '' && match.active === 'Y'" @click="$router.push(link)">
+        <div class="match_btn" v-if="!match.send_info.send_time && match.active === 'Y'" @click="$router.push(link)">
           Заполнить
         </div>
         <div class="match_btn btn_change" v-if="match.send_info.send_time && match.active === 'Y'"
@@ -166,6 +166,7 @@ export default {
       gap: 4px;
 
       .send_info {
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;

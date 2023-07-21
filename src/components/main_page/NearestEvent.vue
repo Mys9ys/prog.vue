@@ -215,5 +215,10 @@ export default {
   gap: 5px;
   margin-bottom: 5px;
 }
+.football{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
 </style>
