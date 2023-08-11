@@ -31,12 +31,12 @@
           </div>
           <div class="title">{{item.info.NAME}}</div>
         </td>
-        <td><span class="t_col">{{item.matches}}</span></td>
+        <td><span class="t_col">{{item.matches ?? 0}}</span></td>
         <td><span class="t_col">{{item.win ?? 0}}</span></td>
         <td><span class="t_col">{{item.draw ?? 0}}</span></td>
         <td><span class="t_col">{{item.lose ?? 0}}</span></td>
-        <td><span class="t_col">{{item.plus}}-{{item.minus}}</span></td>
-        <td><span class="t_col">{{item.score}}</span></td>
+        <td><span class="t_col">{{item.plus ?? 0}}-{{item.minus ?? 0}}</span></td>
+        <td><span class="t_col">{{item.score ?? 0}}</span></td>
       </tr>
     </table>
   </div>
