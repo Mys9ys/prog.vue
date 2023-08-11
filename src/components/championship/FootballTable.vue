@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div class="table_wrapper">
+  <div class="table_wrapper" v-if="tableData.teams">
     <table class="table table-hover table_temp">
       <tr class="table_row">
         <th ><span class="t_col">#</span></th>
@@ -27,16 +27,16 @@
         <td><span class="t_col">{{index+1}}</span></td>
         <td class="team_col">
           <div class="flag">
-            <img :src="url + item.img" alt="">
+            <img :src="url + item.info.img" alt="">
           </div>
-          <div class="title">{{item.NAME}}</div>
+          <div class="title">{{item.info.NAME}}</div>
         </td>
-        <td><span class="t_col">0</span></td>
-        <td><span class="t_col">0</span></td>
-        <td><span class="t_col">0</span></td>
-        <td><span class="t_col">0</span></td>
-        <td><span class="t_col">0-0</span></td>
-        <td><span class="t_col">0</span></td>
+        <td><span class="t_col">{{item.matches}}</span></td>
+        <td><span class="t_col">{{item.win ?? 0}}</span></td>
+        <td><span class="t_col">{{item.draw ?? 0}}</span></td>
+        <td><span class="t_col">{{item.lose ?? 0}}</span></td>
+        <td><span class="t_col">{{item.plus}}-{{item.minus}}</span></td>
+        <td><span class="t_col">{{item.score}}</span></td>
       </tr>
     </table>
   </div>
