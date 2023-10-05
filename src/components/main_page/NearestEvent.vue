@@ -272,7 +272,7 @@ export default {
     }
 
     .info_box{
-      width:100%;
+      width:85%;
       display: flex;
       flex-direction: column;
       gap:4px;
