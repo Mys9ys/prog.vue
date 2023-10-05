@@ -44,7 +44,7 @@
                           <span class="text">Таблица</span>
                           <img class="arrow" src="@/assets/icon/pagination/right.svg" alt="">
                         </div>
-                        <div class="event_btn">
+                        <div class="event_btn" @click="$router.push('/'+event +'/' +event_id)">
                           <span class="text">Список</span>
                           <img class="arrow" src="@/assets/icon/pagination/right.svg" alt="">
                         </div>
