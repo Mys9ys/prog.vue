@@ -9,10 +9,10 @@
       <div class="number title_cell"># {{ arMatch.number }}</div>
       <div class="date title_cell">&#128197; {{ arMatch.date }}</div>
       <div class="time title_cell">&#128344; {{ arMatch.time }}</div>
-      <div class="stage title_cell">{{ arMatch.step }}</div>
+      <div class="stage title_cell">Тур: {{ arMatch.tur }}</div>
     </div>
 
-    <div class="teams_block" v-if=" home.flag">
+    <div class="teams_block" v-if="home">
       <div class="team">
         <div class="flag">
           <img :src="urlImg + home.flag" alt="">
@@ -269,85 +269,11 @@
       </div>
 
       <div class="match_result_wrapper" v-else>
-        <table class="table table-dark table-hover om_table_box" v-if="prognosis">
-          <thead>
-          <tr>
-            <th class="pr_table_col">{{ icons[1] }}</th>
-            <th class="pr_table_col">{{ icons[18] }}</th>
-            <th class="pr_table_col">{{ icons[19] }}</th>
-            <th class="pr_table_col">{{ icons[28] }}</th>
-            <th class="pr_table_col">{{ icons[32] }}</th>
-            <th class="pr_table_col yellow_t">{{ icons[21] }}</th>
-            <th class="pr_table_col red_t">{{ icons[22] }}</th>
-            <th class="pr_table_col">{{ icons[20] }}</th>
-            <th class="pr_table_col">{{ icons[23] }}</th>
-            <th class="pr_table_col">{{ icons[45] }}</th>
-            <th class="pr_table_col">{{ icons[46] }}</th>
-            <th class="pr_table_col">all</th>
 
-          </tr>
-          </thead>
-          <tbody>
+        <FootballResultTable v-if="prognosis"
+            :match="arMatch"
+        ></FootballResultTable>
 
-          <tr>
-
-            <td class="pr_table_col ">{{ matchR.goal_home }} - {{ matchR.goal_guest }}</td>
-            <td class="pr_table_col ">{{ matchR.result }}</td>
-            <td class="pr_table_col ">{{ matchR.sum }}</td>
-            <td class="pr_table_col ">{{ matchR.diff }}</td>
-            <td class="pr_table_col ">{{ matchR.domination }} - {{ 100 - matchR.domination }}</td>
-            <td class="pr_table_col ">{{ matchR.yellow }}</td>
-            <td class="pr_table_col ">{{ matchR.red }}</td>
-            <td class="pr_table_col ">{{ matchR.corner }}</td>
-            <td class="pr_table_col ">{{ matchR.penalty }}</td>
-            <td class="pr_table_col ">{{ matchR.otime }}</td>
-            <td class="pr_table_col ">{{ matchR.spenalty }}</td>
-            <td class="pr_table_col "></td>
-
-          </tr>
-          <tr>
-
-            <td class="pr_table_col result">{{ prognosis.goal_home }} - {{ prognosis.goal_guest }}</td>
-            <td class="pr_table_col result">{{ prognosis.result }}</td>
-            <td class="pr_table_col result">{{ prognosis.sum }}</td>
-            <td class="pr_table_col result">{{ prognosis.diff }}</td>
-            <td class="pr_table_col result">{{ prognosis.domination }} - {{ 100 - prognosis.domination }}</td>
-            <td class="pr_table_col result">{{ prognosis.yellow }}</td>
-            <td class="pr_table_col result">{{ prognosis.red }}</td>
-            <td class="pr_table_col result">{{ prognosis.corner }}</td>
-            <td class="pr_table_col result">{{ prognosis.penalty }}</td>
-            <td class="pr_table_col result">{{ prognosis.otime }}</td>
-            <td class="pr_table_col result">{{ prognosis.spenalty }}</td>
-            <td class="pr_table_col result"></td>
-
-          </tr>
-
-
-
-          <tr class="prog_r">
-
-            <td class="pr_table_col" :class="{'green' : progR.score >0}">{{ progR.score }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.result >0}">{{ progR.result }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.sum >0}">{{ progR.sum }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.diff >0}">{{ progR.diff }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.domination >0}">{{ progR.domination }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.yellow >0}">{{ progR.yellow }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.red >0}">{{ progR.red }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.corner >0}">{{ progR.corner }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.penalty >0}">{{ progR.penalty }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.otime >0}">{{ progR.otime }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.spenalty >0}">{{ progR.spenalty }}</td>
-            <td class="pr_table_col" :class="{'green' : progR.all >0}">{{ progR.all }}</td>
-
-          </tr>
-
-          </tbody>
-        </table>
-        <div class="desc_block">
-          <div class="cell match_res">Результат</div>
-          <div class="cell prognosis">Прогноз</div>
-          <div class="cell "><span class="empty">Мимо/</span><span class="ball">Баллы</span></div>
-        </div>
       </div>
 
       <div class="annotation_block" v-if="annotationVis">
@@ -393,6 +319,7 @@ import PreLoader from "@/components/main/PreLoader";
 import SendSuccess from "@/components/main/SendSuccess";
 import FootballAdminSetResult from "@/components/football/FootballAdminSetResult";
 import ActionFailure from "@/components/main/ActionFailure";
+import FootballResultTable from "@/components/football/FootballResultTable";
 
 
 export default {
@@ -402,7 +329,8 @@ export default {
     FootballAdminSetResult,
     PageHeader,
     PreLoader,
-    SendSuccess
+    SendSuccess,
+    FootballResultTable
   },
 
   data() {
@@ -532,7 +460,7 @@ export default {
 
         if(!this.prognosis.result) {
           this.prognosis.result = true
-          this.prognosis.time_send = true
+          this.prognosis.time_send = 'Сейчас'
         }
       }
     },
@@ -1143,31 +1071,6 @@ export default {
   }
 }
 
-.om_table_box {
-  margin: 0;
-  border-radius: 5px;
-
-  th, td {
-    padding: 2px;
-    font-size: 11px;
-  }
-
-  .result {
-    color: @NoWrite;
-  }
-
-  .prog_r {
-    td {
-      color: @colorBlur;
-    }
-
-    .green {
-      color: @YesWrite;
-    }
-  }
-
-}
-
 .yellow_t {
   color: @maxYellow;
 }
@@ -1203,31 +1106,6 @@ export default {
     .btn {
       .shadow_inset;
     }
-  }
-}
-
-.desc_block{
-  background: @DarkColorBG;
-  padding: 4px;
-  border-radius:  0 0 5px 5px;
-  font-size: 14px;
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  .cell{
-    .shadow_inset;
-  }
-  .match_res{
-    color: @colorText;
-  }
-  .prognosis{
-    color: @NoWrite;
-  }
-  .empty{
-    color: @colorBlur;
-  }
-  .ball{
-    color: @YesWrite;
   }
 }
 

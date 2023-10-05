@@ -93,7 +93,7 @@ export const footballModule = {
 
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
-                    commit('setMatchData', response.data.match)
+                    commit('setMatchData', response.data.result)
                 } else {
                     if(response.data.mes) {
                         commit('setError', response.data.mes)
@@ -121,11 +121,7 @@ export const footballModule = {
                 if (response.data.status == 'ok') {
                     console.log('axios data', response.data)
                 } else {
-                    if(response.data.mes) {
-                        commit('setError', response.data.mes)
-                    } else {
-                        commit('setError', 'что то не так')
-                    }
+                    commit('setErrors', response.data.mes)
                 }
 
             } catch (e) {
