@@ -26,7 +26,9 @@
     </tr>
 
     <tr v-if="match.prog_result" class="prog_r">
-      <td class="pr_table_col" :class="{'green' : match.prog_result[selector] >0}" v-for="(selector, index) in selectors" :key="index">
+      <td class="pr_table_col"
+          :class="{'green' : match.prog_result[selector] >0, 'green' : match.prog_result['domination'] >0 }"
+          v-for="(selector, index) in selectors" :key="index">
         <span v-if="selector !== 'domination2'">{{match.prog_result[selector]}}</span>
         <span v-else>{{match.prog_result['domination']}}</span>
       </td>
