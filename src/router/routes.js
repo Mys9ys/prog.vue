@@ -3,7 +3,6 @@ import AuthPage from "@/pages/auth/AuthPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 import {kvnEvent, kvnGame} from "@/pages/kvn/routes";
 import CatalogPage from "@/pages/CatalogPage";
-import FBCatalog from "@/pages/football/FBCatalog";
 import RatingPage from "@/pages/RatingPage";
 import MyProfilePage from "@/pages/MyProfilePage";
 import ProfilePage from "@/pages/ProfilePage";
@@ -47,11 +46,6 @@ const routes = [
     {
         path: '/ratings',
         component: RatingPage,
-    },
-
-    {
-        path: '/football',
-        component: FBCatalog,
     },
 
     {

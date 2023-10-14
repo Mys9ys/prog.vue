@@ -2,13 +2,13 @@
   <div class="el_event" :class="[code]">
     <div class="img_box">
       <div class="lamp" :class=[element.status]></div>
-      <img :src="url+element.img" alt="">
+      <img :src="url+element.img" alt="" v-if="element">
     </div>
 
     <div class="body_block">
       <div class="name">{{element.NAME}}</div>
       <div class="btn_block">
-        <div v-if="element.table === true" class="btn" @click="$router.push('/championship/'+code +'/' +element.ID)">
+        <div v-if="element.table && element.table !== 'Нет' " class="btn" @click="$router.push('/championship/'+code +'/' +element.ID)">
           <span class="text">Таблица</span>
           <img class="arrow" src="@/assets/icon/pagination/right.svg" alt="">
         </div>
