@@ -1,8 +1,8 @@
 <template>
   <PreLoader v-if="elLoader"></PreLoader>
   <PageHeader class="header">Таблица</PageHeader>
-  <div class="title_wrapper">
-    <div class="logo" v-if="tableData.info.img">
+  <div class="title_wrapper" v-if="tableData.info">
+    <div class="logo" >
       <img :src="url + tableData.info.img" alt="">
     </div>
     <div class="title">
@@ -10,35 +10,43 @@
     </div>
   </div>
 
-  <div class="table_wrapper" v-if="tableData.teams">
-    <table class="table table-hover table_temp">
-      <tr class="table_row">
-        <th ><span class="t_col">#</span></th>
-        <th ><span class="t_col">Команда</span></th>
-        <th ><span class="t_col">И</span></th>
-        <th ><span class="t_col">В</span></th>
-        <th ><span class="t_col">Н</span></th>
-        <th ><span class="t_col">П</span></th>
-        <th ><span class="t_col">Мячи</span></th>
-        <th ><span class="t_col">Очки</span></th>
-      </tr>
+  <div v-if="tableData.groups">
 
-      <tr v-for="(item, index) in tableData.teams" :key="index">
-        <td><span class="t_col">{{index+1}}</span></td>
-        <td class="team_col">
-          <div class="flag">
-            <img :src="url + item.info.img" alt="">
-          </div>
-          <div class="title">{{item.info.NAME}}</div>
-        </td>
-        <td><span class="t_col">{{item.matches ?? 0}}</span></td>
-        <td><span class="t_col">{{item.win ?? 0}}</span></td>
-        <td><span class="t_col">{{item.draw ?? 0}}</span></td>
-        <td><span class="t_col">{{item.lose ?? 0}}</span></td>
-        <td><span class="t_col">{{item.plus ?? 0}}-{{item.minus ?? 0}}</span></td>
-        <td><span class="t_col">{{item.score ?? 0}}</span></td>
-      </tr>
-    </table>
+    <div class="table_wrapper" v-for="(teams, char) in tableData.groups" :key="char">
+      <div class="title_wrapper group_wrapper" v-if="char !== 0">
+        <span class="title"> Группа: {{char}}</span>
+      </div>
+
+      <table class="table table-hover table_temp">
+        <tr class="table_row">
+          <th ><span class="t_col">#</span></th>
+          <th ><span class="t_col">Команда</span></th>
+          <th ><span class="t_col">И</span></th>
+          <th ><span class="t_col">В</span></th>
+          <th ><span class="t_col">Н</span></th>
+          <th ><span class="t_col">П</span></th>
+          <th ><span class="t_col">Мячи</span></th>
+          <th ><span class="t_col">Очки</span></th>
+        </tr>
+
+        <tr v-for="(item, index) in teams" :key="index">
+          <td><span class="t_col">{{index+1}}</span></td>
+          <td class="team_col">
+            <div class="flag">
+              <img :src="url + item.info.img" alt="">
+            </div>
+            <div class="title">{{item.info.NAME}}</div>
+          </td>
+          <td><span class="t_col">{{item.matches ?? 0}}</span></td>
+          <td><span class="t_col">{{item.win ?? 0}}</span></td>
+          <td><span class="t_col">{{item.draw ?? 0}}</span></td>
+          <td><span class="t_col">{{item.lose ?? 0}}</span></td>
+          <td><span class="t_col">{{item.plus ?? 0}}-{{item.minus ?? 0}}</span></td>
+          <td><span class="t_col">{{item.score ?? 0}}</span></td>
+        </tr>
+      </table>
+    </div>
+
   </div>
 </template>
 
@@ -100,6 +108,10 @@ export default {
     }
   }
 }
+.group_wrapper{
+  margin: 0;
+  gap:0;
+}
 .table_wrapper{
   background: @DarkColorBG;
   padding: 4px;
@@ -115,12 +127,14 @@ export default {
   color: @colorText;
 }
 .t_col{
+
   .shadow_inset;
   color: @colorText;
   .flex_center;
 }
 
 .team_col{
+  min-width: 145px;
   color: @colorText;
   display: flex;
   flex-direction: row;
