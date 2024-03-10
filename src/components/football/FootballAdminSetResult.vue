@@ -238,11 +238,11 @@ export default {
         25: this.result.diff ?? '', // Разница мячей
         26: this.result.sum ?? '', // Сумма голов
         10: this.result.domination ?? 50, // Владение
-        12: this.result.yellow ?? '', // желтых
-        13: this.result.red ?? '', // красных
+        12: this.result.yellow ?? 3, // желтых
+        13: this.result.red ?? 0, // красных
 
-        11: this.result.corner ?? '', // угловых
-        14: this.result.penalty ?? '', // пенальти
+        11: this.result.corner ?? 9, // угловых
+        14: this.result.penalty ?? 0, // пенальти
 
         47: this.result.otime ?? '', // m_otime
         48: this.result.spenalty ?? '', // m_spenalty
@@ -428,7 +428,7 @@ export default {
   text-decoration: none;
 }
 .prognosis_block {
-  background: @red;
+  background: @colorBlur;
   color: @colorText;
   padding: 4px;
   border-radius: 5px;
