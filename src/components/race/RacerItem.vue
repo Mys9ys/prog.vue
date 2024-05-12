@@ -5,7 +5,7 @@
         <img :src="urlImg + item.img" alt="">
       </div>
       <div class="country img">
-        <img :src="urlImg + item.country.flag" alt="">
+        <img :src="urlImg + item.team.img" alt="">
       </div>
     </div>
     <div class="name">
